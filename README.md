@@ -19,9 +19,10 @@ Potential img hosting: PixaBay
   - CSV export.
 
 Bonus round:
-- User avatar/username selection (user item).
+- User avatar/username selection (user item). Get req only for now.
 - Additional art.
 - Integrate better with Google maps.
+- Checklist/todos (checklist item).
 
 ## Requirements
 Add your own db key in environment variables for the Netlify function.
