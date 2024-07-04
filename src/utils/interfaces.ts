@@ -1,4 +1,5 @@
 type Category = "food" | "lodging" | "activity" | "prep" | "test";
+type Role = "participant" | "admin" | "readOnly";
 
 interface Vendor {
 	name: string;
@@ -7,15 +8,19 @@ interface Vendor {
 	phoneNumber?: number;
 }
 
+interface TripRecord {
+	tripName: string;
+	role: Role;
+}
+
 export interface User {
 	_id?: string;
 	displayName: string;
 	lookupName: string;
 	createdDate: string; //"YYYYMMDD"
 	lastUpdatedDate?: string;
-	role: string[];
 	avatarRef: string;
-	trips: string[];
+	trips: TripRecord[];
 }
 
 export interface ExpenseItem {
@@ -39,6 +44,13 @@ export interface ActionItem {
 	startTime?: Date; //check ...
 	title: string;
 	details: string;
+	location: {
+		//tbd
+		country: string;
+		nearestCity: string;
+		nearestState?: string;
+	};
+
 	advisory?: string; //special instructions, cautions, reviews
 	urls: string[]; //cite your sources lol
 	vendor?: Vendor;

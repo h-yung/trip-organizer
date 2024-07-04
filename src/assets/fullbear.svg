@@ -1,0 +1,8 @@
+<svg id="svg" fill="#000000" stroke="#000000" width="200px" height="200px" version="1.1" viewBox="144 144 512 512" xmlns="http://www.w3.org/2000/svg">
+    <g id="IconSvg_bgCarrier" stroke-width="0"></g>
+    <g id="IconSvg_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"></g>
+     <g id="IconSvg_iconCarrier">
+      <path xmlns="http://www.w3.org/2000/svg" transform="matrix(5.248 0 0 5.248 148.09 148.09)" d="m11 49 4-4.9997 1.0004-5.0004 8.9997-10 1.0004 3.0004c3.3331-2.6669 8-4.6669 14-6 8.9997-2 15.079-3.1775 25-1.0004 9.9204 2.1779 13 6 16 10 2 2.6669 3.3331 6.5002 4 11.5l-2 6.5002 2 15h-12l2-4-11-8.9997-13 2v11h-12l3.0004-2.9996-10-18-16 7.0004zm15 3.0004 4.9997-1.0004 5.0004 7.0004-8 9.9993h-9.0004l2-2zm34 4.9997 3.9993 1.0004 6 4.9997-2 4.9997h-11l2-2.9996z" fill-rule="evenodd" stroke="#000000"></path>
+
+      </g>
+      </svg>
