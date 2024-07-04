@@ -17,6 +17,7 @@ Potential img hosting: PixaBay
 Get, (Add, Update, Delete) travel action items.
 Get, Add, Update, Delete expense items on the go. 
 - CSV export.
+
 Bonus round:
 - User avatar/username selection (user item).
 - Additional art.
