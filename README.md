@@ -14,9 +14,9 @@ Additional art, etc. credits to the AIC (Art Institute of Chicago) API
 Potential img hosting: PixaBay
 
 ## API
-Get, (Add, Update, Delete) travel action items.
-Get, Add, Update, Delete expense items on the go. 
-- CSV export.
+- Get, (Add, Update, Delete) travel action items.
+- Get, Add, Update, Delete expense items on the go. 
+  - CSV export.
 
 Bonus round:
 - User avatar/username selection (user item).
