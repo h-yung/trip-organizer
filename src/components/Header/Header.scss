@@ -1,0 +1,48 @@
+.header-container {
+	width: 100%;
+	height: 50px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: 0px 1.5rem;
+	// background: red;
+	background: hsla(0, 0%, 0%, 0.134);
+	display: flex;
+	align-items: center;
+
+	.avatar-group {
+		//same class diff styling in diff components
+		display: flex;
+		align-items: center;
+		margin-right: 2rem;
+	}
+
+	.avatar-img {
+		height: 40px;
+		width: auto;
+		object-fit: contain;
+	}
+	.titles {
+		font-weight: bold;
+		font-size: 0.8rem;
+		letter-spacing: 0.05rem;
+		text-transform: uppercase;
+	}
+
+	.trip-name-container {
+		font-weight: bold;
+		font-size: 0.8rem;
+		letter-spacing: 0.05rem;
+		text-transform: uppercase;
+
+		&:hover {
+			cursor: pointer;
+			color: blue;
+		}
+
+		&:focus {
+			cursor: pointer;
+			color: blue;
+		}
+	}
+}

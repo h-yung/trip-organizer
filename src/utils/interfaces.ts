@@ -1,6 +1,18 @@
 type Category = "food" | "lodging" | "activity" | "prep" | "test";
 type Role = "participant" | "admin" | "readOnly";
 
+type AvatarOptions =
+	| "monkey"
+	| "crow"
+	| "bugs"
+	| "dolphin"
+	| "horse"
+	| "bear"
+	| "hippo"
+	| "raccoon"
+	| "lion"
+	| "kiwiBird";
+
 interface Vendor {
 	name: string;
 	url?: string;
@@ -8,7 +20,7 @@ interface Vendor {
 	phoneNumber?: number;
 }
 
-interface TripRecord {
+export interface TripRecord {
 	tripName: string;
 	role: Role;
 }
@@ -19,8 +31,14 @@ export interface User {
 	lookupName: string;
 	createdDate: string; //"YYYYMMDD"
 	lastUpdatedDate?: string;
-	avatarRef: string;
+	avatarRef: AvatarOptions; //string
 	trips: TripRecord[];
+	avatar?: string; //this is assigned from front-end
+}
+
+export interface AvatarItem {
+	ref: string;
+	svg: string;
 }
 
 export interface ExpenseItem {
@@ -29,7 +47,7 @@ export interface ExpenseItem {
 	date: Date;
 	currency: string;
 	desc: string;
-	details: string;
+	details?: string;
 	vendor?: Vendor; //maybe
 	value: number;
 	submittedBy: string; //user.lookupName
@@ -46,9 +64,11 @@ export interface ActionItem {
 	details: string;
 	location: {
 		//tbd
+		address: string;
 		country: string;
 		nearestCity: string;
 		nearestState?: string;
+		zipcode?: number;
 	};
 
 	advisory?: string; //special instructions, cautions, reviews
