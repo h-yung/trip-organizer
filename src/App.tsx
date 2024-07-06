@@ -100,8 +100,10 @@ const showExpensesViewFromBtn = () => {
           <img  className="help-icon" width={20} height={20} src={ClearOutlined} alt="exit ops" /> Close everything/return to activity list
           </li>
         </ul>
-        <p>In Activities List: Double click to see activity detail. In Expenses: Export CSV with the button at the bottom, or add a new expense. Click on the trip name in the header to choose a different trip.</p>
-        <p>*Delete/modify activities/expenses to come.</p>
+        <p>In Activities List: Double click to see activity detail.</p>
+        <p>In Expenses: Export CSV with the button at the bottom, or add a new expense. You can tap to enable deletion (tap on red bin 1x) or update existing expense (tap around elsewhere on the grid to get it to stop editing lol). It'll ask you to confirm your edits but deletes straight away.</p>
+        <p>Click on the trip name in the header to choose a different trip.</p>
+        <p>*Delete/modify activity option to come.</p>
         <div style={{fontSize: "0.8rem", textAlign:"center"}}>
           <Divider type="horizontal"  />
           <span>Icons from <a href="https://www.flaticon.com/" target="_blank"> Flaticon</a> & <a href="https://thenounproject.com/browse/icons/term/kiwi/" target="_blank" title="Kiwi Icons">Noun Project</a> (CC BY 3.0). Art? from Art Institute of Chicago. | LCM</span>

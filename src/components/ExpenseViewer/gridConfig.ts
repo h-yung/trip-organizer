@@ -28,6 +28,7 @@ export const defaultColDefs = {
 
 export const expGridOptions = {
 	includeHiddenColumnsInQuickFilter: true,
+	singleClickEdit: true,
 	// editType: "fullRow",
 	// rowHeight: 50,
 };
@@ -43,6 +44,12 @@ export const useColDefs = (
 ) => {
 	const onCellClicked = () => {
 		setEditingEx(!editingEx);
+
+		// const editingParams = {
+		// 	rowIndex: p.node.rowIndex!,
+		// 	colKey: p.column.getColId(),
+		// };
+		// p.api.startEditingCell(editingParams);
 	};
 
 	const onBinCellClicked = async () => {

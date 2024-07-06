@@ -102,6 +102,8 @@ const ExpenseViewer = ({
     },[setRowData, expenseRef, updateExpense, selectedExpense]);
 
     const onRowValueChanged = (event:RowValueChangedEvent) => {
+        //editing has stopped?
+        event.api.stopEditing();
         const changedRowNode = event.api.getRowNode(event.data._id);
         console.log('changed row?')
         console.log(changedRowNode?.data);
