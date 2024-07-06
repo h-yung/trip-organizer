@@ -28,7 +28,7 @@ The desktop UX is trash because time crunch lol! Someday we'll do breakpoints ag
 ## API
 
 -   [ ] Get, (Add, Update, Delete) travel action items.
-    -   **No update/delete from UI yet**
+    -   **API done, UI update/delete components TBC.**
 -   [x] Get, Add, Update, Delete expense items on the go.
     -   [x] CSV export.
 
