@@ -1,6 +1,7 @@
 .activity-detail-container {
-	height: 90vh;
-	padding: 0 2rem;
+	// height: 90vh;
+	padding: 0 1rem;
+	text-align: left;
 
 	.bare-link {
 		letter-spacing: 0.1rem;
@@ -11,11 +12,15 @@
 	}
 
 	.detail-controls {
+		position: fixed;
+		top: 2.5rem;
+		width: 100%;
+
 		display: flex;
 		justify-content: flex-end;
 		.exit-btn {
 			height: 100px;
-			width: 100px;
+			// width: 100px;
 			display: flex;
 			flex-wrap: wrap;
 			font-size: 3rem;
@@ -42,24 +47,28 @@
 .activity-form {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	width: 100%;
 
 	.item {
 		display: flex;
 		justify-content: center;
 	}
 
-	// .ant-form-item-control-input-content .item-label {
-	// 	padding-bottom: 0.5rem;
-	// }
-
 	.form-item {
 		width: 100%;
+		padding: 0px 1rem;
 	}
-	.form-item.date-picker {
+	.ant-form-item-control-input {
 		display: flex;
-		justify-content: flex-end;
-		width: 300px;
+		width: 100%;
+		justify-content: center;
 	}
+	// .form-item.date-picker {
+	// 	display: flex;
+	// 	justify-content: flex-end;
+	// 	width: 300px;
+	// }
 
 	.item-label {
 		text-align: right;
@@ -69,9 +78,11 @@
 	}
 
 	.entry-header {
-		margin: 50px 0;
+		margin-top: 2rem;
 		display: flex;
-		justify-content: space-between;
+		padding: 0px 1rem;
+		flex-direction: column;
+		justify-content: center;
 		align-items: baseline;
 
 		* {
@@ -101,25 +112,27 @@
 	#address_help,
 	#country_help,
 	#details_help {
-		display: flex;
-		justify-content: flex-end;
+		// display: flex;
+		// justify-content: flex-end;
 		font-size: 1rem;
 	}
 
-	.ant-form-item-control-input-content {
-		display: flex;
-		justify-content: flex-end;
-		width: 400px;
-	}
+	// .ant-form-item-control-input-content {
+	// 	display: flex;
+	// 	justify-content: center;
+	// 	width: 400px;
+	// }
 
 	.radio-group {
+		width: 100%;
 		display: flex;
 		align-items: center;
+		justify-content: center;
 	}
 	.radio-item {
 		font-size: 2.2rem;
-		width: 100px;
-		height: 100px;
+		width: 80px;
+		height: 80px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -133,10 +146,10 @@
 		width: 100%;
 		display: flex;
 		flex-direction: column;
-		align-items: flex-end;
+		align-items: center;
 
-		border-top: 3px solid #00c28e;
-		padding-top: 6px;
+		// border-top: 3px solid #00c28e;
+		// padding-top: 6px;
 
 		.subheader {
 			margin: 1rem 0;
@@ -150,7 +163,13 @@
 			font-size: bold;
 			text-transform: uppercase;
 			display: flex;
-			justify-content: flex-start;
+			justify-content: flex-end;
+		}
+
+		//date picker
+		.ant-picker {
+			// width: 200px;
+			width: 100%;
 		}
 	}
 }
@@ -163,22 +182,18 @@
 }
 
 .send-btn-item {
+	//= send-btn-item
 	display: flex;
 	justify-content: center;
-	width: 100%;
-	height: 4rem;
-	// font-weight: 700;
-	font-size: 2rem;
+	font-weight: 700;
+	font-size: 1rem;
+	padding: 0.25rem 0.5rem;
 	letter-spacing: 0.2rem;
 	text-transform: uppercase;
 	color: #00c28e;
-	background: transparent;
 	border: 4px solid #00c28e;
-	padding: 0.5rem;
 	margin-bottom: 1rem;
-	// border: 2px solid black;
 
-	//fix w config token
 	&:hover {
 		background: #00c28e;
 		border: none;
@@ -193,7 +208,27 @@
 }
 
 .send-btn-item.secondary {
-	font-size: 1.5rem;
-	font-weight: bold;
-	width: 80%;
+	//= send-btn-item
+	display: flex;
+	justify-content: center;
+	font-weight: 700;
+	font-size: 1rem;
+	padding: 0.25rem 0.5rem;
+	letter-spacing: 0.2rem;
+	text-transform: uppercase;
+	color: #00c28e;
+	border: 4px solid #00c28e;
+	margin-bottom: 1rem;
+
+	&:hover {
+		background: #00c28e;
+		border: none;
+		color: white;
+	}
+
+	&:focus {
+		background: #00c28e;
+		border: none;
+		color: white;
+	}
 }

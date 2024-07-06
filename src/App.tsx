@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, ConfigProvider } from 'antd'
+import { Button, ConfigProvider, Divider } from 'antd'
 import { DollarOutlined, FileAddOutlined, SearchOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import ClearOutlined from "./assets/noun-clear-4706196.svg";
 import UserSelection from './components/UserSelection/userSelection';
@@ -70,7 +70,15 @@ const showExpensesViewFromBtn = () => {
 }, []);
 
   return (
-    <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+    <
+    //   div 
+    // style={{display: "flex", flexDirection: "column", alignItems: "center",
+    //   width:"100%",
+    //   flex:1
+    //   // height: "100vh"
+
+    // }}
+    >
     <AppHeader activeUsr={activeUsr} viewTrip={viewTrip} setViewTrip={setViewTrip} setHelp={setHelp} help={help} />
   <div className="main-app">
 
@@ -94,7 +102,8 @@ const showExpensesViewFromBtn = () => {
         </ul>
         <p>In Activities List: Double click to see activity detail. In Expenses: Export CSV with the button at the bottom, or add a new expense. Click on the trip name in the header to choose a different trip.</p>
         <p>*Delete/modify activities/expenses to come.</p>
-        <div style={{fontSize: "0.5rem"}}>
+        <div style={{fontSize: "0.8rem", textAlign:"center"}}>
+          <Divider type="horizontal"  />
           <span>Icons from <a href="https://www.flaticon.com/" target="_blank"> Flaticon</a> & <a href="https://thenounproject.com/browse/icons/term/kiwi/" target="_blank" title="Kiwi Icons">Noun Project</a> (CC BY 3.0). Art? from Art Institute of Chicago. | LCM</span>
         </div>
       </div>
@@ -169,9 +178,9 @@ const showExpensesViewFromBtn = () => {
           </div>)
           : (
 
-            <>
+            
               <ActivityViewer user={activeUsr} viewTrip={viewTrip} />
-            </>
+            
           )
     )
   }
@@ -190,12 +199,12 @@ const showExpensesViewFromBtn = () => {
 
 { !showExpenseViewer && <Button className="always-btn" shape="circle" onClick={showExpensesViewFromBtn}><DollarOutlined /></Button> 
 }
-<Button className="always-btn" shape="circle" onClick={()=> console.log("search")}><SearchOutlined /></Button>
+{/* <Button className="always-btn" shape="circle" onClick={()=> console.log("search")}><SearchOutlined /></Button> */}
       </>
     )}
      </div>
     
-    </div>
+    </>
   )
 }
 

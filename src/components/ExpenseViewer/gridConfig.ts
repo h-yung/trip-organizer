@@ -20,6 +20,7 @@ export const defaultColDefs = {
 	sortable: true,
 	resizable: false,
 	menuTabs: [],
+	suppressMovable: true,
 	headerClass: ["left-align", "scale-up", "header-text"],
 	cellClass: ["left-align", "scale-up"],
 	onCellClicked: (p: CellClickedEvent) => console.log(p.node),
@@ -40,11 +41,11 @@ export const useColDefs = (
 	viewTrip: string
 	// setShowExpenseForm: (p: boolean) => void
 ) => {
-	const onCellDoubleClicked = () => {
+	const onCellClicked = () => {
 		setEditingEx(!editingEx);
 	};
 
-	const onBinCellDoubleClicked = async () => {
+	const onBinCellClicked = async () => {
 		console.log("Delete for real?");
 	};
 
@@ -76,7 +77,8 @@ export const useColDefs = (
 				headerName: "",
 				field: "binGate",
 				width: 70,
-				onCellDoubleClicked: onBinCellDoubleClicked,
+				pinned: true,
+				onCellClicked: onBinCellClicked,
 				cellRenderer: BinCellRenderer,
 				cellRendererParams: {
 					editingEx,
@@ -85,11 +87,11 @@ export const useColDefs = (
 				},
 			},
 			{
-				headerName: "Category",
-				//
+				headerName: "Type",
 				field: "category",
-				onCellDoubleClicked,
+				onCellClicked,
 				editable: editingEx,
+				width: 115,
 				getQuickFilterText: (p: GetQuickFilterTextParams) => p.value,
 
 				valueSetter: (p: ValueSetterParams) => {
@@ -115,22 +117,22 @@ export const useColDefs = (
 				headerName: "Description",
 				editable: editingEx,
 				field: "desc",
-				onCellDoubleClicked,
-				width: 300,
+				onCellClicked,
+				width: 200,
 			},
 			{
 				headerName: "in",
 				editable: editingEx,
 				field: "currency",
-				onCellDoubleClicked,
+				onCellClicked,
 				width: 100,
 			},
 			{
 				headerName: "Cost",
 				editable: editingEx,
 				field: "value",
-				onCellDoubleClicked,
-				width: 150,
+				onCellClicked,
+				width: 140,
 				cellClass: ["right-align", "scale-up"],
 				//valueformatter would depend on currency. tbc
 				valueFormatter: (p: ValueFormatterParams) => {
@@ -152,23 +154,23 @@ export const useColDefs = (
 				headerName: "Date",
 				field: "date",
 				editable: editingEx,
-				onCellDoubleClicked,
-				width: 270,
+				onCellClicked,
+				width: 120,
 				//valueSetter
 
 				valueFormatter: (p: ValueFormatterParams) => {
 					if (!p.value) return p.value;
 					// dayjs(p.value).format("MM/DD/YYYY h:mm A");
 					dayjs.extend(localizedFormat);
-					return dayjs(p.value).format("L LT") ?? p.value;
+					return dayjs(p.value).format("MM/DD/YYYY") ?? p.value;
 				},
 			},
 			{
 				headerName: "Owner",
 				editable: editingEx,
 				field: "submittedBy",
-				onCellDoubleClicked,
-				width: 250,
+				onCellClicked,
+				width: 170,
 				filter: true,
 				valueFormatter: (p: ValueFormatterParams) => {
 					if (!p.value) return;
@@ -187,23 +189,22 @@ export const useColDefs = (
 			{
 				headerName: "Details",
 				editable: editingEx,
-				onCellDoubleClicked,
+				onCellClicked,
 				headerClass: ["header-text"],
 				children: [
 					{
-						headerName: "More Info",
-
-						field: "details",
-						// columnGroupShow: "closed",
-					},
-					{
 						headerName: "Vendor",
 
-						onCellDoubleClicked,
+						onCellClicked,
 						field: "vendor.name",
 						width: 300,
-						columnGroupShow: "open",
 						//maybe collapsible
+					},
+					{
+						headerName: "More Info",
+						field: "details",
+						width: 500,
+						columnGroupShow: "open",
 					},
 				],
 				//maybe collapsible

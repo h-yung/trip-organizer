@@ -68,7 +68,7 @@ export interface BinCellRendererProps extends CustomCellRendererProps {
 
 export const BinCellRenderer = ({
     data,
-    // api,
+    api,
     editingEx,
     setRowData,
     viewTrip
@@ -76,12 +76,18 @@ export const BinCellRenderer = ({
 
     const sendToTrash = useCallback(async () => {
         const { _id } = data;
+
+        if (ENV === "dev"){ 
+            console.log("tis dev")
+            api.applyTransaction({remove: [data]});
+            return;
+        }
+
         const response = await deleteExpense(_id);
         console.log(response);
         if (response.deletedCount){
-            //either deletedCount or fail
-            //api.applyTransaction({ remove: [_id]});
-            //need to reset rowData
+            //deletedCount succeeds
+            api.applyTransaction({ remove: [data]});
             const exps = await getAllExpenses(viewTrip);
 
                 const { documents } = exps;

@@ -177,7 +177,7 @@ const ExpenseEntry = (
             <Radio.Button className="radio-item" key={"radio_2"} value="food"><img width={45} height={45} src={FoodOutlined} alt="food" /></Radio.Button>
             <Radio.Button className="radio-item" key={"radio_3"} value="lodging"><HomeOutlined style={{color: "black"}} /></Radio.Button>
             <Radio.Button className="radio-item" key={"radio_4"} value="prep"><img width={45} height={45} src={PrepOutlined} alt="preparations" /></Radio.Button>
-           {ENV === "dev" && <Radio.Button key={"radio_5"} className="radio-item" value="test"><SmileOutlined style={{color: "black"}} /></Radio.Button> }
+           {/* {ENV === "dev" && <Radio.Button key={"radio_5"} className="radio-item" value="test"><SmileOutlined style={{color: "black"}} /></Radio.Button> } */}
           </Radio.Group>
         </Form.Item>
 
@@ -255,6 +255,7 @@ const ExpenseEntry = (
         <Form.Item >
             <Button htmlType="submit"
             className="send-btn-item"
+            style={{width: 200}} //wouldn't take from scss..
             >
                 Submit
             </Button>

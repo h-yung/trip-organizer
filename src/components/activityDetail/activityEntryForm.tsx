@@ -108,9 +108,6 @@ const ActivityEntry = (
                     name, email, phoneNumber, url
                 }
             }
-
-            //   'date-picker': fieldsValue['date-picker'].format('YYYY-MM-DD'),
-            //   'date-time-picker': fieldsValue['date-time-picker'].format('YYYY-MM-DD HH:mm:ss'),
            
             console.log('Received values of form: ', startTime, entry.startTime);
         if (!editing){
@@ -159,7 +156,7 @@ return (
        
          {/* <Form.Item className="form-item"> */}
          <div className="entry-header">
-            <h2 style={{marginRight: "1rem"}}>{editing? "Updating Activity" : "NEW Activity" }</h2>
+            <h2>{editing? "Updating Activity" : "NEW Activity" }</h2>
            <p className="prepopulated">By {user.displayName} for {viewTrip} </p>
            </div>
         {/* </Form.Item> */}
@@ -174,7 +171,7 @@ return (
             <Radio.Button className="radio-item" key={"radio_2"} value="food"><img width={45} height={45} src={FoodOutlined} alt="food" /></Radio.Button>
             <Radio.Button className="radio-item" key={"radio_3"} value="lodging"><HomeOutlined style={{color: "black"}} /></Radio.Button>
             <Radio.Button className="radio-item" key={"radio_4"} value="prep"><img width={45} height={45} src={PrepOutlined} alt="preparations" /></Radio.Button>
-           {ENV === "dev" && <Radio.Button key={"radio_5"} className="radio-item" value="test"><SmileOutlined style={{color: "black"}} /></Radio.Button> }
+           {/* {ENV === "dev" && <Radio.Button key={"radio_5"} className="radio-item" value="test"><SmileOutlined style={{color: "black"}} /></Radio.Button> } */}
           </Radio.Group>
         </Form.Item>
 
@@ -212,24 +209,26 @@ return (
       >
         {(fields, { add, remove }//, { errors }
         ) => (
-            <>
+            <div style={{ width: 335}}>
             <label className="item-label">Links</label>
 
             {fields.map((field, index) => (
                 <div 
                 key={`${field.key}_${index}_link`}
                 
+                
                 >
-                    {/* {index === 0 ?  : ''} */}
 
                     <Form.Item
                         {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
                         
                         required={index === 0 ? true : false}
                         key={field.key}
+                        // style={{ display: "flex", justifyContent: "center", alignItems: "center"}}
                     >
 
-                        <Form.Item className="form-item"
+                        <Form.Item 
+                        className="form-item"
                         {...field}
                         key={`${field.key}_${index}`}
                         validateTrigger={['onChange', 'onBlur']}
@@ -243,7 +242,9 @@ return (
                         rules={[{ type: 'url' }]}
                         noStyle
                         >
-                        <Input placeholder="https://..." style={{ width: '60%' }} />
+                        <Input placeholder="https://..." 
+                        // style={{ width: '60%' }} 
+                        />
                         </Form.Item>
                         {fields.length > 1 ? (
                         <MinusCircleOutlined
@@ -266,7 +267,7 @@ return (
                 Add field
               </Button>
               </Form.Item>
-              </>
+              </div>
         )}
         </Form.List>
 
@@ -362,6 +363,7 @@ return (
         <Form.Item >
             <Button htmlType="submit"
             className="send-btn-item"
+            style={{width: 200}} //wouldn't take from scss..
             >
                 Submit
             </Button>

@@ -73,7 +73,7 @@ const ActivityViewer = ({
            { !showActivityDetail ? (
             <>
                 <div className="controls-activity">
-              {ENV === "dev" &&  <Button className="filter-btn" onClick={()=> setCategoryFilter("test")} shape="circle" ><SmileOutlined style={{color: "black"}} /></Button>}
+              {/* {ENV === "dev" &&  <Button className="filter-btn" onClick={()=> setCategoryFilter("test")} shape="circle" ><SmileOutlined style={{color: "black"}} /></Button>} */}
                 <Button className="filter-btn" onClick={()=> setCategoryFilter("activity")} size="large"  shape="circle" ><CarOutlined style={{color: "black"}} /></Button>
                 <Button className="filter-btn" onClick={()=> setCategoryFilter("food")} size="large"  shape="circle" ><img width={55} height={55} src={FoodOutlined} alt="food" /></Button>
                 <Button className="filter-btn" onClick={()=> setCategoryFilter("lodging")} size="large"  shape="circle"><HomeOutlined style={{color: "black"}} /></Button>

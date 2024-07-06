@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import {
 	CellClassParams,
 	CellClickedEvent,
-	CellDoubleClickedEvent,
 	ColDef,
 	GetQuickFilterTextParams,
 	ValueFormatterParams,
@@ -15,6 +14,7 @@ export const defaultColDefs = {
 	sortable: true,
 	resizable: false,
 	menuTabs: [],
+	suppressMovable: true,
 	// onCellClicked: (p: CellClickedEvent) => console.log(p.data.category),
 };
 
@@ -27,7 +27,7 @@ export const useColDefs = (
 	setSelectedActivity: (p: null | ActionItem) => void,
 	setShowActivityDetail: (p: boolean) => void
 ) => {
-	const onCellDoubleClicked = (p: CellDoubleClickedEvent) => {
+	const onCellClicked = (p: CellClickedEvent) => {
 		const { data } = p;
 		setSelectedActivity(data);
 		setShowActivityDetail(true);
@@ -38,10 +38,10 @@ export const useColDefs = (
 			{
 				headerName: "Date-Time",
 				field: "startTime",
-				width: 270,
+				width: 180,
 				headerClass: ["left-align", "scale-up", "header-text"],
 				cellClass: ["left-align", "scale-up"],
-				onCellDoubleClicked,
+				onCellClicked,
 				valueFormatter: (p: ValueFormatterParams) => {
 					if (!p.value) return p.value;
 					// dayjs(p.value).format("MM/DD/YYYY h:mm A");
@@ -53,10 +53,10 @@ export const useColDefs = (
 			{
 				headerName: "Title",
 				field: "title",
-				width: 600,
+				width: 300,
 				headerClass: ["left-align", "scale-up", "header-text"],
 				cellClass: ["left-align", "scale-up"],
-				onCellDoubleClicked,
+				onCellClicked,
 			},
 			{
 				headerName: "Category",
