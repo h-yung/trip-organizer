@@ -19,15 +19,16 @@ Potential img hosting: PixaBay
 - [ ] Get, Add, Update, Delete expense items on the go. 
     - [ ] CSV export.
      
-## Other
+## To dos
 - [ ] Fix visual problems.
 - [ ] Data entry.
 
 Bonus round:
-- User avatar/username selection (user item). Get req only for now.
-- Additional art.
-- Integrate better with Google maps.
-- Checklist/todos (checklist item).
+- [ ] User avatar/username selection (user item). Get req only for now.
+- [ ] Additional art.
+- [ ] Integrate better with Google maps.
+- [ ] Checklist/todos (checklist item).
+- [ ] Add activity rating field (under Update endpt)
 
 ## Requirements
 Add your own db key in environment variables for the Netlify function.
