@@ -63,6 +63,7 @@ const ExpenseViewer = ({
 
 
     const handleCancel = useCallback(async () => {
+        setSelectedExpense(null);
         if (ENV === "dev"){
             setRowData(SampleExp);
             setOpenConfModal(false);
@@ -76,6 +77,8 @@ const ExpenseViewer = ({
 
     const handleOk = useCallback(async () => {
 
+        console.log("selected exp at this time:", selectedExpense)
+
         if (!selectedExpense) {
             console.log("nothing to update");
             setOpenConfModal(false);
@@ -88,7 +91,7 @@ const ExpenseViewer = ({
             return;
         } 
         const update = await updateExpense(selectedExpense);
-        if (update.insertedId) console.log('Successfully sent in update!')
+        if (update.matchedCount && update.modifiedCount && update.matchedCount === update.modifiedCount) console.log('Successfully sent in update!')
 
         //now force refresh your data...although maybe not needed bc UI already has the update
         if (expenseRef.current) {
