@@ -51,7 +51,7 @@ Add your own API key in environment variables for the Netlify functions.
 
 ## Learnings
 Mostly sticking to a consistent workflow/order of operations. General directory structure working from outside-in, 
-1. Define data structures (only two here). Even if the database doesn't have a schema, be consistent and work with TypeScript.
+1. Define data structures (only two here). Even if the database doesn't enforce a schema, be consistent and work with TypeScript.
 2. Define basic endpoints needed for API.
 3. Write functions and test API with Postman.
 4. Inside server directory (update your .gitignore), create front-end directories.
