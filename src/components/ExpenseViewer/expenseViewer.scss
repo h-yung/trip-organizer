@@ -68,7 +68,7 @@
 		text-align: right;
 	}
 	.scale-up {
-		font-size: 1.5rem;
+		font-size: 1.2rem;
 	}
 }
 
@@ -83,8 +83,16 @@
 		justify-content: center;
 	}
 
-	.ant-form-item-control-input-content .item-label {
-		padding-bottom: 0.5rem;
+	// .ant-form-item-control-input-content .item-label {
+	// }
+	#category_help,
+	#date_help,
+	#currency_help,
+	#value_help,
+	#desc_help {
+		display: flex;
+		justify-content: flex-end;
+		font-size: 1rem;
 	}
 
 	.form-item.date-picker {
@@ -96,6 +104,7 @@
 	.item-label {
 		font-size: 1.5rem;
 		letter-spacing: 0.1rem;
+		padding-bottom: 0.5rem;
 		text-align: right;
 	}
 
@@ -135,7 +144,7 @@
 
 	.radio-group {
 		display: flex;
-		align-items: baseline;
+		align-items: center;
 	}
 	.radio-item {
 		font-size: 2.2rem;
@@ -144,8 +153,8 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background: red;
-		// margin-right: 0px;
+		// background: red;
+		// margin-right: 1rem;
 		// margin-left: 6px;
 	}
 
@@ -222,4 +231,11 @@
 .select-ag-cell {
 	display: flex;
 	align-items: center;
+}
+
+.editor-btn-style {
+	&:hover,
+	&:focus {
+		cursor: pointer;
+	}
 }

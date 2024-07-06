@@ -1,5 +1,5 @@
-import { Select, Popconfirm } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { Select } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { CustomCellRendererProps } from '@ag-grid-community/react';
 import { Category, ExpenseItem } from "../utils/interfaces";
 import { useCallback, useMemo } from "react";
@@ -102,4 +102,16 @@ export const BinCellRenderer = ({
     editingEx
 ])
 
+}
+
+//shows the expense form 
+export const EditorCellRenderer = () => {
+    return useMemo(() => {
+        //else could render as disabled btn for some roles
+        return (
+            <div className="editor-btn-style">
+                <EditOutlined />
+            </div>
+        )
+    },[])
 }

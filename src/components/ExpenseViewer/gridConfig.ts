@@ -4,6 +4,7 @@ import {
 	CellDoubleClickedEvent,
 	GetQuickFilterTextParams,
 	ValueFormatterParams,
+	ValueSetterParams,
 } from "ag-grid-community";
 import { ExpenseItem, isValidCategory } from "../../utils/interfaces";
 
@@ -12,7 +13,7 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 
 import {
 	BinCellRenderer,
-	CategoryCellRenderer,
+	EditorCellRenderer,
 } from "../../modules/customCellRenderer";
 
 export const defaultColDefs = {
@@ -37,20 +38,43 @@ export const useColDefs = (
 	setEditingEx: (p: boolean) => void,
 	setRowData: (p: ExpenseItem[]) => void,
 	viewTrip: string
+	// setShowExpenseForm: (p: boolean) => void
 ) => {
 	const onCellDoubleClicked = (p: CellDoubleClickedEvent) => {
-		const { data } = p;
-		setSelectedExpense(data);
+		// const { data } = p;
+		// setSelectedExpense(data);
 		setEditingEx(!editingEx);
-		console.log("Selected Exp", data);
+		// console.log("Selected Exp", data);
 	};
 
 	const onBinCellDoubleClicked = async () => {
 		console.log("Delete for real?");
 	};
 
+	// const onEditorCellDoubleClicked = (p: CellDoubleClickedEvent) => {
+	// 	//reverse the mode if already active... not that this should be visible in UI
+	// 	if (editingEx) {
+	// 		setEditingEx(false);
+	// 		return;
+	// 	}
+
+	// 	if (!p.data) return;
+	// 	setEditingEx(true);
+	// 	//get the selected expense
+	// 	const { data } = p;
+	// 	setSelectedExpense(data);
+	// 	setShowExpenseForm(true);
+	// };
+
 	return useMemo(
 		() => [
+			// {
+			// 	headerName: "",
+			// 	field: "editor",
+			// 	width: 70,
+			// 	onCellDoubleClicked: onEditorCellDoubleClicked,
+			// 	cellRenderer: EditorCellRenderer,
+			// },
 			{
 				headerName: "",
 				field: "binGate",
@@ -68,17 +92,19 @@ export const useColDefs = (
 				//
 				field: "category",
 				onCellDoubleClicked,
-				// editable: editingEx,
+				editable: editingEx,
 				getQuickFilterText: (p: GetQuickFilterTextParams) => p.value,
 
-				// valueSetter: (p: ValueSetterParams) => {
-				// 	//
-				// 	if (!p.newValue) return false;
-				// 	if (p.newValue) {
-				// 		return isValidCategory(p.newValue.toLowerCase());
-				// 	}
-				// 	return false;
-				// },
+				valueSetter: (p: ValueSetterParams) => {
+					if (!p.newValue) return false;
+					if (p.newValue) {
+						if (isValidCategory(p.newValue.toLowerCase())) {
+							p.data.category = p.newValue;
+							return isValidCategory(p.newValue.toLowerCase());
+						}
+						return false;
+					}
+				},
 				// hide: true,
 				// cellClass: ["select-ag-cell"],
 				// cellRenderer: CategoryCellRenderer,
@@ -90,21 +116,21 @@ export const useColDefs = (
 			},
 			{
 				headerName: "Description",
-
+				editable: editingEx,
 				field: "desc",
 				onCellDoubleClicked,
 				width: 300,
 			},
 			{
 				headerName: "in",
-
+				editable: editingEx,
 				field: "currency",
 				onCellDoubleClicked,
 				width: 100,
 			},
 			{
 				headerName: "Cost",
-
+				editable: editingEx,
 				field: "value",
 				onCellDoubleClicked,
 				width: 150,
@@ -128,8 +154,11 @@ export const useColDefs = (
 			{
 				headerName: "Date",
 				field: "date",
+				editable: editingEx,
 				onCellDoubleClicked,
 				width: 270,
+				//valueSetter
+
 				valueFormatter: (p: ValueFormatterParams) => {
 					if (!p.value) return p.value;
 					// dayjs(p.value).format("MM/DD/YYYY h:mm A");
@@ -139,7 +168,7 @@ export const useColDefs = (
 			},
 			{
 				headerName: "Owner",
-
+				editable: editingEx,
 				field: "submittedBy",
 				onCellDoubleClicked,
 				width: 250,
@@ -160,7 +189,7 @@ export const useColDefs = (
 			},
 			{
 				headerName: "Details",
-
+				editable: editingEx,
 				onCellDoubleClicked,
 				headerClass: ["header-text"],
 				children: [

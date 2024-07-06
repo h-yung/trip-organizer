@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ActionItem, User } from "../../utils/interfaces";
 import { getAicArt } from "../../apis/main";
-import { Button } from "antd";
+import { Button, ConfigProvider } from "antd";
 import "./activityDetail.scss";
 import { EditOutlined, ArrowRightOutlined, FileAddOutlined } from "@ant-design/icons";
 import ClearOutlined from "../../assets/noun-clear-4706196.svg";
@@ -43,6 +43,20 @@ const ActivityDetail = (
     // }, []);
 
     return (
+        <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  defaultBg: "transparent",
+                  defaultHoverBg: "transparent",
+                  defaultColor: "#00c28e",
+                  colorLinkHover: "#00c28e",
+                //   colorPrimary: "#00c28e"
+                },
+                
+              },
+            }}
+          >
         <div className="activity-detail-container">
           <div className="detail-controls">
             {/* {!editing ? <Button className="btn" onClick={()=> setEditing(true)} size="large"  shape="circle" ><EditOutlined style={{color: "black"}} /></Button> 
@@ -52,10 +66,10 @@ const ActivityDetail = (
            {/* need one more button to save? or confirm */}
            {/* need button to exit everything: always rightmost */}
 
-           <Button className="exit-btn" onClick={leave} size="large"  shape="circle" ><ArrowRightOutlined /></Button>
+           <Button className="exit-btn" onClick={leave} size="large" style={{width: 200}} ><span style={{fontSize:"1rem", textTransform: "uppercase", }}>Back </span><ArrowRightOutlined /></Button>
             </div>
             <div>
-                <a href={location.mapUrl} target="_blank"><h3>View Map</h3></a>
+                <a className="bare-link" href={location.mapUrl} target="_blank"><h3>View Map</h3></a>
             </div>
 
             { !editing ? (
@@ -99,6 +113,7 @@ const ActivityDetail = (
             )}
            
         </div>
+        </ConfigProvider>
     )
 
 };

@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ExpenseItem, User } from "../../utils/interfaces";
-import { ColDef, GridApi, GridReadyEvent } from "ag-grid-community";
+import { ColDef, GridApi, GridReadyEvent, RowValueChangedEvent } from "ag-grid-community";
 import { defaultColDefs, expGridOptions, useColDefs } from "./gridConfig";
-import { getAllExpenses } from "../../apis/main";
+import { getAllExpenses, updateExpense } from "../../apis/main";
 import { AgGridReact } from "ag-grid-react";
-import { Button } from "antd";
+import { Button, ConfigProvider, Modal } from "antd";
 import { HomeOutlined, CarOutlined, SmileOutlined, DownloadOutlined, PlusOutlined } from "@ant-design/icons";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import PrepOutlined from "../../assets/noun-notes-6829221.svg";
@@ -21,14 +21,18 @@ interface ExpenseViewerProps {
     setShowExpenseViewer: (p:boolean) => void;
 }
 
+
 const ExpenseViewer = ({
     user,
     viewTrip,
     // setShowExpenseViewer
 }: ExpenseViewerProps) => {
 
+
     const expenseRef = useRef<GridApi<ExpenseItem>>(); //MutableRefObject<GridApi<ExpenseItem> | undefined >
     const [showExpenseForm, setShowExpenseForm] = useState(false);
+
+    const [ openConfModal, setOpenConfModal ] = useState(false);
 
     const [selectedExpense, setSelectedExpense] = useState<ExpenseItem | null>(null);
 
@@ -47,7 +51,8 @@ const ExpenseViewer = ({
         editingEx, 
         setEditingEx, 
         setRowData, 
-        viewTrip ) as ColDef[];
+        viewTrip,
+    ) as ColDef[];
 
     const exportExpenses = useCallback(() => {
         if (expenseRef.current) {
@@ -55,6 +60,54 @@ const ExpenseViewer = ({
         }
 
     }, [expenseRef]);
+
+
+    const handleCancel = useCallback(async () => {
+        if (ENV === "dev"){
+            setRowData(SampleExp);
+            setOpenConfModal(false);
+            return;
+        } 
+        const exps = await getAllExpenses(viewTrip);
+        const { documents } = exps;
+        setRowData(documents);
+        setOpenConfModal(false);
+    },[]);
+
+    const handleOk = useCallback(async () => {
+
+        if (!selectedExpense) {
+            console.log("nothing to update");
+            setOpenConfModal(false);
+            return;
+        }
+        if (ENV === "dev"){
+            // setRowData(SampleExp);
+            console.log('UI stays same with the accepted edits');
+            setOpenConfModal(false);
+            return;
+        } 
+        const update = await updateExpense(selectedExpense);
+        if (update.insertedId) console.log('Successfully sent in update!')
+
+        //now force refresh your data...although maybe not needed bc UI already has the update
+        if (expenseRef.current) {
+            expenseRef.current.applyTransaction({ update: [selectedExpense] });
+        }
+        setOpenConfModal(false);
+
+    },[setRowData, expenseRef, updateExpense, selectedExpense]);
+
+    const onRowValueChanged = (event:RowValueChangedEvent) => {
+        const changedRowNode = event.api.getRowNode(event.data._id);
+        console.log('changed row?')
+        console.log(changedRowNode?.data);
+
+        changedRowNode && setSelectedExpense(changedRowNode.data);
+
+        //confirm to send for edits
+        setOpenConfModal(true);
+    }
 
 
     useEffect(()=> {
@@ -71,7 +124,7 @@ const ExpenseViewer = ({
 
                 const { documents } = exps;
                 setRowData(documents);
-                console.log(documents);
+                // console.log(documents);
             }
         }
        getExps();
@@ -85,11 +138,30 @@ const ExpenseViewer = ({
                 setShowExpenseForm={setShowExpenseForm}
                 viewTrip={viewTrip}
                 user={user}
+                // editing={editingEx}
+                // setEditing={setEditingEx}
             />
     )
-
        : (
+        <ConfigProvider
+            theme={{
+                components: {
+                Modal: {
+                    titleFontSize: 18,
+                },
+                Button: {
+                    defaultBg: "transparent",
+                    defaultHoverBg: "transparent",
+                    // defaultColor: "#00c28e",
+                    // colorLinkHover: "#00c28e",
+                    colorPrimary: "#00c28e"
+                  },
+                },
+            }}
+            >
        <div className="expense-viewer">
+        <Modal title="Confirm updates?" width={200} open={openConfModal} onOk={handleOk} onCancel={handleCancel}>
+      </Modal>
             <div className="controls-activity">
               {ENV === "dev" &&  <Button className="filter-btn" onClick={()=> setCategoryFilter("test")} shape="circle" ><SmileOutlined style={{color: "black"}} /></Button>}
                 <Button className="filter-btn" onClick={()=> setCategoryFilter("activity")} size="large"  shape="circle" ><CarOutlined style={{color: "black"}} /></Button>
@@ -101,7 +173,7 @@ const ExpenseViewer = ({
             </div>
             <>
                 <div style={{display: "flex", color: "red", marginBottom: "0.5rem"}}>
-                    <label className="titles">Expenses</label>
+                    <label className="titles">Expenses: Double-tap a row to start editing</label>
                 </div>
                 <div className="ag-theme-material expense-grid">
                     <AgGridReact
@@ -112,6 +184,8 @@ const ExpenseViewer = ({
                         getRowId={(p) => p.data._id}
                         columnDefs={columnDefs}
                         quickFilterText={categoryFilter}
+                        editType="fullRow"
+                        onRowValueChanged={onRowValueChanged}
                     />
                 </div>
             </>
@@ -121,6 +195,7 @@ const ExpenseViewer = ({
             <Button className="special-btn" onClick={()=> setShowExpenseForm(true)}><PlusOutlined /></Button>
             </div>
         </div>
+        </ConfigProvider>
        )
 }
 

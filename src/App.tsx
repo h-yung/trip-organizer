@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button } from 'antd'
+import { Button, ConfigProvider } from 'antd'
 import { DollarOutlined, FileAddOutlined, SearchOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import ClearOutlined from "./assets/noun-clear-4706196.svg";
 import UserSelection from './components/UserSelection/userSelection';
@@ -34,7 +34,7 @@ function App() {
     "destiny_alaska_2024" : "" 
   );
 
-  // const [artImg, setArtImg] = useState<Image | null>(null);
+  const [artImg, setArtImg] = useState<Image | null>(null);
 
 
   const [ showExpenseViewer, setShowExpenseViewer ] = useState(false);
@@ -61,13 +61,13 @@ const showExpensesViewFromBtn = () => {
     console.log("activeUser changed", activeUsr?.displayName);
     
   }, [activeUsr])
-//   useEffect(()=> {
-//     async function getArt(query?: string){  //currently "bear" default
-//         const artObj = await getAicArt(query);
-//         setArtImg(artObj);
-//     }
-//     getArt(); //no query for now
-// }, []);
+  useEffect(()=> {
+    async function getArt(query?: string){  //currently "bear" default
+        const artObj = await getAicArt(query);
+        setArtImg(artObj);
+    }
+    getArt(); //no query for now
+}, []);
 
   return (
     <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
@@ -133,24 +133,40 @@ const showExpensesViewFromBtn = () => {
             } */}
         </div>
        ) : !viewTrip  ? 
-        (<>
+        (<div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
           <span className='titles'>Choose a trip</span>
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  defaultBg: "transparent",
+                  defaultHoverBg: "transparent",
+                  defaultColor: "#00c28e",
+                },
+              },
+            }}
+          >
           <div className="trip-list-container">
           
               {activeUsr.trips.map((trip:TripRecord) => {
-                return <Button className="trip-item" size="large" key={trip.tripName} id={trip.tripName} onClick={chooseTrip}>{trip.tripName}</Button>
+                return <div 
+                key={trip.tripName}
+                style={{display: "flex", justifyContent: "center"}}
+                
+                ><Button className="trip-item" size="large" id={trip.tripName} onClick={chooseTrip}>{trip.tripName}</Button></div>
               })}
           </div>
-          {/* {artImg && 
+          </ConfigProvider>
+          {artImg && 
              <div className="art-aic-container">
                 <div style={{width: 400, height: 300, //margin: "0.5rem 0.5rem 0px 0px" 
                 }}><img src={artImg.url} alt={artImg?.alt_text} /></div>
                   <label>{artImg.title}</label>
                   <p>{artImg.date_display} | {artImg.artist_title}</p>
             </div>
-            } */}
+            }
           
-          </>)
+          </div>)
           : (
 
             <>
@@ -167,7 +183,7 @@ const showExpensesViewFromBtn = () => {
     { activeUsr && viewTrip && (
 
       <>
-{ (showActEntry || showExpenseViewer) && <Button className="always-btn" shape="circle" onClick={() => { setShowActEntry(false); setShowExpenseViewer(false);}} size="large"><img width={60} height={60} src={ClearOutlined} alt="exit ops" /></Button>} 
+{ (showActEntry || showExpenseViewer) && <Button className="always-btn" shape="circle" onClick={() => { setShowActEntry(false); setShowExpenseViewer(false)}} size="large"><img width={60} height={60} src={ClearOutlined} alt="exit ops" /></Button>} 
 
 { !showActEntry && <Button className="always-btn" shape="circle" onClick={addActivity} size="large"><FileAddOutlined /></Button>} 
 

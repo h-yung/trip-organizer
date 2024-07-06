@@ -1,4 +1,4 @@
-import { Form, Button, Radio, Input, DatePicker } from "antd";
+import { Form, Button, Radio, Input, DatePicker, ConfigProvider } from "antd";
 import dayjs from "dayjs";
 import {MinusCircleOutlined, PlusOutlined   } from "@ant-design/icons";
 import { ActionItem, User } from "../../utils/interfaces";
@@ -131,8 +131,18 @@ const ActivityEntry = (
     }
 
 
-    return (
-    <>
+return (
+    <ConfigProvider
+    theme={{
+        components: {
+        Radio: {
+            buttonBg: "transparent",
+            buttonCheckedBg: "red",
+            buttonCheckedBgDisabled: "transparent"
+        },
+        },
+    }}
+    >
         { !isSuccess ? (
       <Form
         className="activity-form"
@@ -156,7 +166,8 @@ const ActivityEntry = (
         <label className="item-label">Category</label>
 
         <Form.Item className="form-item" name="category" 
-        // rules={[{ required: true }]}
+            help="Required"
+            rules={[{ required: true }]}
         >
           <Radio.Group className="radio-group">
             <Radio.Button className="radio-item" key={"radio_1"} value="activity"><CarOutlined style={{color: "black"}} /></Radio.Button>
@@ -169,10 +180,9 @@ const ActivityEntry = (
 
         <label className="item-label">Title</label>
         <Form.Item className="form-item"  name="title" 
-        // rules={[{ required: true, 
-            // message: 'Please input!'
-            //  }]}
-             >
+            help="Required"
+            rules={[{ required: true }]}
+        >
           <Input />
         </Form.Item>
 
@@ -180,7 +190,10 @@ const ActivityEntry = (
 
             <label className="item-label">Scheduled for </label>
 
-            <Form.Item className="form-item date-picker" name="startTime">
+            <Form.Item className="form-item date-picker" name="startTime"
+                     help="Required"
+                     rules={[{ required: true }]}
+            >
                 <DatePicker showTime format="YYYY-MM-DD HH:mm" />
             </Form.Item>
         </div>
@@ -262,14 +275,16 @@ const ActivityEntry = (
             <label className="item-label">Map URL</label>
 
             <Form.Item className="form-item" name="mapUrl" 
-            // rules={[{ required: true }]}
+                 help="Required"
+                 rules={[{ required: true }]}
             >
                 <Input />
             </Form.Item>
             <label className="item-label">Address</label>
 
             <Form.Item className="form-item"  name="address" 
-            // rules={[{ required: true }]}
+                 help="Required"
+                 rules={[{ required: true }]}
             >
                 <Input />
 
@@ -284,7 +299,8 @@ const ActivityEntry = (
             <label className="item-label">Country</label>
 
             <Form.Item className="form-item" name="country" 
-            // rules={[{ required: true }]}
+                 help="Required"
+                 rules={[{ required: true }]}
             >
                 <Input />
             </Form.Item>
@@ -306,7 +322,8 @@ const ActivityEntry = (
         <label className="item-label">Description</label>
 
         <Form.Item className="form-item" name="details" 
-        // rules={[{ required: true }]}
+                 help="Required"
+                 rules={[{ required: true }]}
         >
             <TextArea rows={4} />
         </Form.Item>
@@ -366,7 +383,7 @@ const ActivityEntry = (
 
 
 )}
-    </>
+   </ConfigProvider>
     )
 }
 

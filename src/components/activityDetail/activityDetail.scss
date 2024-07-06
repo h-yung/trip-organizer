@@ -1,6 +1,14 @@
 .activity-detail-container {
 	height: 90vh;
 
+	.bare-link {
+		letter-spacing: 0.1rem;
+		font-weight: bold;
+		font-size: 1rem;
+		color: #00c28e;
+		text-transform: uppercase;
+	}
+
 	.detail-controls {
 		display: flex;
 		justify-content: flex-end;
@@ -39,9 +47,9 @@
 		justify-content: center;
 	}
 
-	.ant-form-item-control-input-content .item-label {
-		padding-bottom: 0.5rem;
-	}
+	// .ant-form-item-control-input-content .item-label {
+	// 	padding-bottom: 0.5rem;
+	// }
 
 	.form-item {
 		width: 100%;
@@ -56,6 +64,7 @@
 		text-align: right;
 		font-size: 1.5rem;
 		letter-spacing: 0.1rem;
+		padding-bottom: 0.5rem;
 	}
 
 	.entry-header {
@@ -86,6 +95,16 @@
 		text-transform: uppercase;
 	}
 
+	#category_help,
+	#startTime_help,
+	#address_help,
+	#country_help,
+	#details_help {
+		display: flex;
+		justify-content: flex-end;
+		font-size: 1rem;
+	}
+
 	.ant-form-item-control-input-content {
 		display: flex;
 		justify-content: flex-end;
@@ -94,7 +113,7 @@
 
 	.radio-group {
 		display: flex;
-		align-items: baseline;
+		align-items: center;
 	}
 	.radio-item {
 		font-size: 2.2rem;
@@ -103,7 +122,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background: red;
+		// background: red;
 		// margin-right: 0px;
 		// margin-left: 6px;
 	}
