@@ -16,8 +16,8 @@ Potential img hosting: PixaBay
 ## API
 - [ ] Get, (Add, Update, Delete) travel action items.
   - Endpoints exist but not all are in place from front end.
-- [ ] Get, Add, Update, Delete expense items on the go. 
-    - [ ] CSV export.
+- [ ] Get, Add, Update, Delete expense items on the go. **Get/add/delete** done.
+    - [x] CSV export.
      
 ## To dos
 - [ ] Fix visual problems.
