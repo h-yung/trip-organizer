@@ -3,7 +3,7 @@
 A lightweight mobile-first, desktop-unfriendly app with serverless API that keeps important travel information accessible on the go, with the option to log expenses. Simple password lock.
 The desktop UX is trash because time crunch lol! Someday we'll do breakpoints again...
 
-Site is live but behind password lock. Screenshots at bottom.
+Site is live but behind password lock. Server functions not included in public repo.
 
 ## Details
 
