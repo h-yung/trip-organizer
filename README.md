@@ -3,11 +3,14 @@ A lightweight mobile-friendly app with serverless API that keeps important trave
 
 ## Details
 Web app built with:
-React + TypeScript
-Vite
-MongoDb
-Netlify
-UI libraries: Ant Design, AG Grid (probably overkill)
+- React + TypeScript
+- Vite
+- MongoDb
+- Netlify-cli
+UI libraries:
+- Ant Design
+- AG Grid (probably overkill)
+
 Free icons from FlatIcon and some personal graphics
 
 Additional art, etc. credits to the AIC (Art Institute of Chicago) API
