@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Button, ConfigProvider, Divider } from 'antd'
 import { DollarOutlined, FileAddOutlined, SearchOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import bugs from "./assets/bugs.svg";
 import ClearOutlined from "./assets/noun-clear-4706196.svg";
 import UserSelection from './components/UserSelection/userSelection';
 import './App.css'
@@ -22,16 +23,17 @@ function App() {
     {
       _id: "doot",
       displayName: "Test",
-      lookupName: "helen_yung",
+      lookupName: "app_developer",
       createdDate: "20240705",
       avatarRef: "bugs", //string
-      trips: [{tripName: "destiny_alaska_2024", role: "participant"}]
+      avatar: bugs,
+      trips: [{tripName: "test_trip_2024", role: "participant"}]
     } : null
   
   );
   const [viewTrip, setViewTrip] = useState(
     ENV=== "dev" ? 
-    "destiny_alaska_2024" : "" 
+    "test_trip_2024" : "" 
   );
 
   const [artImg, setArtImg] = useState<Image | null>(null);
