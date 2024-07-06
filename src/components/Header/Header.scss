@@ -6,9 +6,10 @@
 	left: 0;
 	padding: 0px 1.5rem;
 	// background: red;
-	background: hsla(0, 0%, 0%, 0.134);
+	background: #00c28e98;
 	display: flex;
 	align-items: center;
+	z-index: 2;
 
 	.avatar-group {
 		//same class diff styling in diff components
@@ -43,6 +44,28 @@
 		&:focus {
 			cursor: pointer;
 			color: blue;
+		}
+	}
+
+	.help-btn {
+		margin-left: 2rem;
+		font-size: 1.5rem;
+		height: 3rem;
+		background: transparent;
+		border: none;
+
+		&:hover {
+			cursor: pointer;
+			color: blue;
+			border: none;
+			background: transparent;
+		}
+
+		&:focus {
+			cursor: pointer;
+			color: blue;
+			border: none;
+			background: transparent;
 		}
 	}
 }

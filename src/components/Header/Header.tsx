@@ -1,14 +1,18 @@
 import "./Header.scss";
 import { User } from '../../utils/interfaces';
 import { useMemo } from "react";
-import { Popconfirm } from "antd";
+import { Button, Popconfirm } from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 
 interface AppHeaderProps {
     activeUsr: User | null;
     viewTrip: string;
     setViewTrip: (p:string) => void;
+    setHelp: (p:boolean) => void;
+    help: boolean;
+
 }
-const AppHeader = ({activeUsr, viewTrip, setViewTrip}: AppHeaderProps) => {
+const AppHeader = ({activeUsr, viewTrip, setViewTrip, setHelp, help}: AppHeaderProps) => {
 
     const showName = useMemo(()=> activeUsr?.displayName.split(" ")[0],[activeUsr])
 
@@ -31,7 +35,8 @@ const AppHeader = ({activeUsr, viewTrip, setViewTrip}: AppHeaderProps) => {
                      placement="bottom"
                 >
                     <div role="button" className="trip-name-container">{viewTrip}</div>
-                    </Popconfirm>
+                </Popconfirm>
+                <Button className="help-btn" onClick={()=>{setHelp(!help)}}><QuestionCircleOutlined /></Button>
             </div>
         // </Header>
     )

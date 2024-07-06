@@ -1,5 +1,11 @@
-type Category = "food" | "lodging" | "activity" | "prep" | "test";
+const categories = ["food", "lodging", "activity", "prep", "test"] as const;
+
+export type Category = (typeof categories)[number];
 type Role = "participant" | "admin" | "readOnly";
+
+//conv
+export const isValidCategory = (x: any): x is Category =>
+	categories.includes(x);
 
 type AvatarOptions =
 	| "monkey"
@@ -64,6 +70,7 @@ export interface ActionItem {
 	details: string;
 	location: {
 		//tbd
+		mapUrl: string; //link
 		address: string;
 		country: string;
 		nearestCity: string;
@@ -74,4 +81,13 @@ export interface ActionItem {
 	advisory?: string; //special instructions, cautions, reviews
 	urls: string[]; //cite your sources lol
 	vendor?: Vendor;
+}
+
+export interface Image {
+	image_id: string;
+	title: string;
+	artist_title: string;
+	date_display: string;
+	alt_text: string;
+	url: string;
 }
