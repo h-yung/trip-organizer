@@ -40,11 +40,8 @@ export const useColDefs = (
 	viewTrip: string
 	// setShowExpenseForm: (p: boolean) => void
 ) => {
-	const onCellDoubleClicked = (p: CellDoubleClickedEvent) => {
-		// const { data } = p;
-		// setSelectedExpense(data);
+	const onCellDoubleClicked = () => {
 		setEditingEx(!editingEx);
-		// console.log("Selected Exp", data);
 	};
 
 	const onBinCellDoubleClicked = async () => {
