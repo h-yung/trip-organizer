@@ -1,6 +1,6 @@
 # trip-organizer
 
-A lightweight mobile-friendly app with serverless API that keeps important travel information accessible on the go, with the option to log expenses. Simple password lock.
+A lightweight mobile-first app with serverless API that keeps important travel information accessible on the go, with the option to log expenses. Simple password lock.
 The desktop UX is trash because time crunch lol! Someday we'll do breakpoints again...
 
 Site is live but behind password lock. Screenshots at bottom.
