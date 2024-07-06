@@ -7,6 +7,7 @@ Web app built with:
 - Vite
 - MongoDb
 - Netlify-cli
+
 UI libraries:
 - Ant Design
 - AG Grid (probably overkill)
