@@ -42,7 +42,7 @@ const ActivityDetail = (
 
     const [ editing, setEditing ] = useState(false);
 
-    const { title, startTime, location, advisory, details, vendor } = selectedActivity!;
+    const { title, startTime, location, advisory, details, vendor, urls } = selectedActivity!;
 
     const leave = () => {
         setEditing(false);
@@ -119,6 +119,18 @@ const ActivityDetail = (
                   <div>
                   <label>Further Information</label>
                   <p>{details} </p>
+                  { urls.length && urls[0] ? 
+                  <ul style={{paddingLeft:"1rem"}}>
+                        {urls.map(url => {
+                            return (
+                                <li key={urls.indexOf(url)}><a href={url}>{url}</a></li>
+                            )
+                        })
+                        }
+                        </ul>
+
+
+                  : <></> }
               </div>
              } 
              <div>
