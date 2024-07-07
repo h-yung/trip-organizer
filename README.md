@@ -27,8 +27,7 @@ The desktop UX is trash because time crunch lol! Someday we'll do breakpoints ag
 
 ## API
 
--   [ ] Get, (Add, Update, Delete) travel action items.
-    -   **API done, UI update/delete components TBC.**
+-   [x] Get, Add, Update, Delete travel action items.
 -   [x] Get, Add, Update, Delete expense items on the go.
     -   [x] CSV export.
 
@@ -50,7 +49,9 @@ Bonus round:
 Add your own API key in environment variables for the Netlify functions.
 
 ## Learnings
-Mostly sticking to a consistent workflow/order of operations. General directory structure working from outside-in, 
+
+Mostly sticking to a consistent workflow/order of operations. General directory structure working from outside-in,
+
 1. Define data structures (only two here). Even if the database doesn't enforce a schema, be consistent and work with TypeScript.
 2. Define basic endpoints needed for API.
 3. Write functions and test API with Postman.
@@ -70,6 +71,7 @@ I didn't end up getting the Vite dev environment to play more nicely with the se
 Create wrapper for Netlify serverless function + Mongo Data API.
 
 ## V1
+
 Left to right, top to bottom: trip list for user > activities list > activity detail > expenses viewer (exportable + can add) > editing expense > add new activity
 
 [![v1-screens](https://i.postimg.cc/bwGLX9nb/v1-screens.png)](https://i.postimg.cc/bwGLX9nb/v1-screens.png)

@@ -2,8 +2,10 @@ body {
 	background: rgb(245, 245, 239);
 	margin: 0;
 	// width: 100vw;
-	display: flex;
-	justify-content: center;
+	display: flex; //horizontal
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
 }
 #root {
 	margin: 0px;
@@ -20,11 +22,13 @@ body {
 
 .main-app {
 	//always below the header
-	margin-top: 2rem;
+	// position: relative;
+	margin-top: 50px; //header
 	width: 100%;
 	// max-width: 360px;
 	display: flex;
 	flex-direction: column;
+	justify-content: flex-start;
 	align-items: center;
 	overflow-x: hidden;
 }
@@ -85,39 +89,48 @@ body {
 	text-transform: uppercase;
 }
 
-.trip-list-container {
-	margin-top: 2rem;
+.trip-container {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	margin-top: 2rem;
 
-	.trip-item {
-		//= send-btn-item
+	.trip-list-container {
+		margin: 2rem 0px;
 		display: flex;
-		justify-content: center;
-		font-weight: 700;
-		font-size: 1rem;
-		padding: 0.25rem 0.5rem;
-		letter-spacing: 0.2rem;
-		text-transform: uppercase;
-		color: #00c28e;
-		border: 4px solid #00c28e;
-		margin-bottom: 1rem;
+		flex-direction: column;
 
-		&:hover {
-			background: #00c28e;
-			border: none;
-			color: white;
-		}
+		.trip-item {
+			//= send-btn-item
+			display: flex;
+			justify-content: center;
+			font-weight: 700;
+			font-size: 1rem;
+			padding: 0.25rem 0.5rem;
+			letter-spacing: 0.2rem;
+			text-transform: uppercase;
+			color: #00c28e;
+			border: 4px solid #00c28e;
+			margin-bottom: 1rem;
 
-		&:focus {
-			background: #00c28e;
-			border: none;
-			color: white;
+			&:hover {
+				background: #00c28e;
+				border: none;
+				color: white;
+			}
+
+			&:focus {
+				background: #00c28e;
+				border: none;
+				color: white;
+			}
 		}
 	}
 }
 
 .art-aic-container {
+	// position: fixed;
+	// bottom: 0px;
 	display: flex;
 	// justify-content: space-between;
 	flex-direction: column;

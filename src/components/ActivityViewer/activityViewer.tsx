@@ -64,7 +64,10 @@ const ActivityViewer = ({
         }
        getActivities();
 
-    }, [viewTrip])
+    }, [viewTrip, 
+        showActivityDetail, //inelegant, but there is a chance that user has edited an activity since visiting the detail bc workflow. 
+
+    ])
 
     return (
         <div className="activity-viewer">
@@ -98,14 +101,15 @@ const ActivityViewer = ({
             </div>
             </>
            ) : (
-            <>
+            
                 <ActivityDetail 
                     setSelectedActivity={setSelectedActivity} 
                     selectedActivity={selectedActivity} 
                     setShowActivityDetail={setShowActivityDetail} 
                     user={user}
+                    viewTrip={viewTrip} //need for UpdateEntry
                  />
-            </>
+            
            ) }
             
             {/* <Button type="primary" onClick={toggleFormVisibility}>{showExpenseForm ? "Hide form" : "Add trip expense"}</Button>

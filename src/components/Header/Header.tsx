@@ -1,7 +1,7 @@
 import "./Header.scss";
 import { User } from '../../utils/interfaces';
 import { useMemo } from "react";
-import { Button, Popconfirm } from "antd";
+import { Button, ConfigProvider, Popconfirm } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 
 interface AppHeaderProps {
@@ -22,9 +22,20 @@ const AppHeader = ({activeUsr, viewTrip, setViewTrip, setHelp, help}: AppHeaderP
 
 
     return (
-        // <Header>
+        <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  defaultBg: "transparent",
+                  defaultHoverBg: "transparent",
+                //   defaultColor: "#00c28e",
+                },
+              },
+            }}
+          >
             <div className="header-container">
-                {activeUsr ? <div className='avatar-group'>
+                {activeUsr ? 
+                <div className='avatar-group'>
                     {activeUsr.avatar && 
                     <img src={activeUsr.avatar} 
                         className="avatar-img" alt="animal icon avatar"/> }
@@ -36,9 +47,9 @@ const AppHeader = ({activeUsr, viewTrip, setViewTrip, setHelp, help}: AppHeaderP
                 >
                     <div role="button" className="trip-name-container">{viewTrip}</div>
                 </Popconfirm>
-                <Button className="help-btn" onClick={()=>{setHelp(!help)}}><QuestionCircleOutlined /></Button>
+                <Button className="help-btn" onClick={()=>{setHelp(!help)}}>{help ? <span className="titles">Hide</span> : <QuestionCircleOutlined />}</Button>
             </div>
-        // </Header>
+            </ConfigProvider>
     )
 }
 

@@ -1,49 +1,50 @@
 import { Form, Button, Radio, Input, DatePicker, ConfigProvider } from "antd";
+import dayjs from "dayjs";
 import {MinusCircleOutlined, PlusOutlined   } from "@ant-design/icons";
-import { ActionItem, User } from "../../utils/interfaces";
+import { ActionItem, ActivityUpdateFormValues, User } from "../../utils/interfaces";
 import TextArea from "antd/es/input/TextArea";
 import { HomeOutlined, CarOutlined, SmileOutlined } from "@ant-design/icons";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import PrepOutlined from "../../assets/noun-notes-6829221.svg";
-import { addActivity } from "../../apis/main";
-import { useState } from "react";
-import { convertFormToAct } from "../../utils/activityConverter";
+import { addActivity, updateAction } from "../../apis/main";
+import { useEffect, useMemo, useState } from "react";
+import { convertActForForm, convertFormToAct } from "../../utils/activityConverter";
 
-interface ActivityEntryProps {
-	setShowActEntry: (p: boolean) => void;
+interface UpdateActivityEntryProps {
     user: User;
     viewTrip: string;
-    // query: string; //global search
-    editing?: boolean; //implies existing
-    setEditing?:(p: boolean) => void;
-    selectedActivity?: ActionItem | null; //for EDIT
-    setSelectedActivity?: (p: null | ActionItem) => void;
+
+    editing: boolean; //implies existing
+    setEditing:(p: boolean) => void;
+    selectedActivity: ActionItem;
+    setSelectedActivity: (p: null | ActionItem) => void;
 }
 
 const ENV = import.meta.env.VITE_MODE;
 
 //need form reset
 
-const ActivityEntry = (
+const UpdateActivityEntry = (
     {
-        setShowActEntry,
-
         setEditing,
-        editing,
-        // selectedActivity,
-
+        selectedActivity,
+        setSelectedActivity, //need to update this
         user,
         viewTrip
-        // , user
-    }: ActivityEntryProps 
+    }: UpdateActivityEntryProps 
 ) => {
-
     const [isSuccess, setIsSuccess ] = useState(false);
 
+    const [ form ] = Form.useForm();
+
+    const formVals = useMemo(()=> {
+        return convertActForForm(selectedActivity);
+
+    }, [selectedActivity])
+
     const exitForm = () => {
-        setEditing && setEditing(false);
+        setEditing(false);
         setIsSuccess(false); //just cleanup
-        setShowActEntry(false);
     }
 
     const formItemLayout = {
@@ -65,26 +66,30 @@ const ActivityEntry = (
       
 
     const submit = async (values: any) => {
-            const entry = convertFormToAct(values, user, viewTrip);
-           
-            // console.log('Received values of form: ', entry.startTime);
-        if (!editing){
-            // = add
-            const response = await addActivity(entry, viewTrip);
-            console.log("RESPONSE:", response);
-            if (response?.insertedId) setIsSuccess(true);
+        const entry = convertFormToAct(values, user, viewTrip, selectedActivity._id);
+
+        const update = await updateAction(entry, viewTrip);
+
+        if (ENV === "dev") {
             
+            setEditing(false);
+            setSelectedActivity(entry);
         }
-        //if (editing === true && selectedActivity) {} //need to prepopulate information and display as defaults
+
+        if (update.matchedCount && update.modifiedCount && update.matchedCount === update.modifiedCount) {
+            console.log('Successfully sent in update!');
+
+            //if update succeeded, apply the updates from submission; does not re-req however. The re-req comes on ActivityViewer level.
+            setSelectedActivity(entry);
+
+            setIsSuccess(true);
+            setEditing(false); 
+        }
     }
 
     const onFinishFailed = () => {
-        if (!editing){
-        }
-        //if (editing === true && selectedActivity) {} //need to prepopulate information and display as defaults
         console.log("Could not submit.")
     }
-
 
 return (
     <ConfigProvider
@@ -101,17 +106,29 @@ return (
         { !isSuccess ? (
 
     <>
-        <div className="entry-header">
-        <h2>NEW Activity</h2>
-        <p className="prepopulated new">By {user.displayName} for {viewTrip} </p>
-        </div>
+    <div className="entry-header">
+            <h2>
+                <span>Updating Activity</span> 
+                <Button htmlType="button"
+                className="cancel-update-btn"
+                onClick={exitForm}
+                 // style={{width: 200}} //wouldn't take from scss..
+                >
+                    Cancel
+                </Button>
+            </h2>
+           <p className="prepopulated">By {user.displayName} for {viewTrip} </p>
+           </div>
+           
       <Form
+        form={form}
         className="activity-form"
         labelCol={{ span: 4 }}
         size="large"
         layout="vertical"
         onFinish={submit}
         onFinishFailed={onFinishFailed}
+        initialValues={formVals}
         // onValuesChange={e=>console.log(e)}
 
         {...formItemLayoutWithOutLabel}
@@ -124,7 +141,7 @@ return (
             help="Required"
             rules={[{ required: true }]}
         >
-          <Radio.Group className="radio-group">
+          <Radio.Group className="radio-group" value={formVals?.category}>
             <Radio.Button className="radio-item" key={"radio_1"} value="activity"><CarOutlined style={{color: "black"}} /></Radio.Button>
             <Radio.Button className="radio-item" key={"radio_2"} value="food"><img width={45} height={45} src={FoodOutlined} alt="food" /></Radio.Button>
             <Radio.Button className="radio-item" key={"radio_3"} value="lodging"><HomeOutlined style={{color: "black"}} /></Radio.Button>
@@ -138,7 +155,7 @@ return (
             help="Required"
             rules={[{ required: true }]}
         >
-          <Input />
+          <Input value={formVals?.title} />
         </Form.Item>
 
         <div className="form-subBlock">
@@ -149,12 +166,15 @@ return (
                      help="Required"
                      rules={[{ required: true }]}
             >
-                <DatePicker showTime format="YYYY-MM-DD HH:mm" />
+                <DatePicker showTime format="YYYY-MM-DD HH:mm" value={formVals?.startTime} />
             </Form.Item>
         </div>
 
         <Form.List
         name="urls"
+        
+        //???
+        initialValue={formVals?.urls?.length ? formVals.urls : [""]}
         // rules={[
         //   {
         //     validator: async (_, names) => {
@@ -201,8 +221,7 @@ return (
                         noStyle
                         >
                         <Input placeholder="https://..." 
-                            style={{ width: "80%" }} 
-
+                        style={{ width: "80%" }} 
                         />
                         </Form.Item>
                         {fields.length > 1 ? (
@@ -238,7 +257,7 @@ return (
                  help="Required"
                  rules={[{ required: true }]}
             >
-                <Input />
+                <Input value={formVals?.mapUrl} />
             </Form.Item>
             <label className="item-label">Address</label>
 
@@ -246,7 +265,7 @@ return (
                  help="Required"
                  rules={[{ required: true }]}
             >
-                <Input />
+                <Input value={formVals?.address} />
 
             </Form.Item>
             <label className="item-label">Nearest City</label>
@@ -254,7 +273,7 @@ return (
             <Form.Item className="form-item"  name="nearestCity" 
             // rules={[{ required: true, message: "Required" }]}
             >
-                <Input />
+                <Input value={formVals?.nearestCity} />
             </Form.Item>
             <label className="item-label">Country</label>
 
@@ -262,17 +281,17 @@ return (
                  help="Required"
                  rules={[{ required: true }]}
             >
-                <Input />
+                <Input value={formVals?.country} />
             </Form.Item>
             <label className="item-label">Nearest State</label>
 
             <Form.Item className="form-item" name="nearestState">
-                <Input />
+                <Input value={formVals?.nearestState}/>
             </Form.Item>
             <label className="item-label">Zipcode</label>
 
             <Form.Item className="form-item" name="zipcode">
-                <Input />
+                <Input value={formVals?.zipcode} />
             </Form.Item>
         </div>
 
@@ -285,12 +304,12 @@ return (
                  help="Required"
                  rules={[{ required: true }]}
         >
-            <TextArea rows={4} />
+            <TextArea rows={4} value={formVals?.details} />
         </Form.Item>
         <label className="item-label">Tips</label>
 
         <Form.Item className="form-item" name="advisory">
-            <TextArea rows={4} />
+            <TextArea rows={4} value={formVals?.advisory} />
         </Form.Item>
         </div>
         <div className="form-subBlock">
@@ -299,23 +318,23 @@ return (
                 <label className="item-label">Name</label>
 
             <Form.Item className="form-item"  name="name">
-                <Input />
+                <Input value={formVals?.name} />
 
             </Form.Item>
             <label className="item-label">Website</label>
 
             <Form.Item className="form-item" name="url" rules={[{ type: 'url' }]}>
-                <Input />
+                <Input value={formVals?.url} />
             </Form.Item>
             <label className="item-label">Email</label>
 
             <Form.Item className="form-item" name="email" rules={[{ type: 'email' }]}>
-                <Input />
+                <Input value={formVals?.email} />
             </Form.Item>
             <label className="item-label">Phone</label>
 
             <Form.Item className="form-item" name="phoneNumber">
-                <Input />
+                <Input value={formVals?.phoneNumber} />
             </Form.Item>
         </div>
    
@@ -327,7 +346,7 @@ return (
             </Button>
         </Form.Item>
       </Form>
-    </>
+      </>
 ): (
     <div className="finish-panel">
         <SmileOutlined style={{fontSize: "6rem" }} />
@@ -347,4 +366,4 @@ return (
     )
 }
 
-export default ActivityEntry;
+export default UpdateActivityEntry;

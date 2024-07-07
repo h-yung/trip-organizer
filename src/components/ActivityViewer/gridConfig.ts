@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 import {
-	CellClassParams,
 	CellClickedEvent,
-	ColDef,
 	GetQuickFilterTextParams,
 	ValueFormatterParams,
 } from "ag-grid-community";

@@ -1,7 +1,13 @@
 .activity-detail-container {
 	// height: 90vh;
+	margin-top: 1rem;
 	padding: 0 1rem;
 	text-align: left;
+
+	.category-icon-detail {
+		display: flex;
+		align-items: center;
+	}
 
 	.bare-link {
 		letter-spacing: 0.1rem;
@@ -12,19 +18,21 @@
 	}
 
 	.detail-controls {
-		position: fixed;
-		top: 2.5rem;
+		position: relative;
+		// top: 2.5rem;
+		height: 3rem;
 		width: 100%;
-
 		display: flex;
-		justify-content: flex-end;
+		justify-content: space-between;
+		align-items: center;
+
 		.exit-btn {
-			height: 100px;
+			// height: 100px;
 			// width: 100px;
 			display: flex;
-			flex-wrap: wrap;
+			justify-content: flex-end;
 			font-size: 3rem;
-			padding: 0;
+			padding-right: 1rem;
 			border: none;
 			background: transparent;
 
@@ -43,17 +51,31 @@
 		margin-top: 0px;
 	}
 }
+.prepopulated {
+	// font-weight: bold;
+	letter-spacing: 0.1rem;
+	color: #00c28e;
+	font-weight: bold;
+	margin: 0px 1rem 6px 1rem;
+	border-left: 2px solid black;
+	text-align: start;
+	display: flex;
+	justify-content: center;
+	text-align: right;
+	line-height: 1.5rem;
+	font-size: 1rem;
+	text-transform: uppercase;
+}
+
+.prepopulated.new {
+	padding-left: 1rem;
+}
 
 .activity-form {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-
-	.item {
-		display: flex;
-		justify-content: center;
-	}
 
 	.form-item {
 		width: 100%;
@@ -78,11 +100,12 @@
 	}
 
 	.entry-header {
-		margin-top: 2rem;
+		// margin-top: 2rem;
 		display: flex;
 		padding: 0px 1rem;
+		width: 100%;
 		flex-direction: column;
-		justify-content: center;
+		justify-content: space-between;
 		align-items: baseline;
 
 		* {
@@ -90,22 +113,6 @@
 		}
 	}
 
-	.prepopulated {
-		// font-weight: bold;
-		letter-spacing: 0.1rem;
-		color: #00c28e;
-
-		margin-bottom: 6px;
-		padding-left: 1rem;
-		border-left: 2px solid black;
-		text-align: start;
-		display: flex;
-		justify-content: flex-end;
-		text-align: right;
-		line-height: 1.5rem;
-		font-size: 1rem;
-		text-transform: uppercase;
-	}
 	#title_help,
 	#category_help,
 	#startTime_help,
@@ -168,7 +175,6 @@
 
 		//date picker
 		.ant-picker {
-			// width: 200px;
 			width: 100%;
 		}
 	}
@@ -186,13 +192,14 @@
 	display: flex;
 	justify-content: center;
 	font-weight: 700;
-	font-size: 1rem;
+	font-size: 2rem;
 	padding: 0.25rem 0.5rem;
 	letter-spacing: 0.2rem;
 	text-transform: uppercase;
 	color: #00c28e;
 	border: 4px solid #00c28e;
 	margin-bottom: 1rem;
+	background: transparent;
 
 	&:hover {
 		background: #00c28e;
@@ -231,4 +238,19 @@
 		border: none;
 		color: white;
 	}
+}
+
+.cancel-update-btn {
+	margin-left: 1rem;
+	letter-spacing: 0.1rem;
+	text-transform: uppercase;
+	font-size: 1rem;
+	padding: 0.5rem;
+}
+
+.bin-btn {
+	color: red;
+	font-size: 30px;
+	width: 30px;
+	margin: 1rem 0px;
 }

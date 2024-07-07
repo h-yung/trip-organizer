@@ -5,7 +5,7 @@ import { HomeOutlined, CarOutlined, SmileOutlined } from "@ant-design/icons";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import PrepOutlined from "../../assets/noun-notes-6829221.svg";
 import { addExpense } from "../../apis/main";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 //some detritus here from initially thinking to edit expense with the form
 

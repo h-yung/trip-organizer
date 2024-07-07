@@ -9,6 +9,7 @@
 	background: #00c28e98;
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	z-index: 2;
 
 	.avatar-group {
@@ -16,6 +17,8 @@
 		display: flex;
 		align-items: center;
 		margin-right: 2rem;
+		width: 80px;
+		justify-content: space-between;
 	}
 
 	.avatar-img {
@@ -48,6 +51,8 @@
 	}
 
 	.help-btn {
+		position: relative;
+		right: 2rem;
 		margin-left: 2rem;
 		font-size: 1.5rem;
 		height: 3rem;

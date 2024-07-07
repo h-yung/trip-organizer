@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs";
+
 const categories = ["food", "lodging", "activity", "prep", "test"] as const;
 
 export type Category = (typeof categories)[number];
@@ -81,6 +83,27 @@ export interface ActionItem {
 	advisory?: string; //special instructions, cautions, reviews
 	urls: string[]; //cite your sources lol
 	vendor?: Vendor;
+}
+
+export interface ActivityUpdateFormValues {
+	_id?: string;
+	address: string;
+	advisory: string | undefined;
+	title: string;
+	startTime: Dayjs;
+	category: string;
+	urls: string[];
+	country: string;
+	mapUrl: string;
+	nearestCity: string;
+	nearestState: string | undefined;
+	zipcode: number | undefined;
+	details: string;
+	//vendor
+	email: string | undefined;
+	name: string | undefined;
+	phoneNumber: number | undefined;
+	url: string | undefined;
 }
 
 export interface Image {

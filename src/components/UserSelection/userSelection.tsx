@@ -1,17 +1,8 @@
-import crow from "../../assets/crow.svg";
-import bugs from "../../assets/bugs.svg";
-import dolphin from "../../assets/dolphin.svg";
-import horse from "../../assets/equestrian-statue.svg";
-import bear from "../../assets/fullbear.svg";
-import hippo from "../../assets/hippo.svg";
-import monkey from "../../assets/monkey.svg";
-import raccoon from "../../assets/raccoon.svg";
-import lion from "../../assets/lion.svg";
-import kiwiBird from "../../assets/kiwi-bird.svg";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { AvatarItem, User } from "../../utils/interfaces";
+import { useCallback, useEffect, useState } from "react";
 import { getAllUsers } from "../../apis/main";
+import { avatarDictionary } from "../../utils/avatars";
+import { AvatarItem, User } from "../../utils/interfaces";
 import "./userSelection.scss";
 
 
@@ -23,48 +14,6 @@ const UserSelection = ({
     setUser
 }: UserSelectionProps) => {
     const [userOptions, setUserOptions] = useState<User[]>([]);
-    const avatarDictionary = useMemo<AvatarItem[]>(()=> [
-        {
-            ref: "crow",
-            svg: crow
-        },
-        {
-            ref: "bugs",
-            svg: bugs
-        },
-        {
-            ref: "dolphin",
-            svg: dolphin
-        },
-        {
-            ref: "horse",
-            svg: horse
-        },
-        {
-            ref: "bear",
-            svg: bear
-        },
-        {
-            ref: "hippo",
-            svg: hippo
-        },
-        {
-            ref: "monkey",
-            svg: monkey
-        },
-        {
-            ref: "raccoon",
-            svg: raccoon
-        },
-        {
-            ref: "lion",
-            svg: lion
-        },
-        {
-            ref: "kiwiBird",
-            svg: kiwiBird
-        },
-    ] ,[]);
 
     const assignUser = useCallback((event:any)=> {
 

@@ -84,8 +84,10 @@ export const updateExpense = async (expenseItem: ExpenseItem) => {
 };
 
 //deletedCount
-export const deleteActivity = async (activityId: string) => {
-	const url = `${VITE_DELETE_ACTION}?itemId=${jsesc(activityId)}`;
+export const deleteActivity = async (activityId: string, trip: string) => {
+	const url = `${VITE_DELETE_ACTION}?itemId=${jsesc(
+		activityId
+	)}&collectionName=${trip}`;
 	const response = await fetch(url);
 	return await response.json();
 };

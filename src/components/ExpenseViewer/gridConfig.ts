@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import {
 	CellClickedEvent,
-	CellDoubleClickedEvent,
 	GetQuickFilterTextParams,
 	ValueFormatterParams,
 	ValueSetterParams,
@@ -56,30 +55,8 @@ export const useColDefs = (
 		console.log("Delete for real?");
 	};
 
-	// const onEditorCellDoubleClicked = (p: CellDoubleClickedEvent) => {
-	// 	//reverse the mode if already active... not that this should be visible in UI
-	// 	if (editingEx) {
-	// 		setEditingEx(false);
-	// 		return;
-	// 	}
-
-	// 	if (!p.data) return;
-	// 	setEditingEx(true);
-	// 	//get the selected expense
-	// 	const { data } = p;
-	// 	setSelectedExpense(data);
-	// 	setShowExpenseForm(true);
-	// };
-
 	return useMemo(
 		() => [
-			// {
-			// 	headerName: "",
-			// 	field: "editor",
-			// 	width: 70,
-			// 	onCellDoubleClicked: onEditorCellDoubleClicked,
-			// 	cellRenderer: EditorCellRenderer,
-			// },
 			{
 				headerName: "",
 				field: "binGate",
@@ -191,6 +168,16 @@ export const useColDefs = (
 						fixed.push(temp);
 					}
 					return fixed.join(" ");
+				},
+				valueSetter: (p: ValueSetterParams) => {
+					if (!p.newValue) return false;
+					const updatedSubmitter = p.newValue
+						.replaceAll(" ", "_")
+						.toLowerCase()
+						.trim();
+					p.data.submittedBy = updatedSubmitter;
+					return true;
+					//there really should be some validation on send but not yet
 				},
 			},
 			{

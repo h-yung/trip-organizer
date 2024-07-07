@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react'
-import { Button, ConfigProvider, Divider } from 'antd'
-import { DollarOutlined, FileAddOutlined, SearchOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { DollarOutlined, FileAddOutlined, SearchOutlined } from '@ant-design/icons';
+import { Button, ConfigProvider, Divider } from 'antd';
+import { useEffect, useState } from 'react';
+import { getAicArt } from './apis/main';
+import './App.scss';
 import bugs from "./assets/bugs.svg";
 import ClearOutlined from "./assets/noun-clear-4706196.svg";
-import UserSelection from './components/UserSelection/userSelection';
-import './App.css'
-import './App.scss'
-import { TripRecord, User, Image } from './utils/interfaces';
-import AppHeader from './components/Header/Header';
-import ActivityViewer from './components/ActivityViewer/activityViewer';
 import ActivityEntry from './components/activityDetail/activityEntryForm';
+import ActivityViewer from './components/ActivityViewer/activityViewer';
 import ExpenseViewer from './components/ExpenseViewer/expenseViewer';
-import { getAicArt } from './apis/main';
+import AppHeader from './components/Header/Header';
+import UserSelection from './components/UserSelection/userSelection';
+import { Image, TripRecord, User } from './utils/interfaces';
+// import UserUpdateCreate from './components/UserUpdateOrCreate/userUpdateCreate';
 
 const ENV = import.meta.env.VITE_MODE;
 
@@ -68,7 +68,19 @@ const showExpensesViewFromBtn = () => {
         const artObj = await getAicArt(query);
         setArtImg(artObj);
     }
-    getArt(); //no query for now
+
+    if (ENV === "dev"){
+      setArtImg({
+        title: "Arty art Long Name Long NameLong Name Long NameLong Name Long NameLong Name Long Name",
+        artist_title: "Artist Person Long Name Long Name Long Name Long Name",
+        date_display: "1800-1815",
+        image_id: "1001010101",
+        alt_text: "test art image",
+        url: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg"
+      });
+    } else {
+      getArt(); //no query for now
+    }
 }, []);
 
   return (
@@ -102,10 +114,9 @@ const showExpensesViewFromBtn = () => {
           <img  className="help-icon" width={20} height={20} src={ClearOutlined} alt="exit ops" /> Close everything/return to activity list
           </li>
         </ul>
-        <p>In Activities List: Double click to see activity detail.</p>
-        <p>In Expenses: Export CSV with the button at the bottom, or add a new expense. You can tap to enable deletion (tap on red bin 1x) or update existing expense (tap around elsewhere on the grid to get it to stop editing lol). It'll ask you to confirm your edits but deletes straight away.</p>
+        <p>In Activities List: Double click to see activity detail. From detail page, you can edit or delete activity.</p>
+        <p>In Expenses: Export CSV with the button at the bottom, or add a new expense. You can tap to enable deletion (tap on red bin 1x) or update existing expense (tap around elsewhere on the grid to get it to stop editing lol). It'll ask you to confirm your edits but deletes straight away. If you enter a new expense, notice you can add a few more fields than are currently shown.</p>
         <p>Click on the trip name in the header to choose a different trip.</p>
-        <p>*Delete/modify activity option to come.</p>
         <div style={{fontSize: "0.8rem", textAlign:"center"}}>
           <Divider type="horizontal"  />
           <span>Icons from <a href="https://www.flaticon.com/" target="_blank"> Flaticon</a> & <a href="https://thenounproject.com/browse/icons/term/kiwi/" target="_blank" title="Kiwi Icons">Noun Project</a> (CC BY 3.0). Art? from Art Institute of Chicago. | LCM</span>
@@ -134,19 +145,9 @@ const showExpensesViewFromBtn = () => {
       !activeUsr ? (
         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
           <UserSelection setUser={setActiveUsr} />
-          {/* {artImg && 
-             <div className="art-aic-container">
-                <div style={{width: 300, height: 250, margin: "0.5rem 0.5rem 0px 0px" }}><img src={artImg.url} alt={artImg?.alt_text} /></div>
-                <div >
-                  <label>{artImg.title}</label>
-                  <span> | {artImg.date_display} | {artImg.artist_title}</span>
-                </div>
-                
-            </div>
-            } */}
         </div>
        ) : !viewTrip  ? 
-        (<div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        (<div className="trip-container">
           <span className='titles'>Choose a trip</span>
           <ConfigProvider
             theme={{
@@ -170,22 +171,27 @@ const showExpensesViewFromBtn = () => {
               })}
           </div>
           </ConfigProvider>
+
+          {/* <UserUpdateCreate activeUsr={activeUsr} /> */}
+
           {artImg && 
              <div className="art-aic-container">
-                <div style={{width: 400, height: 300, //margin: "0.5rem 0.5rem 0px 0px" 
-                }}><img src={artImg.url} alt={artImg?.alt_text} /></div>
+                <div style={{width: "100vw", height: 300}}>
+                  <img src={artImg.url} alt={artImg?.alt_text} />
+                </div>
+                <div style={{width: "100vw", padding:"0 2rem"}}>
                   <label>{artImg.title}</label>
                   <p>{artImg.date_display} | {artImg.artist_title}</p>
+                  </div>
             </div>
             }
           
-          </div>)
+          </div>
+        )
           : (
-
-            
               <ActivityViewer user={activeUsr} viewTrip={viewTrip} />
             
-          )
+        )
     )
   }
  
