@@ -11,13 +11,28 @@ interface AppHeaderProps {
     setHelp: (p:boolean) => void;
     help: boolean;
 
+    //must reset everything when trip is swapped
+    setShowExpenseViewer: (p:boolean) => void;
+    setShowActEntry:(p:boolean) => void;
+    setReviewForm:(p:boolean) => void;
+
+
 }
-const AppHeader = ({activeUsr, viewTrip, setViewTrip, setHelp, help}: AppHeaderProps) => {
+const AppHeader = ({
+  activeUsr, viewTrip, setViewTrip, setHelp, help,
+  setShowActEntry,
+  setShowExpenseViewer,
+  setReviewForm
+
+}: AppHeaderProps) => {
 
     const showName = useMemo(()=> activeUsr?.displayName.split(" ")[0],[activeUsr])
 
     const confirm = () => {
         setViewTrip("");
+        setShowActEntry(false);
+        setShowExpenseViewer(false);
+        setReviewForm(false);
     }
 
     // const startReview = () => {

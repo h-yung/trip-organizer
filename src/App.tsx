@@ -92,9 +92,12 @@ const showExpensesViewFromBtn = () => {
   return (
     <>
     <AppHeader 
-    activeUsr={activeUsr} 
-    viewTrip={viewTrip} setViewTrip={setViewTrip} 
-    setHelp={setHelp} help={help} 
+      activeUsr={activeUsr} 
+      viewTrip={viewTrip} setViewTrip={setViewTrip} 
+      setHelp={setHelp} help={help} 
+      setShowActEntry={setShowActEntry}
+      setShowExpenseViewer={setShowExpenseViewer}
+      setReviewForm={setReviewForm}
     />
   <div className="main-app">
 
