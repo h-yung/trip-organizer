@@ -65,7 +65,7 @@ Bonus round:
 -   [ ] Make trip reviews visible to all.
 -   [ ] Add role-based restrictions for trip updates.
 
-**Latest updatees**
+**Latest updates**
 
 -   Made trip_activities collection to conform with rest of collections.
 -   Simplified endpoint definitions.
