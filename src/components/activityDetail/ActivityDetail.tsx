@@ -119,11 +119,16 @@ const ActivityDetail = (
                   <div>
                   <label>Further Information</label>
                   <p>{details} </p>
+
+                  <label>Links</label>
                   { urls.length && urls[0] ? 
-                  <ul style={{paddingLeft:"1rem"}}>
+                  <ul>
                         {urls.map(url => {
                             return (
-                                <li key={urls.indexOf(url)}><a href={url}>{url}</a></li>
+                                <li 
+                                key={urls.indexOf(url)}
+                                className="detail-urls"
+                                ><a href={url}>{url}</a></li>
                             )
                         })
                         }
