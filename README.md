@@ -57,8 +57,10 @@ Bonus round:
 -   [x] Get, Add, Update, Delete travel action items.
 -   [x] Get, Add, Update, Delete expense items on the go.
     -   [x] CSV export.
--   [ ] Get, Add, Update, Delete trip review. - One per user per trip - Only allowed if user is a participant role.
-        \*\*Endpoints all done, from UI you can only add or update.
+-   [ ] Get, Add, Update, Delete trip review.
+    - One per user per trip
+    - Only allowed if user is a participant role.
+    - \*\*Endpoints all done, from UI you can only add or update.
 -   [ ] Make trip reviews visible to all.
 -   [ ] Add role-based restrictions for trip updates.
 
