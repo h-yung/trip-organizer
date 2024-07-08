@@ -1,4 +1,4 @@
-import { CarOutlined, HomeOutlined, MinusCircleOutlined, PlusOutlined, PushpinOutlined, SmileOutlined } from "@ant-design/icons";
+import { CarOutlined, CloseCircleOutlined, DollarOutlined, FileAddOutlined, HomeOutlined, MinusCircleOutlined, PlusOutlined, PushpinOutlined, SmileOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, DatePicker, Form, Input, Radio } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import jsesc from "jsesc";
@@ -7,14 +7,13 @@ import { addActivity } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { convertFormToAct } from "../../utils/activityConverter";
 import { ActionItem, User } from "../../utils/interfaces";
+import { Link } from "react-router-dom";
+import SuccessPage from "../Success/Success";
 
 interface ActivityEntryProps {
-	setShowActEntry: (p: boolean) => void;
     user: User;
     viewTrip: string;
     // query: string; //global search
-    editing?: boolean; //implies existing
-    setEditing?:(p: boolean) => void;
     selectedActivity?: ActionItem | null; //for EDIT
     setSelectedActivity?: (p: null | ActionItem) => void;
 }
@@ -27,25 +26,18 @@ const ENV = import.meta.env.VITE_MODE;
 
 const ActivityEntry = (
     {
-        setShowActEntry,
-
-        setEditing,
-        editing,
-        // selectedActivity,
-
         user,
         viewTrip
-        // , user
     }: ActivityEntryProps 
 ) => {
 
     const [isSuccess, setIsSuccess ] = useState(false);
 
-    const exitForm = () => {
-        setEditing && setEditing(false);
-        setIsSuccess(false); //just cleanup
-        setShowActEntry(false);
-    }
+    // const exitForm = () => {
+    //     setEditing && setEditing(false);
+    //     setIsSuccess(false); //just cleanup
+    //     setShowActEntry(false);
+    // }
 
     const formItemLayout = {
         // labelCol: {
@@ -69,20 +61,14 @@ const ActivityEntry = (
             const entry = convertFormToAct(values, user, viewTrip);
            
             // console.log('Received values of form: ', entry.startTime);
-        if (!editing){
-            // = add
             const response = await addActivity(entry);
             console.log("RESPONSE:", jsesc(response));
             if (response?.insertedId) setIsSuccess(true);
             
-        }
         //if (editing === true && selectedActivity) {} //need to prepopulate information and display as defaults
     }
 
     const onFinishFailed = () => {
-        if (!editing){
-        }
-        //if (editing === true && selectedActivity) {} //need to prepopulate information and display as defaults
         console.log("Could not submit.")
     }
 
@@ -337,13 +323,19 @@ return (
         <Button className="send-btn-item" size="large" onClick={()=> setIsSuccess(false) }>
             Add another entry
         </Button>
-        <Button className="send-btn-item secondary" size="large" onClick={exitForm}>
+        <Link to="/" className="send-btn-item secondary" //onClick={exitForm}>
+        >
             Go back
-        </Button>
+        </Link>
     </div>
+
+    // <SuccessPage path="/" customExitLine="Go back" />
 
 
 )}
+
+
+
    </ConfigProvider>
     )
 }

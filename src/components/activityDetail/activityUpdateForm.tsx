@@ -1,4 +1,4 @@
-import { CarOutlined, HomeOutlined, MinusCircleOutlined, PlusOutlined, PushpinOutlined, SmileOutlined } from "@ant-design/icons";
+import { CarOutlined, CloseCircleOutlined, DollarOutlined, HomeOutlined, MinusCircleOutlined, PlusOutlined, PushpinOutlined, SmileOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, DatePicker, Form, Input, Radio } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useMemo, useState } from "react";
@@ -6,13 +6,11 @@ import { updateAction } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { convertActForForm, convertFormToAct } from "../../utils/activityConverter";
 import { ActionItem, User } from "../../utils/interfaces";
+import { Link } from "react-router-dom";
 
 interface UpdateActivityEntryProps {
     user: User;
     viewTrip: string;
-
-    editing: boolean; //implies existing
-    setEditing:(p: boolean) => void;
     selectedActivity: ActionItem;
     setSelectedActivity: (p: null | ActionItem) => void;
 }
@@ -23,7 +21,6 @@ const ENV = import.meta.env.VITE_MODE;
 
 const UpdateActivityEntry = (
     {
-        setEditing,
         selectedActivity,
         setSelectedActivity, //need to update this
         user,
@@ -38,11 +35,6 @@ const UpdateActivityEntry = (
         return convertActForForm(selectedActivity);
 
     }, [selectedActivity])
-
-    const exitForm = () => {
-        setEditing(false);
-        setIsSuccess(false); //just cleanup
-    }
 
     const formItemLayout = {
         // labelCol: {
@@ -69,7 +61,6 @@ const UpdateActivityEntry = (
 
         if (ENV === "dev") {
             
-            setEditing(false);
             setSelectedActivity(entry);
         }
 
@@ -80,7 +71,6 @@ const UpdateActivityEntry = (
             setSelectedActivity(entry);
 
             setIsSuccess(true);
-            setEditing(false); 
         }
     }
 
@@ -106,13 +96,12 @@ return (
     <div className="entry-header">
             <h2>
                 <span>Updating Activity</span> 
-                <Button htmlType="button"
+                <Link to="/"
                 className="cancel-update-btn"
-                onClick={exitForm}
                  // style={{width: 200}} //wouldn't take from scss..
                 >
                     Cancel
-                </Button>
+                </Link>
             </h2>
            <p className="prepopulated">By {user.displayName} for {viewTrip} </p>
            </div>
@@ -352,13 +341,18 @@ return (
         <Button className="send-btn-item" size="large" onClick={()=> setIsSuccess(false) }>
             Add another entry
         </Button>
-        <Button className="send-btn-item secondary" size="large" onClick={exitForm}>
+        <Link to="/" className="send-btn-item secondary" // onClick={exitForm}
+        >
             Go back
-        </Button>
+        </Link>
     </div>
 
 
 )}
+
+
+
+
    </ConfigProvider>
     )
 }

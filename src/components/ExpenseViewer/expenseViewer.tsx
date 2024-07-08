@@ -10,25 +10,21 @@ import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { SampleExp } from "../../utils/sampleData";
 import "./expenseViewer.scss";
 import ExpenseEntry from "./expenseForm";
+import { Link } from "react-router-dom";
 
 const ENV = import.meta.env.VITE_MODE;
 
 interface ExpenseViewerProps {
-    user: User;
     viewTrip: string;
-    setShowExpenseViewer: (p:boolean) => void;
 }
 
 
 const ExpenseViewer = ({
-    user,
     viewTrip,
-    // setShowExpenseViewer
 }: ExpenseViewerProps) => {
 
 
     const expenseRef = useRef<GridApi<ExpenseItem>>(); //MutableRefObject<GridApi<ExpenseItem> | undefined >
-    const [showExpenseForm, setShowExpenseForm] = useState(false);
 
     const [ openConfModal, setOpenConfModal ] = useState(false);
 
@@ -40,7 +36,6 @@ const ExpenseViewer = ({
     const [ categoryFilter, setCategoryFilter ] = useState(""); 
     const disableClearBtn = useMemo(()=> categoryFilter==="", [categoryFilter]);
 
-    // const toggleFormVisibility = () => { setShowExpenseForm(!showExpenseForm)};
 
     const onGridReady = (params:GridReadyEvent) => { expenseRef.current = params.api; };
     const columnDefs = useColDefs(
@@ -133,19 +128,10 @@ const ExpenseViewer = ({
        getExps();
 
     }, [viewTrip, 
-        showExpenseForm //in case of successful insert, need to refresh list. isSuccess is in lower-level child component
+       //in case of successful insert, need to refresh list. isSuccess is in lower-level child component
      ])
 
-    return showExpenseForm ? (
-            <ExpenseEntry 
-                setShowExpenseForm={setShowExpenseForm}
-                viewTrip={viewTrip}
-                user={user}
-                // editing={editingEx}
-                // setEditing={setEditingEx}
-            />
-    )
-       : (
+    return (
         <ConfigProvider
             theme={{
                 components: {
@@ -170,8 +156,8 @@ const ExpenseViewer = ({
              <Button className="filter-btn" onClick={()=> setCategoryFilter("activity")} size="large"  shape="circle" ><CarOutlined style={{color: "black"}} /></Button>
                 <Button className="filter-btn" onClick={()=> setCategoryFilter("food")} size="large"  shape="circle" ><img style={{objectFit: "contain"}} width={48} height={48} src={FoodOutlined} alt="food" /></Button>
                 <Button className="filter-btn" onClick={()=> setCategoryFilter("lodging")} size="large"  shape="circle"><HomeOutlined style={{color: "black"}} /></Button>
-                <Button className="filter-btn" onClick={()=> setCategoryFilter("prep")} size="large"  shape="circle"><PushpinOutlined /></Button> {/* more of a to-do list item, maybe V2*/}
-               <Button className="filter-btn" onClick={()=> setCategoryFilter("")} size="large" disabled={disableClearBtn} shape="circle"><CloseCircleOutlined /></Button>
+                <Button className="filter-btn" onClick={()=> setCategoryFilter("prep")} size="large"  shape="circle"><PushpinOutlined style={{color: "black"}} /></Button> {/* more of a to-do list item, maybe V2*/}
+               <Button className="filter-btn" onClick={()=> setCategoryFilter("")} size="large" disabled={disableClearBtn} shape="circle"><CloseCircleOutlined style={{color: "black"}} /></Button>
                     
             </div>
             <>
@@ -195,11 +181,11 @@ const ExpenseViewer = ({
             <div className="exp-group">
             
             <Button className="special-btn" onClick={exportExpenses}><DownloadOutlined /></Button>
-            <Button className="special-btn" onClick={()=> setShowExpenseForm(true)}><PlusOutlined /></Button>
+            <Link to="/expenses-new" className="special-btn"><PlusOutlined /></Link>
             </div>
         </div>
         </ConfigProvider>
-       )
+    )
 }
 
 export default ExpenseViewer;

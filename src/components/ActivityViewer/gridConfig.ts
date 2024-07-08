@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { redirect } from "react-router-dom";
 import {
 	CellClickedEvent,
 	ColDef,
@@ -23,13 +24,13 @@ export const actGridOptions = {
 };
 
 export const useColDefs = (
-	setSelectedActivity: (p: null | ActionItem) => void,
-	setShowActivityDetail: (p: boolean) => void
+	setSelectedActivity: (p: null | ActionItem) => void
 ) => {
 	const onCellClicked = (p: CellClickedEvent) => {
 		const { data } = p;
 		setSelectedActivity(data);
-		setShowActivityDetail(true);
+		return redirect("/");
+		// setShowActivityDetail(true); //need this to redirect
 	};
 
 	return useMemo(

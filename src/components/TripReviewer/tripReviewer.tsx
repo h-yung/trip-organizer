@@ -7,11 +7,12 @@ import "./tripReviewer.scss";
 import { convertFormToReview } from '../../utils/activityConverter';
 import { addTripReview, updateTripReview } from '../../apis/main';
 import jsesc from 'jsesc';
+import SuccessPage from '../Success/Success';
+import { Link } from 'react-router-dom';
 
 interface ReviewProps {
     user: User; //the review is in the user obj
     viewTrip: string;
-    setReviewForm: (p:boolean) => void;
     allTripActivities: ActionItem[]; //via activityViewer, bc workflow
     tripReview: TripReview | null;
     setTripReview: (p:TripReview | null) => void;
@@ -27,7 +28,6 @@ const TripReviewer = (
         user,
         viewTrip,
         allTripActivities,
-        setReviewForm,
         setTripReview,
         tripReview
     }: ReviewProps 
@@ -60,12 +60,6 @@ const TripReviewer = (
 
         return values;
     }, [viewTrip, tripReview])
-
-    const exitForm = () => {
-        setReviewForm(false);
-        // setViewTrip(""); //only goes back to trip activity viewer
-        setIsSuccess(false); //just cleanup
-    }
 
       const formItemLayoutWithOutLabel = {
         wrapperCol: {
@@ -163,12 +157,12 @@ return (
     <div className="entry-header">
         <h2>
             <span>Trip Review</span> 
-            <Button htmlType="button"
+            <Link 
+            to="/"
             className="cancel-update-btn"
-            onClick={exitForm}
             >
                 Cancel
-            </Button>
+            </Link>
         </h2>
         <p className="prepopulated">By {user.displayName} for {viewTrip} </p>
     </div>
@@ -257,15 +251,7 @@ return (
       </Form>
       </>
 ): (
-    <div className="finish-panel">
-        <SmileOutlined style={{fontSize: "6rem" }} />
-        <h2 className="exclamation">SUCCESS!</h2>
-        <p>...fully submitted.</p>
-        <Button className="send-btn-item" size="large" onClick={ exitForm }>
-        Back to trip activities
-        </Button>
-    </div>
-
+    <SuccessPage customExitLine={"Back to activities page"} path={"/"} />
 
 )}
    </ConfigProvider>

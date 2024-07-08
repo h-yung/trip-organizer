@@ -1,0 +1,54 @@
+.titles {
+	font-weight: bold;
+	font-size: 0.8rem;
+	letter-spacing: 0.05rem;
+	text-transform: uppercase;
+}
+
+.trip-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 2rem;
+
+	.trip-list-container {
+		margin: 2rem 0px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.trip-item {
+			//= send-btn-item
+			display: flex;
+			justify-content: center;
+			font-weight: 700;
+			font-size: 1rem;
+			padding: 0.25rem 0.5rem;
+			letter-spacing: 0.2rem;
+			text-transform: uppercase;
+			color: #00c28e;
+			border: 4px solid #00c28e;
+			margin-bottom: 1rem;
+
+			> span {
+				display: inline-block;
+				max-width: 220px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+
+			&:hover {
+				background: #00c28e;
+				border: none;
+				color: white;
+			}
+
+			&:focus {
+				background: #00c28e;
+				border: none;
+				color: white;
+			}
+		}
+	}
+}

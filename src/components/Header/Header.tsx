@@ -3,26 +3,17 @@ import { User } from '../../utils/interfaces';
 import { useMemo } from "react";
 import { Button, ConfigProvider, Popconfirm } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
+import { Link, redirect } from "react-router-dom";
 
 interface AppHeaderProps {
     activeUsr: User | null;
     viewTrip: string;
     setViewTrip: (p:string) => void;
-    setHelp: (p:boolean) => void;
-    help: boolean;
-
-    //must reset everything when trip is swapped
-    setShowExpenseViewer: (p:boolean) => void;
-    setShowActEntry:(p:boolean) => void;
-    setReviewForm:(p:boolean) => void;
-
+    setActiveUsr: (p: User | null) => void;
 
 }
 const AppHeader = ({
-  activeUsr, viewTrip, setViewTrip, setHelp, help,
-  setShowActEntry,
-  setShowExpenseViewer,
-  setReviewForm
+  activeUsr, viewTrip, setViewTrip,setActiveUsr
 
 }: AppHeaderProps) => {
 
@@ -30,9 +21,8 @@ const AppHeader = ({
 
     const confirm = () => {
         setViewTrip("");
-        setShowActEntry(false);
-        setShowExpenseViewer(false);
-        setReviewForm(false);
+        setActiveUsr(null);
+        // redirect("/user-selection");  //check
     }
 
     // const startReview = () => {
@@ -52,20 +42,32 @@ const AppHeader = ({
             }}
           >
             <div className="header-container">
-                {activeUsr ? 
+                {!activeUsr  && <span className="titles">Hai there</span>}
+                
+               { activeUsr &&
+
+              <Popconfirm title="Switch user?"
+                onConfirm={confirm}
+                placement="bottom"
+                >
                 <div className='avatar-group'>
                     {activeUsr.avatar && 
                     <img src={activeUsr.avatar} 
                         className="avatar-img" alt="animal icon avatar"/> }
                     <span className="titles">{showName}</span>
-                </div> : <span className="titles">Hai there</span>}
+                </div>
+                </Popconfirm>
+              }
+                
                 <Popconfirm title="See a different trip?"
                      onConfirm={confirm}
                      placement="bottom"
                 >
                     <div role="button" className="trip-name-container">{viewTrip}</div>
                 </Popconfirm>
-                <Button className="help-btn" onClick={()=>{setHelp(!help)}}><QuestionCircleOutlined /></Button>
+                <Link to="/help" className="help-btn">
+                  <QuestionCircleOutlined />
+                </Link>
             </div>
             </ConfigProvider>
     )

@@ -3,7 +3,11 @@ import { useCallback, useEffect, useState } from "react";
 import { getAllUsers } from "../../apis/main";
 import { avatarDictionary } from "../../utils/avatars";
 import { AvatarItem, User } from "../../utils/interfaces";
+import bugs from "../../assets/bugs.svg";
+
 import "./userSelection.scss";
+
+const ENV = import.meta.env.VITE_MODE;
 
 
 interface UserSelectionProps {
@@ -39,6 +43,22 @@ const UserSelection = ({
            setUserOptions(users.documents);
         }
 
+        if (ENV === "dev"){
+            setUser({
+                _id: "doot",
+                displayName: "Test",
+                lookupName: "app_developer",
+                createdDate: "20240705",
+                avatarRef: "bugs", //string
+                avatar: bugs,
+                trips: [
+                  {tripName: "test_trip_2024", role: ["participant"]},
+                  {tripName: "super_long_trip_name_hello", role: ["participant", "admin"]},
+                  {tripName: "third_trip", role: ["readOnly"]}
+                ]
+              });
+              return;
+        }
         getUsers();
     },[])
 

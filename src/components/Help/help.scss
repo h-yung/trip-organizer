@@ -1,0 +1,18 @@
+.help-box {
+	background: white;
+	max-width: 600px;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	text-align: left;
+
+	li {
+		display: flex;
+		align-items: center;
+
+		.help-icon {
+			margin-right: 2rem;
+		}
+	}
+}

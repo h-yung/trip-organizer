@@ -6,11 +6,11 @@ import { useState } from "react";
 import { addExpense } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { ExpenseItem, User } from "../../utils/interfaces";
+import { Link } from "react-router-dom";
 
 //some detritus here from initially thinking to edit expense with the form
 
 interface ExpenseEntryProps {
-	setShowExpenseForm: (p: boolean) => void;
     user: User;
     viewTrip: string;
     // query: string; //global search
@@ -26,11 +26,6 @@ const ENV = import.meta.env.VITE_MODE;
 
 const ExpenseEntry = (
     {
-        setShowExpenseForm,
-        // setEditing,
-        // editing,
-        // selectedExpense,
-        // setSelectedExpense,
         user,
         viewTrip
         // , user
@@ -39,11 +34,6 @@ const ExpenseEntry = (
 
     const [isSuccess, setIsSuccess ] = useState(false);
 
-    const exitForm = () => {
-        // setEditing && setEditing(false);
-        setIsSuccess(false); //just cleanup
-        setShowExpenseForm(false);
-    }
 
       const formItemLayoutWithOutLabel = {
         wrapperCol: {
@@ -259,14 +249,6 @@ const ExpenseEntry = (
             </Button>
         </Form.Item>
 
-       {/* {editing && <Form.Item >
-            <Button htmlType="button"
-            className="send-btn-item"
-            onClick={cancelExpenseEditing}
-            >
-                Cancel Edits & Exit
-            </Button>
-        </Form.Item>} */}
       </Form>
 
 ): (
@@ -277,9 +259,9 @@ const ExpenseEntry = (
         <Button className="send-btn-item" size="large" onClick={()=> setIsSuccess(false) }>
             Add another expense
         </Button>
-        <Button className="send-btn-item secondary" size="large" onClick={exitForm}>
+        <Link to="/expenses-viewer" className="send-btn-item secondary">
             Go back
-        </Button>
+        </Link>
     </div>
 
 
