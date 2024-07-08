@@ -50,12 +50,66 @@
 		height: 1.5rem;
 		margin: 0 0.5rem;
 	}
+	.titles.timeline {
+		border-bottom: 2px solid #00c28e;
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.timeline-container {
+		margin-top: 1rem;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+
+		.subtitle {
+			font-size: 1rem;
+			// text-transform: uppercase;
+			// font-style: italic;
+			font-weight: 300;
+		}
+	}
+
+	//force over left
+	.ant-timeline-item-label {
+		width: calc(32% - 12px) !important;
+		text-transform: uppercase;
+	}
+	.ant-timeline-item-tail,
+	div.ant-timeline-item-head {
+		left: 32% !important;
+	}
+	.ant-timeline-item-content {
+		left: calc(30% - 4px) !important;
+		width: calc(64% - 4px) !important;
+		font-weight: bold;
+		font-size: 1.1rem;
+
+		&:hover,
+		&:focus {
+			cursor: pointer;
+		}
+
+		.activity-title {
+			margin: 0px;
+			font-weight: 500;
+			// color: #00c28es;
+		}
+	}
+	.timeline-btn {
+		margin-bottom: 3rem;
+	}
+	.ant-timeline {
+		margin-top: 2rem;
+	}
 
 	.activity-grid {
-		height: 584px;
+		// height: 584px;
+		height: 372px;
 		width: 100%;
 		border-left: 4px solid red;
 		flex: 1;
+		margin-bottom: 2rem;
 	}
 
 	.header-text {

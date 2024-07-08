@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Button, ConfigProvider } from "antd";
-import { HomeOutlined, CarOutlined, RightOutlined } from "@ant-design/icons";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Button, ConfigProvider, Divider, Timeline } from "antd";
+import { HomeOutlined, CarOutlined, RightOutlined, UpOutlined, DownOutlined, FileAddOutlined } from "@ant-design/icons";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import PrepOutlined from "../../assets/noun-notes-6829221.svg";
 import ClearOutlined from "../../assets/noun-clear-4706196.svg";
@@ -17,6 +17,7 @@ import "./activityViewer.scss";
 import { actGridOptions, defaultColDefs, useColDefs } from "./gridConfig";
 import { sampleActivities, sampleReviews } from "../../utils/sampleData";
 import TripReviewer from "../TripReviewer/tripReviewer";
+import dayjs from "dayjs";
 
 const ENV = import.meta.env.VITE_MODE;
 
@@ -59,9 +60,36 @@ const ActivityViewer = ({
         setReviewForm(true);
     }
 
+    const onTimelineItemClicked = useCallback((e)=> {
+        //get the correct data
+        e.preventDefault();
+        // console.log(e.currentTarget)
+        const matchedDatum = rowData.find(datum => datum._id === e.currentTarget.id)!;
+        console.log(matchedDatum)
+        setSelectedActivity(matchedDatum);
+		setShowActivityDetail(true);
+    },[rowData])
+
+    //timeline
+    const [reverse, setReverse] = useState(false);
+    const toggleReverse = useCallback(()=> {
+        setReverse(!reverse);
+    }, [reverse])
+    const timelineItems = useMemo(()=> {
+        return rowData.sort((a,b)=> dayjs(b.startTime).diff(dayjs(a.startTime))).map((datum:ActionItem)=> {
+            return ({
+                label: dayjs(datum.startTime).format("ddd MMM DD h:mm A"),
+                children: 
+                <div key={datum._id} id={datum._id} onClick={onTimelineItemClicked}>
+                    <h4 className="activity-title">{datum.title}</h4>
+                    <span className="subtitle">{datum.location.nearestCity}</span>
+                </div>,
+            })
+        })
+    },[rowData])
+
 
     useEffect(()=> {
-
         async function getActivities(){
             if (viewTrip){
 
@@ -113,7 +141,12 @@ const ActivityViewer = ({
                   defaultBg: "transparent",
                   defaultHoverBg: "transparent",
                   defaultColor: "#00c28e",
+                  defaultBorderColor:"#00c28e",
                 },
+                Timeline: {
+                    colorPrimary: "#00c28e",
+                    itemPaddingBottom: 48
+                }
               },
             }}
           >
@@ -125,6 +158,35 @@ const ActivityViewer = ({
             !reviewForm ?
             
             (<>
+
+
+<div className="timeline-container">
+
+        <>
+            <div style={{width: "100%", display: "flex", justifyContent: "space-between", alignItems: "flex-start"}}>
+                
+                <div style={{display:"flex", flexDirection: "column", alignItems: "flex-start"}}>
+                <span className="titles timeline">Schedule</span>
+
+               
+                 <span className="subtitle"> {rowData.length ? "Tap on activity names for details." : "There are no activities/events for this trip."}</span>
+                </div>
+            
+            {rowData.length ? <Button className="timelline-btn" onClick={toggleReverse}>
+            { reverse ? <UpOutlined />: <DownOutlined /> }
+                </Button> : <></>}
+            </div>
+        
+        
+            <Timeline
+            mode="left"
+            items={timelineItems}
+            reverse={reverse}
+            /> 
+        </>
+            
+            <Divider type="horizontal" />
+            </div>
                 <div className="controls-activity">
               {/* {ENV === "dev" &&  <Button className="filter-btn" onClick={()=> setCategoryFilter("test")} shape="circle" ><SmileOutlined style={{color: "black"}} /></Button>} */}
                 <Button className="filter-btn" onClick={()=> setCategoryFilter("activity")} size="large"  shape="circle" ><CarOutlined style={{color: "black"}} /></Button>
@@ -151,6 +213,7 @@ const ActivityViewer = ({
                     quickFilterText={categoryFilter}
                 />
             </div>
+           
             </>
            ) : (
             <>
@@ -165,14 +228,13 @@ const ActivityViewer = ({
             </>
            )
            : (
-            
-                <ActivityDetail 
-                    setSelectedActivity={setSelectedActivity} 
-                    selectedActivity={selectedActivity} 
-                    setShowActivityDetail={setShowActivityDetail} 
-                    user={user}
-                    viewTrip={viewTrip} //need for UpdateEntry
-                 />
+                    <ActivityDetail 
+                        setSelectedActivity={setSelectedActivity} 
+                        selectedActivity={selectedActivity} 
+                        setShowActivityDetail={setShowActivityDetail} 
+                        user={user}
+                        viewTrip={viewTrip} //need for UpdateEntry
+                    />
             
            ) }
             

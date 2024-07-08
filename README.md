@@ -3,7 +3,7 @@
 A lightweight mobile-first, desktop-unfriendly app with serverless API that keeps important travel information accessible on the go, with the option to log expenses. Simple password lock.
 The app is intended for use during the trip, not for the heavy planning stage.
 
-Site is live but behind password lock. 
+Site is live but behind password lock.
 Server functions not included in public repo.
 
 ## Features
@@ -40,9 +40,12 @@ The desktop UX is trash because time crunch lol! Someday we'll do breakpoints ag
 -   [x] Fix visual problems. **Ish?** Mobile only.
 -   [ ] Data entry.
 -   [ ] Clean up SCSS /repetitiveness.
+-   [x] Timeline view for activities. Could be a nicer at-a-glance thing although I like the AG Grid functionality. Why not both.
 
 Bonus round:
 
+-   [ ] Let user make a new trip. Set up some invite workflow... after better authentication.
+-   [ ] Speaking of which, the user retrieval needs a bit more specificity.
 -   [ ] User avatar/username selection (user item). Get req only for now.
 -   [ ] Update graphics.
 -   [ ] Integrate better with Google maps.
@@ -51,7 +54,6 @@ Bonus round:
         -   (requires retrieval of all users for a given trip)
         -   limit this to admin role?
     -   Meh about this - results in a lot of double reporting. Just communicate with your trip buddies. Maybe limit to converting trip advisories/requirements or specific activity instructions into reminder checklist. Limit to being useful during travel.
--   [x] Add activity rating field (under Update endpt). **Created as trip review**
 
 ### API
 
@@ -59,9 +61,10 @@ Bonus round:
 -   [x] Get, Add, Update, Delete expense items on the go.
     -   [x] CSV export.
 -   [ ] Get, Add, Update, Delete trip review.
-    - One per user per trip
-    - Only allowed if user is a participant role.
-    - \*\*Endpoints all done, from UI you can only add or update.
+    -   [x] Add activity rating field (under Update endpt). **Created as trip review**
+    -   One per user per trip
+    -   Only allowed if user is a participant role.
+    -   \*\*Endpoints all done, from UI you can only add or update.
 -   [ ] Make trip reviews visible to all.
 -   [ ] Add role-based restrictions for trip updates.
 

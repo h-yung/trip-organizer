@@ -37,12 +37,13 @@ export const useColDefs = (
 				headerName: "Date-Time",
 				field: "startTime",
 				width: 180,
+				initialSort: "desc",
 				headerClass: ["left-align", "scale-up", "header-text"],
 				cellClass: ["left-align", "scale-up"],
+				hide: true,
 				onCellClicked,
 				valueFormatter: (p: ValueFormatterParams) => {
 					if (!p.value) return p.value;
-					// dayjs(p.value).format("MM/DD/YYYY h:mm A");
 					dayjs.extend(localizedFormat);
 					return dayjs(p.value).format("L LT") ?? p.value;
 				},
