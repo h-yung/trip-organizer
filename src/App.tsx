@@ -65,10 +65,11 @@ const showExpensesViewFromBtn = () => {
   setShowExpenseViewer(true);
 }
 
-  useEffect(()=> {
-    console.log("activeUser changed", activeUsr?.displayName);
+  // useEffect(()=> {
+  //   console.log("activeUser changed", activeUsr?.displayName);
     
-  }, [activeUsr])
+  // }, [activeUsr])
+  
   useEffect(()=> {
     async function getArt(query?: string){  //currently "bear" default
         const artObj = await getAicArt(query);
