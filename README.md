@@ -1,6 +1,7 @@
 # trip-organizer
 
 A lightweight mobile-first, desktop-unfriendly app with serverless API that keeps important travel information accessible on the go, with the option to log expenses. Simple password lock.
+The app is intended for use during the trip, not for the heavy planning stage.
 
 Site is live but behind password lock. 
 Server functions not included in public repo.
@@ -48,7 +49,7 @@ Bonus round:
     -   Enable assigning to other trip users
         -   (requires retrieval of all users for a given trip)
         -   limit this to admin role?
-    -   OTOH this might not be that practical/results in a lot of double reporting given everyone has different tracking preferences.
+    -   Meh about this - results in a lot of double reporting. Just communicate with your trip buddies. Maybe limit to converting trip advisories/requirements or specific activity instructions into reminder checklist. Limit to being useful during travel.
 -   [x] Add activity rating field (under Update endpt). **Created as trip review**
 
 ### API
