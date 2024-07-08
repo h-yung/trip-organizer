@@ -5,10 +5,8 @@ import { defaultColDefs, expGridOptions, useColDefs } from "./gridConfig";
 import { getAllExpenses, updateExpense } from "../../apis/main";
 import { AgGridReact } from "ag-grid-react";
 import { Button, ConfigProvider, Modal } from "antd";
-import { HomeOutlined, CarOutlined, SmileOutlined, DownloadOutlined, PlusOutlined } from "@ant-design/icons";
+import { HomeOutlined, CarOutlined, PushpinOutlined, SmileOutlined, CloseCircleOutlined, DownloadOutlined, PlusOutlined } from "@ant-design/icons";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
-import PrepOutlined from "../../assets/noun-notes-6829221.svg";
-import ClearOutlined from "../../assets/noun-clear-4706196.svg";
 import { SampleExp } from "../../utils/sampleData";
 import "./expenseViewer.scss";
 import ExpenseEntry from "./expenseForm";
@@ -168,12 +166,12 @@ const ExpenseViewer = ({
         <Modal title="Confirm updates?" width={200} open={openConfModal} onOk={handleOk} onCancel={handleCancel}>
       </Modal>
             <div className="controls-activity">
-              {/* {ENV === "dev" &&  <Button className="filter-btn" onClick={()=> setCategoryFilter("test")} shape="circle" ><SmileOutlined style={{color: "black"}} /></Button>} */}
-                <Button className="filter-btn" onClick={()=> setCategoryFilter("activity")} size="large"  shape="circle" ><CarOutlined style={{color: "black"}} /></Button>
-                <Button className="filter-btn" onClick={()=> setCategoryFilter("food")} size="large"  shape="circle" ><img width={55} height={55} src={FoodOutlined} alt="food" /></Button>
+             {/* {ENV === "dev" &&  <Button className="filter-btn" onClick={()=> setCategoryFilter("test")} shape="circle" ><SmileOutlined style={{color: "black"}} /></Button>} */}
+             <Button className="filter-btn" onClick={()=> setCategoryFilter("activity")} size="large"  shape="circle" ><CarOutlined style={{color: "black"}} /></Button>
+                <Button className="filter-btn" onClick={()=> setCategoryFilter("food")} size="large"  shape="circle" ><img style={{objectFit: "contain"}} width={48} height={48} src={FoodOutlined} alt="food" /></Button>
                 <Button className="filter-btn" onClick={()=> setCategoryFilter("lodging")} size="large"  shape="circle"><HomeOutlined style={{color: "black"}} /></Button>
-                <Button className="filter-btn" onClick={()=> setCategoryFilter("prep")} size="large"  shape="circle"><img width={50} height={50} src={PrepOutlined} alt="preparations" /></Button> {/* more of a to-do list item, maybe V2*/}
-               <Button className="filter-btn" onClick={()=> setCategoryFilter("")} size="large" disabled={disableClearBtn} shape="circle"><img width={45} height={45} src={ClearOutlined} alt="clear filter" /></Button>
+                <Button className="filter-btn" onClick={()=> setCategoryFilter("prep")} size="large"  shape="circle"><PushpinOutlined /></Button> {/* more of a to-do list item, maybe V2*/}
+               <Button className="filter-btn" onClick={()=> setCategoryFilter("")} size="large" disabled={disableClearBtn} shape="circle"><CloseCircleOutlined /></Button>
                     
             </div>
             <>

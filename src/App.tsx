@@ -1,17 +1,15 @@
-import { DollarOutlined, FileAddOutlined, SearchOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, DollarOutlined, FileAddOutlined, SearchOutlined } from '@ant-design/icons';
 import { Button, ConfigProvider, Divider } from 'antd';
 import { useEffect, useState } from 'react';
 import { getAicArt } from './apis/main';
 import './App.scss';
 import bugs from "./assets/bugs.svg";
-import ClearOutlined from "./assets/noun-clear-4706196.svg";
 import ActivityEntry from './components/activityDetail/activityEntryForm';
 import ActivityViewer from './components/ActivityViewer/activityViewer';
 import ExpenseViewer from './components/ExpenseViewer/expenseViewer';
 import AppHeader from './components/Header/Header';
 import UserSelection from './components/UserSelection/userSelection';
 import { Image, TripRecord, User } from './utils/interfaces';
-import TripReviewer from './components/TripReviewer/tripReviewer';
 // import UserUpdateCreate from './components/UserUpdateOrCreate/userUpdateCreate';
 
 const ENV = import.meta.env.VITE_MODE;
@@ -117,7 +115,7 @@ const showExpensesViewFromBtn = () => {
             <SearchOutlined className="help-icon"  /> *Global search (not yet functional HAHA)
           </li>
           <li>
-          <img  className="help-icon" width={20} height={20} src={ClearOutlined} alt="exit ops" /> Close everything/return to activity list
+          <CloseCircleOutlined className="help-icon" />Close everything/return to activity list
           </li>
         </ul>
         <p>In Activities List: Double click to see activity detail. From detail page, you can edit or delete activity.</p>
@@ -216,7 +214,7 @@ const showExpensesViewFromBtn = () => {
 
     { activeUsr && viewTrip && (
       <>
-{ (showActEntry || showExpenseViewer) && <Button className="always-btn" shape="circle" onClick={() => { setShowActEntry(false); setShowExpenseViewer(false)}} size="large"><img width={60} height={60} src={ClearOutlined} alt="exit ops" /></Button>} 
+{ (showActEntry || showExpenseViewer) && <Button className="always-btn" shape="circle" onClick={() => { setShowActEntry(false); setShowExpenseViewer(false)}} size="large"><CloseCircleOutlined /></Button>} 
 
 { !showActEntry && <Button className="always-btn" shape="circle" onClick={addActivity} size="large"><FileAddOutlined /></Button>} 
 

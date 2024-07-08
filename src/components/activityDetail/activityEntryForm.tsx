@@ -1,14 +1,12 @@
-import { Form, Button, Radio, Input, DatePicker, ConfigProvider } from "antd";
-import {MinusCircleOutlined, PlusOutlined   } from "@ant-design/icons";
-import { ActionItem, User } from "../../utils/interfaces";
+import { CarOutlined, HomeOutlined, MinusCircleOutlined, PlusOutlined, PushpinOutlined, SmileOutlined } from "@ant-design/icons";
+import { Button, ConfigProvider, DatePicker, Form, Input, Radio } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { HomeOutlined, CarOutlined, SmileOutlined } from "@ant-design/icons";
-import FoodOutlined from "../../assets/noun-food-6439612.svg";
-import PrepOutlined from "../../assets/noun-notes-6829221.svg";
-import { addActivity } from "../../apis/main";
-import { useState } from "react";
-import { convertFormToAct } from "../../utils/activityConverter";
 import jsesc from "jsesc";
+import { useState } from "react";
+import { addActivity } from "../../apis/main";
+import FoodOutlined from "../../assets/noun-food-6439612.svg";
+import { convertFormToAct } from "../../utils/activityConverter";
+import { ActionItem, User } from "../../utils/interfaces";
 
 interface ActivityEntryProps {
 	setShowActEntry: (p: boolean) => void;
@@ -129,9 +127,9 @@ return (
         >
           <Radio.Group className="radio-group">
             <Radio.Button className="radio-item" key={"radio_1"} value="activity"><CarOutlined style={{color: "black"}} /></Radio.Button>
-            <Radio.Button className="radio-item" key={"radio_2"} value="food"><img width={45} height={45} src={FoodOutlined} alt="food" /></Radio.Button>
+            <Radio.Button className="radio-item" key={"radio_2"} value="food"><img width={54} height={54} src={FoodOutlined} alt="food" /></Radio.Button>
             <Radio.Button className="radio-item" key={"radio_3"} value="lodging"><HomeOutlined style={{color: "black"}} /></Radio.Button>
-            <Radio.Button className="radio-item" key={"radio_4"} value="prep"><img width={45} height={45} src={PrepOutlined} alt="preparations" /></Radio.Button>
+            <Radio.Button className="radio-item" key={"radio_4"} value="prep"><PushpinOutlined /></Radio.Button>
            {/* {ENV === "dev" && <Radio.Button key={"radio_5"} className="radio-item" value="test"><SmileOutlined style={{color: "black"}} /></Radio.Button> } */}
           </Radio.Group>
         </Form.Item>

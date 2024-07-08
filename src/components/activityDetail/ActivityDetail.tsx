@@ -1,9 +1,8 @@
-import { ArrowRightOutlined, CarOutlined, DeleteOutlined, EditOutlined, HomeOutlined, SmileOutlined } from "@ant-design/icons";
+import { ArrowRightOutlined, CarOutlined, DeleteOutlined, EditOutlined, HomeOutlined, PushpinOutlined, SmileOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider } from "antd";
 import { useCallback, useState } from "react";
 import { deleteActivity } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
-import PrepOutlined from "../../assets/noun-notes-6829221.svg";
 import { ActionItem, Category, User } from "../../utils/interfaces";
 import "./activityDetail.scss";
 import UpdateActivityEntry from "./activityUpdateForm";
@@ -29,7 +28,7 @@ const categoryIcon = (category:Category) => {
         case "lodging":
             return <HomeOutlined style={{color: "black", fontSize: 30, width: 30}} />;
         case "prep":
-            return <img width={40} height={40} src={PrepOutlined} alt="preparations" />;
+            return <PushpinOutlined style={{color: "black", fontSize: 30, width: 30}} />;
         case "test":
             return <SmileOutlined style={{color: "black", fontSize: 30, width: 30}} />;
     }

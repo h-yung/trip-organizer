@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button, ConfigProvider, Divider, Timeline } from "antd";
-import { HomeOutlined, CarOutlined, RightOutlined, UpOutlined, DownOutlined, FileAddOutlined } from "@ant-design/icons";
+import { HomeOutlined, CarOutlined, RightOutlined, UpOutlined, DownOutlined, PushpinOutlined, FileAddOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
-import PrepOutlined from "../../assets/noun-notes-6829221.svg";
-import ClearOutlined from "../../assets/noun-clear-4706196.svg";
 import { ActionItem, TripReview, User } from "../../utils/interfaces";
 // import ExpenseEntryForm from "../ExpenseViewer/expenseForm";
 import ActivityDetail from "../activityDetail/ActivityDetail";
@@ -190,10 +188,10 @@ const ActivityViewer = ({
                 <div className="controls-activity">
               {/* {ENV === "dev" &&  <Button className="filter-btn" onClick={()=> setCategoryFilter("test")} shape="circle" ><SmileOutlined style={{color: "black"}} /></Button>} */}
                 <Button className="filter-btn" onClick={()=> setCategoryFilter("activity")} size="large"  shape="circle" ><CarOutlined style={{color: "black"}} /></Button>
-                <Button className="filter-btn" onClick={()=> setCategoryFilter("food")} size="large"  shape="circle" ><img width={55} height={55} src={FoodOutlined} alt="food" /></Button>
+                <Button className="filter-btn" onClick={()=> setCategoryFilter("food")} size="large"  shape="circle" ><img style={{objectFit: "contain"}} width={48} height={48} src={FoodOutlined} alt="food" /></Button>
                 <Button className="filter-btn" onClick={()=> setCategoryFilter("lodging")} size="large"  shape="circle"><HomeOutlined style={{color: "black"}} /></Button>
-                <Button className="filter-btn" onClick={()=> setCategoryFilter("prep")} size="large"  shape="circle"><img width={50} height={50} src={PrepOutlined} alt="preparations" /></Button> {/* more of a to-do list item, maybe V2*/}
-               <Button className="filter-btn" onClick={()=> setCategoryFilter("")} size="large" disabled={disableClearBtn} shape="circle"><img width={45} height={45} src={ClearOutlined} alt="clear filter" /></Button>
+                <Button className="filter-btn" onClick={()=> setCategoryFilter("prep")} size="large"  shape="circle"><PushpinOutlined /></Button> {/* more of a to-do list item, maybe V2*/}
+                <Button className="filter-btn" onClick={()=> setCategoryFilter("")} size="large" disabled={disableClearBtn} shape="circle"><CloseCircleOutlined /></Button>
                     
             </div>
             <div className="grid-title-box">
