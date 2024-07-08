@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import {
 	CellClickedEvent,
+	ColDef,
 	GetQuickFilterTextParams,
 	ValueFormatterParams,
 } from "ag-grid-community";
@@ -32,43 +33,45 @@ export const useColDefs = (
 	};
 
 	return useMemo(
-		() => [
-			{
-				headerName: "Date-Time",
-				field: "startTime",
-				width: 180,
-				initialSort: "desc",
-				headerClass: ["left-align", "scale-up", "header-text"],
-				cellClass: ["left-align", "scale-up"],
-				hide: true,
-				onCellClicked,
-				valueFormatter: (p: ValueFormatterParams) => {
-					if (!p.value) return p.value;
-					dayjs.extend(localizedFormat);
-					return dayjs(p.value).format("L LT") ?? p.value;
+		() =>
+			[
+				{
+					headerName: "Date-Time",
+					field: "startTime",
+					width: 180,
+					initialSort: "desc",
+					headerClass: ["left-align", "scale-up", "header-text"],
+					cellClass: ["left-align", "scale-up"],
+					hide: true,
+					onCellClicked,
+					valueFormatter: (p: ValueFormatterParams) => {
+						if (!p.value) return p.value;
+						dayjs.extend(localizedFormat);
+						return dayjs(p.value).format("L LT") ?? p.value;
+					},
+					//2024-08-16T12:00:00Z this is ISO 8601
 				},
-				//2024-08-16T12:00:00Z this is ISO 8601
-			},
-			{
-				headerName: "Title",
-				field: "title",
-				width: 300,
-				headerClass: ["left-align", "scale-up", "header-text"],
-				cellClass: ["left-align", "scale-up"],
-				onCellClicked,
-			},
-			{
-				headerName: "Category",
-				field: "category",
-				getQuickFilterText: (p: GetQuickFilterTextParams) => p.value,
-				hide: true,
-			},
-			{
-				headerName: "Submitted by",
-				field: "submittedBy",
-				hide: true,
-			},
-		],
+				{
+					headerName: "Title",
+					field: "title",
+					width: 300,
+					headerClass: ["left-align", "scale-up", "header-text"],
+					cellClass: ["left-align", "scale-up"],
+					onCellClicked,
+				},
+				{
+					headerName: "Category",
+					field: "category",
+					getQuickFilterText: (p: GetQuickFilterTextParams) =>
+						p.value,
+					hide: true,
+				},
+				{
+					headerName: "Submitted by",
+					field: "submittedBy",
+					hide: true,
+				},
+			] as ColDef<ActionItem>[], // | ColGroupDef<TData>)[],
 		[]
 	);
 };

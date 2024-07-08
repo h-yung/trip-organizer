@@ -60,7 +60,7 @@ const ActivityViewer = ({
         setReviewForm(true);
     }
 
-    const onTimelineItemClicked = useCallback((e)=> {
+    const onTimelineItemClicked = useCallback((e:React.MouseEvent<HTMLDivElement>)=> {
         //get the correct data
         e.preventDefault();
         // console.log(e.currentTarget)
@@ -80,7 +80,7 @@ const ActivityViewer = ({
             return ({
                 label: dayjs(datum.startTime).format("ddd MMM DD h:mm A"),
                 children: 
-                <div key={datum._id} id={datum._id} onClick={onTimelineItemClicked}>
+                <div key={datum._id} id={datum._id} onClick={onTimelineItemClicked} role="button">
                     <h4 className="activity-title">{datum.title}</h4>
                     <span className="subtitle">{datum.location.nearestCity}</span>
                 </div>,
