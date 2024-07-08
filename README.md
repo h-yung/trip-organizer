@@ -30,11 +30,20 @@ The desktop UX is trash because time crunch lol! Someday we'll do breakpoints ag
 -   [x] Get, Add, Update, Delete travel action items.
 -   [x] Get, Add, Update, Delete expense items on the go.
     -   [x] CSV export.
+-   [ ] Make trip reviews visible to all.
+-   [ ] Add role-based restrictions for trip updates.
+
+**Latest updatees**
+
+-   Made trip_activities collection to conform with rest of collections.
+-   Simplified endpoint definitions.
+-   Created trip_reviews and flows to add and update trip review.
 
 ## To dos
 
 -   [x] Fix visual problems. **Ish?** Mobile only.
 -   [ ] Data entry.
+-   [ ] Clean up SCSS /repetitiveness.
 
 Bonus round:
 
@@ -42,7 +51,7 @@ Bonus round:
 -   [ ] Update graphics.
 -   [ ] Integrate better with Google maps.
 -   [ ] Checklist/todos (checklist item).
--   [ ] Add activity rating field (under Update endpt)
+-   [x] Add activity rating field (under Update endpt). **Created as trip review**
 
 ## Requirements
 
@@ -56,15 +65,20 @@ Mostly sticking to a consistent workflow/order of operations. General directory 
 2. Define basic endpoints needed for API.
 3. Write functions and test API with Postman.
 4. Inside server directory (update your .gitignore), create front-end directories.
-5. Design main workflows/pages. This was essentially a single page app, with few enough conditionals that I didn't bother using React Router. Although I could probably have used Context.
+5. Design main workflows/pages. This was essentially a single page app, with few enough conditionals that I didn't bother using React Router. **Mild regrets about this now.**
 6. Write components and very wasteful (S)CSS.
 7. Change your mind a few times about how to handle certain user flows.
 8. Rewrite the build and deploy scripts.
 9. Fiddle with the design for some hours using browser dev tools.
 10. Deploy and check functionality.
 
-If I had to restart, I would not have two package.json ...
-I didn't end up getting the Vite dev environment to play more nicely with the serverless functions. Is Hono worth looking at?
+If I had to restart,
+
+-   I would not have ended up with two package.json ...
+    I didn't end up getting the Vite dev environment to play more nicely with the serverless functions. Is Hono worth looking at?
+
+-   Try a relational database.
+    Mongo is familiar but the more I worked on this, the less it made sense that these documents were all together. Very repetitive storage and requesting.
 
 ## Future documentation/etc
 

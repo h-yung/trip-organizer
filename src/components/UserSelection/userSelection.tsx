@@ -36,9 +36,6 @@ const UserSelection = ({
     useEffect(()=> {
         async function getUsers(){
            const users = await getAllUsers();
-
-           console.log("all the users")
-           console.log()
            setUserOptions(users.documents);
         }
 

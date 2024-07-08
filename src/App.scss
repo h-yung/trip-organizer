@@ -82,6 +82,13 @@ body {
 	color: #888;
 }
 
+.grid-title-box {
+	display: flex;
+	align-items: baseline;
+	color: red;
+	margin-bottom: 0.5rem;
+}
+
 .titles {
 	font-weight: bold;
 	font-size: 0.8rem;
@@ -99,6 +106,7 @@ body {
 		margin: 2rem 0px;
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 
 		.trip-item {
 			//= send-btn-item
@@ -112,6 +120,14 @@ body {
 			color: #00c28e;
 			border: 4px solid #00c28e;
 			margin-bottom: 1rem;
+
+			> span {
+				display: inline-block;
+				max-width: 220px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
 
 			&:hover {
 				background: #00c28e;
@@ -135,7 +151,7 @@ body {
 	// justify-content: space-between;
 	flex-direction: column;
 	align-items: center;
-	border-bottom: 4px solid #00c28e;
+	// border-bottom: 4px solid #00c28e;
 
 	img {
 		width: 100%;
@@ -154,4 +170,12 @@ body {
 		margin-top: 0px;
 		background-color: #00c28e;
 	}
+}
+
+.finish-panel {
+	margin-top: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 1.5rem;
 }

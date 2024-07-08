@@ -54,7 +54,7 @@ const ActivityDetail = (
         if (ENV==="dev"){
             setShowActivityDetail(false);
         }
-        const response = await deleteActivity(selectedActivity!._id!, viewTrip);
+        const response = await deleteActivity(selectedActivity!._id!);
         if (response.deletedCount){
             //go back to main page, which should get refreshed list
             setShowActivityDetail(false);

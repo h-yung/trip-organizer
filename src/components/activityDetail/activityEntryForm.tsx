@@ -8,6 +8,7 @@ import PrepOutlined from "../../assets/noun-notes-6829221.svg";
 import { addActivity } from "../../apis/main";
 import { useState } from "react";
 import { convertFormToAct } from "../../utils/activityConverter";
+import jsesc from "jsesc";
 
 interface ActivityEntryProps {
 	setShowActEntry: (p: boolean) => void;
@@ -23,6 +24,8 @@ interface ActivityEntryProps {
 const ENV = import.meta.env.VITE_MODE;
 
 //need form reset
+//some detritus here from initially thinking to edit with same form
+//may replace everything with the update activity form /controlled values
 
 const ActivityEntry = (
     {
@@ -70,8 +73,8 @@ const ActivityEntry = (
             // console.log('Received values of form: ', entry.startTime);
         if (!editing){
             // = add
-            const response = await addActivity(entry, viewTrip);
-            console.log("RESPONSE:", response);
+            const response = await addActivity(entry);
+            console.log("RESPONSE:", jsesc(response));
             if (response?.insertedId) setIsSuccess(true);
             
         }

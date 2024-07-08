@@ -4,6 +4,7 @@ import {
 	ActivityUpdateFormValues,
 	Category,
 	isValidCategory,
+	TripReview,
 	User,
 } from "./interfaces";
 
@@ -91,4 +92,52 @@ export const convertFormToAct = (
 	if (itemId) entry._id = itemId;
 	console.log();
 	return entry;
+};
+
+interface ReviewConvertParams {
+	initValSet: Record<string, number | string | boolean>;
+	user: User;
+	tripName: string;
+	activities: ActionItem[]; //also have to glue the activity.title back in :/
+	reviewId?: string;
+}
+
+export const convertFormToReview = ({
+	initValSet,
+	user,
+	tripName,
+	activities, //also have to glue the activity.title back in :/
+	reviewId,
+}: ReviewConvertParams): TripReview => {
+	const start = structuredClone(initValSet);
+	delete start.comment;
+	delete start.recommend;
+
+	const ratings = [];
+
+	for (const key in start) {
+		//get the title back
+		const { title } = activities.find(
+			(action) => action._id === key.toString()
+		)!;
+
+		ratings.push({
+			id: key.toString(),
+			rating: initValSet[key] as number,
+			title,
+		});
+	}
+	const finishedReview: TripReview = {
+		comment: initValSet.comment as string,
+		recommend: initValSet.recommend as boolean,
+		itemRatings: ratings,
+		submittedBy: user.lookupName,
+		submittedByUserId: user._id,
+		tripName,
+	};
+
+	//if has _id
+	if (reviewId) finishedReview._id = reviewId;
+
+	return finishedReview;
 };

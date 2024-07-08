@@ -1,35 +1,13 @@
 import jsesc from "jsesc";
-import { ActionItem, ExpenseItem } from "../utils/interfaces";
+import { ActionItem, ExpenseItem, TripReview } from "../utils/interfaces";
 const {
-	VITE_ADD_EXPENSE,
-	VITE_DELETE_EXPENSE,
 	VITE_GET_AIC,
-	VITE_GET_EXPENSE_ALL,
-	VITE_GET_USER_ALL,
-	VITE_GET_ACTIVITY_ALL,
-	VITE_DELETE_ACTION,
-	VITE_UPDATE_ACTION,
-	VITE_ADD_ACTION,
-	VITE_UPDATE_EXPENSE,
+	VITE_GET_ALL,
+	VITE_ADD_ONE,
+	VITE_UPDATE_ONE,
+	VITE_DELETE_ONE,
+	VITE_GET_REVIEW_TRIP_USER,
 } = import.meta.env;
-
-export const getAllUsers = async () => {
-	const url = VITE_GET_USER_ALL;
-	const response = await fetch(url);
-	return await response.json();
-};
-
-export const getAllActivity = async (collectionName: string) => {
-	const url = `${VITE_GET_ACTIVITY_ALL}?collectionName=${collectionName}`;
-	const response = await fetch(url);
-	return await response.json();
-};
-
-export const getAllExpenses = async (trip: string) => {
-	const url = `${VITE_GET_EXPENSE_ALL}?trip=${trip}`;
-	const response = await fetch(url);
-	return await response.json();
-};
 
 export const getAicArt = async (query?: string) => {
 	const url = `${VITE_GET_AIC}?trip=${query ?? ""}`;
@@ -48,9 +26,23 @@ export const getAicArt = async (query?: string) => {
      */
 };
 
+export const getAllUsers = async () => {
+	const url = `${VITE_GET_ALL}?collection=trip_users`;
+	const response = await fetch(url);
+	return await response.json();
+};
+
+export const getAllExpenses = async (trip: string) => {
+	const url = `${VITE_GET_ALL}?trip=${trip}&collection=trip_expenses`;
+	const response = await fetch(url);
+	return await response.json();
+};
+
 //deletedCount
 export const deleteExpense = async (expenseId: string) => {
-	const url = `${VITE_DELETE_EXPENSE}?itemId=${jsesc(expenseId)}`;
+	const url = `${VITE_DELETE_ONE}?itemId=${jsesc(
+		expenseId
+	)}&collection=trip_expenses`;
 	const response = await fetch(url);
 	return await response.json();
 };
@@ -62,7 +54,7 @@ export const addExpense = async (expenseItem: ExpenseItem) => {
 		body: JSON.stringify({ document: expenseItem }),
 	};
 
-	const url = `${VITE_ADD_EXPENSE}`;
+	const url = `${VITE_ADD_ONE}?collection=trip_expenses`;
 	const response = await fetch(url, config);
 	return await response.json();
 };
@@ -78,40 +70,42 @@ export const updateExpense = async (expenseItem: ExpenseItem) => {
 		body: JSON.stringify(document),
 	};
 
-	const url = `${VITE_UPDATE_EXPENSE}?itemId=${jsesc(_id)}`;
+	const url = `${VITE_UPDATE_ONE}?itemId=${jsesc(
+		_id
+	)}&collection=trip_expenses`;
 	const response = await fetch(url, config);
 	return await response.json();
 };
 
+export const getAllActivity = async (tripName: string) => {
+	const url = `${VITE_GET_ALL}?trip=${tripName}&collection=trip_activities`;
+	const response = await fetch(url);
+	return await response.json();
+};
+
 //deletedCount
-export const deleteActivity = async (activityId: string, trip: string) => {
-	const url = `${VITE_DELETE_ACTION}?itemId=${jsesc(
+export const deleteActivity = async (activityId: string) => {
+	const url = `${VITE_DELETE_ONE}?itemId=${jsesc(
 		activityId
-	)}&collectionName=${trip}`;
+	)}&collection=trip_activities`;
 	const response = await fetch(url);
 	return await response.json();
 };
 
 //insertedId
-export const addActivity = async (
-	activity: ActionItem,
-	collectionName: string
-) => {
+export const addActivity = async (activity: ActionItem) => {
 	const config = {
 		method: "POST",
 		body: JSON.stringify({ document: activity }),
 	};
 
-	const url = `${VITE_ADD_ACTION}?collectionName=${jsesc(collectionName)}`;
+	const url = `${VITE_ADD_ONE}?collection=trip_activities`;
 	const response = await fetch(url, config);
 	return await response.json();
 };
 
 //matchedCount, ModifyCount
-export const updateAction = async (
-	activity: ActionItem,
-	collectionName: string
-) => {
+export const updateAction = async (activity: ActionItem) => {
 	const document = JSON.parse(JSON.stringify(activity));
 	const { _id } = document;
 	delete document._id;
@@ -121,9 +115,57 @@ export const updateAction = async (
 		body: JSON.stringify(document),
 	};
 
-	const url = `${VITE_UPDATE_ACTION}?itemId=${jsesc(
+	const url = `${VITE_UPDATE_ONE}?itemId=${jsesc(
 		_id
-	)}&collectionName=${jsesc(collectionName)}`;
+	)}&collection=trip_activities`;
+	const response = await fetch(url, config);
+	return await response.json();
+};
+
+export const getTripReviewForUser = async (
+	tripName: string,
+	userId: string
+) => {
+	const url = `${VITE_GET_REVIEW_TRIP_USER}?trip=${tripName}&userId=${userId}`;
+	const response = await fetch(url);
+	return await response.json();
+};
+
+//deletedCount
+export const deleteTripReview = async (reviewId: string) => {
+	const url = `${VITE_DELETE_ONE}?itemId=${jsesc(
+		reviewId
+	)}&collection=trip_reviews`;
+	const response = await fetch(url);
+	return await response.json();
+};
+
+//insertedId
+export const addTripReview = async (review: TripReview) => {
+	const config = {
+		method: "POST",
+		body: JSON.stringify({ document: review }),
+	};
+
+	const url = `${VITE_ADD_ONE}?collection=trip_reviews`;
+	const response = await fetch(url, config);
+	return await response.json();
+};
+
+//matchedCount, ModifyCount
+export const updateTripReview = async (review: TripReview) => {
+	const document = JSON.parse(JSON.stringify(review));
+	const { _id } = document;
+	delete document._id;
+
+	const config = {
+		method: "POST",
+		body: JSON.stringify(document),
+	};
+
+	const url = `${VITE_UPDATE_ONE}?itemId=${jsesc(
+		_id
+	)}&collection=trip_reviews`;
 	const response = await fetch(url, config);
 	return await response.json();
 };

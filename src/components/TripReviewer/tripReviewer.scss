@@ -61,7 +61,8 @@
 	text-align: start;
 	display: flex;
 	justify-content: center;
-	text-align: right;
+	// text-align: left;
+	padding-left: 0.5rem;
 	line-height: 1.5rem;
 	font-size: 1rem;
 	text-transform: uppercase;
@@ -71,7 +72,7 @@
 	padding-left: 1rem;
 }
 
-.activity-form {
+.review-form {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -106,7 +107,7 @@
 		width: 100%;
 		flex-direction: column;
 		justify-content: space-between;
-		align-items: baseline;
+		align-items: center;
 
 		* {
 			margin-bottom: 0px;
@@ -129,24 +130,6 @@
 	// 	justify-content: center;
 	// 	width: 400px;
 	// }
-
-	.radio-group {
-		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-	.radio-item {
-		font-size: 2.2rem;
-		width: 80px;
-		height: 80px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		// background: red;
-		// margin-right: 0px;
-		// margin-left: 6px;
-	}
 
 	.form-subBlock {
 		margin: 1rem auto;

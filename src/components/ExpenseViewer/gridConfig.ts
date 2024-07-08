@@ -77,7 +77,7 @@ export const useColDefs = (
 				editable: editingEx,
 				width: 115,
 				getQuickFilterText: (p: GetQuickFilterTextParams) => p.value,
-
+				//replace with AutoComplete component
 				valueSetter: (p: ValueSetterParams) => {
 					if (!p.newValue) return false;
 					if (p.newValue) {

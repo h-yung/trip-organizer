@@ -20,6 +20,9 @@ const AppHeader = ({activeUsr, viewTrip, setViewTrip, setHelp, help}: AppHeaderP
         setViewTrip("");
     }
 
+    // const startReview = () => {
+    //   setReviewForm(true);
+    // }
 
     return (
         <ConfigProvider
@@ -47,7 +50,7 @@ const AppHeader = ({activeUsr, viewTrip, setViewTrip, setHelp, help}: AppHeaderP
                 >
                     <div role="button" className="trip-name-container">{viewTrip}</div>
                 </Popconfirm>
-                <Button className="help-btn" onClick={()=>{setHelp(!help)}}>{help ? <span className="titles">Hide</span> : <QuestionCircleOutlined />}</Button>
+                <Button className="help-btn" onClick={()=>{setHelp(!help)}}><QuestionCircleOutlined /></Button>
             </div>
             </ConfigProvider>
     )

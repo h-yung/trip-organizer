@@ -28,13 +28,30 @@ interface Vendor {
 	phoneNumber?: number;
 }
 
-export interface TripRecord {
+interface ItemRating {
+	title: string; //activity title
+	id: string; //activity _id
+	rating: number;
+}
+
+export interface TripReview {
+	_id?: string;
+	itemRatings: ItemRating[];
+	comment: string;
+	recommend: boolean;
 	tripName: string;
-	role: Role;
+	submittedBy: string; //user lookup name.  this is the compromise of not using relational DB - not fetching endlessly for a readable user name.
+	submittedByUserId: string; //user _id
+}
+
+export interface TripRecord {
+	tripName: string; //should convert to an id... and the database to a collection...
+	role: Role[];
+	// review?: //moved out. for now, triprecord is attached to the User doc.
 }
 
 export interface User {
-	_id?: string;
+	_id: string;
 	displayName: string;
 	lookupName: string;
 	createdDate: string; //"YYYYMMDD"
@@ -66,7 +83,7 @@ export interface ActionItem {
 	_id?: string;
 	category: Category;
 	submittedBy?: string; //user.lookupName
-	trip: string;
+	trip: string; //replace with tripId...
 	startTime?: Date; //check ...
 	title: string;
 	details: string;

@@ -11,6 +11,7 @@ import ExpenseViewer from './components/ExpenseViewer/expenseViewer';
 import AppHeader from './components/Header/Header';
 import UserSelection from './components/UserSelection/userSelection';
 import { Image, TripRecord, User } from './utils/interfaces';
+import TripReviewer from './components/TripReviewer/tripReviewer';
 // import UserUpdateCreate from './components/UserUpdateOrCreate/userUpdateCreate';
 
 const ENV = import.meta.env.VITE_MODE;
@@ -27,7 +28,11 @@ function App() {
       createdDate: "20240705",
       avatarRef: "bugs", //string
       avatar: bugs,
-      trips: [{tripName: "test_trip_2024", role: "participant"}]
+      trips: [
+        {tripName: "test_trip_2024", role: ["participant"]},
+        {tripName: "super_long_trip_name_hello", role: ["participant", "admin"]},
+        {tripName: "third_trip", role: ["readOnly"]}
+      ]
     } : null
   
   );
@@ -38,6 +43,7 @@ function App() {
 
   const [artImg, setArtImg] = useState<Image | null>(null);
 
+  const [reviewForm, setReviewForm] = useState(false);
 
   const [ showExpenseViewer, setShowExpenseViewer ] = useState(false);
   const [ showActEntry, setShowActEntry ] = useState(false); //maybe just set for editing similarily but pass a variable
@@ -84,16 +90,12 @@ const showExpensesViewFromBtn = () => {
 }, []);
 
   return (
-    <
-    //   div 
-    // style={{display: "flex", flexDirection: "column", alignItems: "center",
-    //   width:"100%",
-    //   flex:1
-    //   // height: "100vh"
-
-    // }}
-    >
-    <AppHeader activeUsr={activeUsr} viewTrip={viewTrip} setViewTrip={setViewTrip} setHelp={setHelp} help={help} />
+    <>
+    <AppHeader 
+    activeUsr={activeUsr} 
+    viewTrip={viewTrip} setViewTrip={setViewTrip} 
+    setHelp={setHelp} help={help} 
+    />
   <div className="main-app">
 
     { help && (
@@ -139,7 +141,6 @@ const showExpensesViewFromBtn = () => {
       viewTrip={viewTrip}
       />
   )}
-
   { 
     !showActEntry && !showExpenseViewer && (
       !activeUsr ? (
@@ -165,9 +166,14 @@ const showExpensesViewFromBtn = () => {
               {activeUsr.trips.map((trip:TripRecord) => {
                 return <div 
                 key={trip.tripName}
-                style={{display: "flex", justifyContent: "center"}}
+                style={{display: "flex", alignItems: "center"}}
                 
-                ><Button className="trip-item" size="large" id={trip.tripName} onClick={chooseTrip}>{trip.tripName}</Button></div>
+                >
+                  <Button className="trip-item" size="large" id={trip.tripName} onClick={chooseTrip}>
+                    {trip.tripName}
+                  </Button>
+                 
+                  </div>
               })}
           </div>
           </ConfigProvider>
@@ -189,7 +195,12 @@ const showExpensesViewFromBtn = () => {
           </div>
         )
           : (
-              <ActivityViewer user={activeUsr} viewTrip={viewTrip} />
+              <ActivityViewer 
+                user={activeUsr} 
+                viewTrip={viewTrip} 
+                setReviewForm={setReviewForm}
+                reviewForm={reviewForm}
+              />
             
         )
     )
@@ -200,7 +211,6 @@ const showExpensesViewFromBtn = () => {
      <div className="footer">
 
     { activeUsr && viewTrip && (
-
       <>
 { (showActEntry || showExpenseViewer) && <Button className="always-btn" shape="circle" onClick={() => { setShowActEntry(false); setShowExpenseViewer(false)}} size="large"><img width={60} height={60} src={ClearOutlined} alt="exit ops" /></Button>} 
 

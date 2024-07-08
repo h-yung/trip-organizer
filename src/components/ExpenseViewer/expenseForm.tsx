@@ -6,6 +6,7 @@ import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import PrepOutlined from "../../assets/noun-notes-6829221.svg";
 import { addExpense } from "../../apis/main";
 import { useState } from "react";
+import jsesc from "jsesc";
 
 //some detritus here from initially thinking to edit expense with the form
 
@@ -92,7 +93,7 @@ const ExpenseEntry = (
         // if (!editing){
             // = add
             const response = await addExpense(entry);
-            console.log("RESPONSE:", response);
+            console.log("RESPONSE:", jsesc(response));
             if (response?.insertedId) setIsSuccess(true);
         // }
         //if (editing === true && selectedExpense) {} //need to prepopulate information and display as defaults

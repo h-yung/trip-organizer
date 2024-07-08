@@ -68,7 +68,7 @@ const UpdateActivityEntry = (
     const submit = async (values: any) => {
         const entry = convertFormToAct(values, user, viewTrip, selectedActivity._id);
 
-        const update = await updateAction(entry, viewTrip);
+        const update = await updateAction(entry);
 
         if (ENV === "dev") {
             
