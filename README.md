@@ -30,6 +30,7 @@ UI libraries:
 Free icons from FlatIcon and some personal graphics
 
 Additional art, etc. credits to the AIC (Art Institute of Chicago) API
+
 Potential img hosting: PixaBay
 
 The desktop UX is trash because time crunch lol! Someday we'll do breakpoints again...
