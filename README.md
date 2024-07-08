@@ -1,7 +1,9 @@
 # trip-organizer
 
 A lightweight mobile-first, desktop-unfriendly app with serverless API that keeps important travel information accessible on the go, with the option to log expenses. Simple password lock.
-Site is live but behind password lock. Server functions not included in public repo.
+
+Site is live but behind password lock. 
+Server functions not included in public repo.
 
 ## Features
 
