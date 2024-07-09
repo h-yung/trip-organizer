@@ -64,7 +64,6 @@ const UserSelection = ({
 
                         const svg = avatarDictionary.find(({ref}:AvatarItem)=> ref === avatarRef)?.svg;
                         return (
-                            <>
                             <Link to="/trip-selection"
                             key={_id} 
                                 >
@@ -86,7 +85,6 @@ const UserSelection = ({
                                 >{displayName}</span>
                             </div>
                             </Link>
-                            </>
                         )
                     }
                 )}
