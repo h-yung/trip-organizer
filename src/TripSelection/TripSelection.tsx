@@ -42,12 +42,12 @@ export default function TripSelection(
 
     if (ENV === "dev"){
         setArtImg({
-        title: "Arty art Long Name Long NameLong Name Long NameLong Name Long NameLong Name Long Name",
-        artist_title: "Artist Person Long Name Long Name Long Name Long Name",
-        date_display: "1800-1815",
+        title: "Chicago",
+        artist_title: "Ricky Esquivel, Pexels",
+        date_display: "Mar 22, 2016",
         image_id: "1001010101",
         alt_text: "test art image",
-        url: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg"
+        url: "https://images.pexels.com/photos/1563256/pexels-photo-1563256.jpeg"
         });
     } else {
         getArt(); //no query for now
