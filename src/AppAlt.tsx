@@ -105,8 +105,8 @@ function App() {
                 />} />}
           <Route path="help" element={<HelpPage />} />
 
-          <Route path="*" element={<NoPage />} />
           {/* <Route path="*" element={<NoPage />} /> */}
+          <Route path="*" element={<UserSelection setUser={setActiveUsr} />} />
 
         </Route>
       </Routes>
