@@ -36,24 +36,13 @@ Potential img hosting: PixaBay
 The desktop UX is trash because time crunch lol! Someday we'll do breakpoints again...
 
 ## To dos
-
+Mostly moved into Issues section.
 -   [x] Fix visual problems. **Ish?** Mobile only.
 -   [ ] Data entry.
 -   [ ] Clean up SCSS /repetitiveness.
 -   [x] Timeline view for activities. Could be a nicer at-a-glance thing although I like the AG Grid functionality. Why not both.
-
-Bonus round:
-
--   [ ] Let user make a new trip. Set up some invite workflow... after better authentication.
--   [ ] Speaking of which, the user retrieval needs a bit more specificity.
--   [ ] User avatar/username selection (user item). Get req only for now.
 -   [ ] Update graphics.
--   [ ] Integrate better with Google maps.
--   [ ] Checklist/todos (checklist item). Maybe convert "Prep" category activity to this with additional status keys.
-    -   Enable assigning to other trip users
-        -   (requires retrieval of all users for a given trip)
-        -   limit this to admin role?
-    -   Meh about this - results in a lot of double reporting. Just communicate with your trip buddies. Maybe limit to converting trip advisories/requirements or specific activity instructions into reminder checklist. Limit to being useful during travel.
+-   [ ] Integrate better with ~~Google maps~~ some map API.
 
 ### API
 
@@ -97,7 +86,7 @@ Mostly sticking to a consistent workflow/order of operations. General directory 
 2. Define basic endpoints needed for API.
 3. Write functions and test API with Postman.
 4. Inside server directory (update your .gitignore), create front-end directories.
-5. Design main workflows/pages. This was essentially a single page app, with few enough conditionals that I didn't bother using React Router. **Mild regrets about this now.**
+5. Design main workflows/pages. ~~This was essentially a single page app, with few enough conditionals that I didn't bother using React Router. **Mild regrets about this now.**~~ Fixed routing to use router. Should have plotted that out.
 6. Write components and very wasteful (S)CSS.
 7. Change your mind a few times about how to handle certain user flows.
 8. Rewrite the build and deploy scripts.
