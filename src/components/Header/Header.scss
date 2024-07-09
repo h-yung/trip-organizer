@@ -1,6 +1,5 @@
 .header-container {
 	width: 100%; //due to6position:fixed, it has no parent to ref, but 100vw actually exceeds all device widths
-	border: 1px solid red;
 	height: 50px;
 	position: fixed;
 	top: 0;
