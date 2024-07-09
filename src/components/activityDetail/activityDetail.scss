@@ -8,6 +8,13 @@
 	justify-content: center;
 	align-items: center;
 
+	.controls {
+		width: 90%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
 	.exit-btn {
 		// height: 100px;
 		// width: 100px;

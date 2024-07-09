@@ -81,7 +81,7 @@ const ActivityDetail = (
 
 <div className="detail-controls">
     <div 
-    style={{ width: "90%", display: "flex", justifyContent: "space-between"}}
+    className="controls"
     >
       <Link to={`/trip/${viewTrip}/activity/detail/${selectedActivity?._id}/update`}><Button className="btn" 
       size="large"  style={{border: "none", fontSize: "2rem" }}><EditOutlined /></Button> 
@@ -128,7 +128,7 @@ const ActivityDetail = (
                   <p>{details} </p>
 
                   <label>Links</label>
-                  { urls.length && urls[0] ? 
+                  { urls?.length && urls[0] ? 
                   <ul>
                         {urls.map(url => {
                             return (

@@ -108,7 +108,7 @@ return (
                     Cancel
                 </Link>
             </h2>
-           <p className="prepopulated">BY {user.displayName} FOR {viewTrip} </p>
+           <p className="prepopulated">by {user.displayName} for {viewTrip} </p>
            </div>
            
       <Form

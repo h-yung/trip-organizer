@@ -158,7 +158,7 @@ const ExpenseEntry = (
        
          <div className="entry-header">
             <h2 style={{marginRight: "1rem"}}>NEW Expense</h2>
-           <p className="prepopulated">BY {user.displayName} FOR {viewTrip} </p>
+           <p className="prepopulated">by {user.displayName} for {viewTrip} </p>
            </div>
         <label className="item-label">Category</label>
 
@@ -261,8 +261,8 @@ const ExpenseEntry = (
     <SuccessPage 
     path={`/trip/${viewTrip}/expenses`}
     customExitLine="Go back"
-    otherAction="Log another expense"
-    otherActionPath={`/trip/${viewTrip}/expenses/new`}
+    // otherAction="Log another expense"
+    // otherActionPath={`/trip/${viewTrip}/expenses/new`}
 />
 
 
