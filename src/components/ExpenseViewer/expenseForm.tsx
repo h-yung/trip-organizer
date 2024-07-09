@@ -7,6 +7,7 @@ import { addExpense } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { ExpenseItem, User } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
+import SuccessPage from "../Success/Success";
 
 //some detritus here from initially thinking to edit expense with the form
 
@@ -78,9 +79,14 @@ const ExpenseEntry = (
             //   'date-time-picker': fieldsValue['date-time-picker'].format('YYYY-MM-DD HH:mm:ss'),
            
             console.log('Received values of form: ', values, entry);
-            // console.log("editing?", editing);
-        // if (!editing){
-            // = add
+            
+            
+            if (ENV === "dev") {
+            
+                console.log("tis dev, submitted new expense");
+                setIsSuccess(true);
+                return;
+            }
             const response = await addExpense(entry);
             console.log("RESPONSE:", jsesc(response));
             if (response?.insertedId) setIsSuccess(true);
@@ -152,7 +158,7 @@ const ExpenseEntry = (
        
          <div className="entry-header">
             <h2 style={{marginRight: "1rem"}}>NEW Expense</h2>
-           <p className="prepopulated">By {user.displayName} for {viewTrip} </p>
+           <p className="prepopulated">BY {user.displayName} FOR {viewTrip} </p>
            </div>
         <label className="item-label">Category</label>
 
@@ -252,17 +258,12 @@ const ExpenseEntry = (
       </Form>
 
 ): (
-    <div className="finish-panel">
-        <SmileOutlined style={{fontSize: "6rem" }} />
-        <h2 className="exclamation">SUCCESS!</h2>
-        <p>...fully submitted.</p>
-        <Button className="send-btn-item" size="large" onClick={()=> setIsSuccess(false) }>
-            Add another expense
-        </Button>
-        <Link to="/expenses-viewer" className="send-btn-item secondary">
-            Go back
-        </Link>
-    </div>
+    <SuccessPage 
+    path={`/trip/${viewTrip}/expenses`}
+    customExitLine="Go back"
+    otherAction="Log another expense"
+    otherActionPath={`/trip/${viewTrip}/expenses/new`}
+/>
 
 
 )}

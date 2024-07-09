@@ -1,14 +1,14 @@
-import { useMemo } from "react";
-import { redirect } from "react-router-dom";
 import {
 	CellClickedEvent,
 	ColDef,
 	GetQuickFilterTextParams,
 	ValueFormatterParams,
 } from "ag-grid-community";
-import { ActionItem } from "../../utils/interfaces";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { ActionItem } from "../../utils/interfaces";
 
 export const defaultColDefs = {
 	sortable: true,
@@ -24,13 +24,17 @@ export const actGridOptions = {
 };
 
 export const useColDefs = (
-	setSelectedActivity: (p: null | ActionItem) => void
+	setSelectedActivity: (p: null | ActionItem) => void,
+	viewTrip: string
 ) => {
+	const navigate = useNavigate();
 	const onCellClicked = (p: CellClickedEvent) => {
+		console.log("clicked");
 		const { data } = p;
 		setSelectedActivity(data);
-		return redirect("/");
-		// setShowActivityDetail(true); //need this to redirect
+		console.log(data);
+		console.log(`/trip/${viewTrip}/activity/detail/${data._id}`);
+		navigate(`/trip/${viewTrip}/activity/detail/${data._id}`);
 	};
 
 	return useMemo(

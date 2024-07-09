@@ -61,6 +61,13 @@ const ActivityEntry = (
             const entry = convertFormToAct(values, user, viewTrip);
            
             // console.log('Received values of form: ', entry.startTime);
+
+            if (ENV === "dev"){
+                console.log("tis dev, submitted new activity");
+                console.log(entry);
+                setIsSuccess(true);
+                return;
+            }
             const response = await addActivity(entry);
             console.log("RESPONSE:", jsesc(response));
             if (response?.insertedId) setIsSuccess(true);
@@ -90,7 +97,7 @@ return (
     <>
         <div className="entry-header">
         <h2>NEW Activity</h2>
-        <p className="prepopulated new">By {user.displayName} for {viewTrip} </p>
+        <p className="prepopulated new">BY {user.displayName} FOR {viewTrip} </p>
         </div>
       <Form
         className="activity-form"
@@ -316,20 +323,28 @@ return (
       </Form>
     </>
 ): (
-    <div className="finish-panel">
-        <SmileOutlined style={{fontSize: "6rem" }} />
-        <h2 className="exclamation">SUCCESS!</h2>
-        <p>...fully submitted.</p>
-        <Button className="send-btn-item" size="large" onClick={()=> setIsSuccess(false) }>
-            Add another entry
-        </Button>
-        <Link to="/" className="send-btn-item secondary" //onClick={exitForm}>
-        >
-            Go back
-        </Link>
-    </div>
 
-    // <SuccessPage path="/" customExitLine="Go back" />
+
+    <SuccessPage 
+        path={`/trip/${viewTrip}/activity`}
+        customExitLine="Go back"
+        // otherAction="Add another entry"
+        // otherActionPath={`/trip/${viewTrip}/activity/new`}
+    />
+
+    // <div className="finish-panel">
+    //     <SmileOutlined style={{fontSize: "6rem" }} />
+    //     <h2 className="exclamation">SUCCESS!</h2>
+    //     <p>...fully submitted.</p>
+    //     <Button className="send-btn-item" size="large" onClick={()=> setIsSuccess(false) }>
+    //         Add another entry
+    //     </Button>
+    //     <Link to={`/trip/${viewTrip}/activity`} className="send-btn-item secondary" //onClick={exitForm}>
+    //     >
+    //         Go back
+    //     </Link>
+    // </div>
+
 
 
 )}

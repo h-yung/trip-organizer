@@ -181,7 +181,8 @@ const ExpenseViewer = ({
             <div className="exp-group">
             
             <Button className="special-btn" onClick={exportExpenses}><DownloadOutlined /></Button>
-            <Link to="/expenses-new" className="special-btn"><PlusOutlined /></Link>
+            <Link to={`/trip/${viewTrip}/expenses/new`}>
+            <Button className="special-btn"><PlusOutlined /></Button></Link>
             </div>
         </div>
         </ConfigProvider>

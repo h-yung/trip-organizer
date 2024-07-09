@@ -50,7 +50,7 @@ const ActivityViewer = ({
     // const toggleFormVisibility = () => { setShowExpenseForm(!showExpenseForm)};
 
     const onGridReady = (params:GridReadyEvent) => { activityRef.current = params.api; };
-    const columnDefs = useColDefs(setSelectedActivity);
+    const columnDefs = useColDefs(setSelectedActivity, viewTrip);
 
     const allowReview = useMemo(()=>{
       //if user was a trip participant
@@ -79,7 +79,7 @@ const ActivityViewer = ({
                 label: dayjs(datum.startTime).format("ddd MMM DD h:mm A"),
                 children: 
                 <div key={datum._id} id={datum._id} onClick={onTimelineItemClicked} role="button">
-                    <Link to="/activity-detail">
+                    <Link to={`/trip/${viewTrip}/activity/detail/${datum._id}`}>
                         <h4 className="activity-title">{datum.title}</h4>
                         <span className="subtitle">{datum.location.nearestCity}</span>
                     </Link>
@@ -180,7 +180,7 @@ const ActivityViewer = ({
             reverse={reverse}
             /> 
             <div style={{display:"flex", justifyContent: "center", width: "100%"}}>
-                {allowReview && <Link to="/trip-reviewer"><Button className="titles review" //onClick={startReview} 
+                {allowReview && <Link to={`/trip/${viewTrip}/review/edit`}><Button className="titles review" //onClick={startReview} 
                 icon={<StarFilled />}>
                 { !tripReview ? "Review this trip" : "Edit trip review"}</Button>
                 </Link>}

@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 
 
 export default function NoPage() {
     return (
         <>
-            <h2>There is no page. Bye</h2>
+            <h2>404</h2>
+            <Link to={`/`}>Return to user selection</Link>
         </>
     )
 }

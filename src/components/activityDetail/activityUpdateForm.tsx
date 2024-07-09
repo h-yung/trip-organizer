@@ -7,6 +7,7 @@ import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { convertActForForm, convertFormToAct } from "../../utils/activityConverter";
 import { ActionItem, User } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
+import SuccessPage from "../Success/Success";
 
 interface UpdateActivityEntryProps {
     user: User;
@@ -62,6 +63,10 @@ const UpdateActivityEntry = (
         if (ENV === "dev") {
             
             setSelectedActivity(entry);
+            
+            console.log("tis dev, submitted update activity");
+            setIsSuccess(true);
+            return;
         }
 
         if (update.matchedCount && update.modifiedCount && update.matchedCount === update.modifiedCount) {
@@ -96,14 +101,14 @@ return (
     <div className="entry-header">
             <h2>
                 <span>Updating Activity</span> 
-                <Link to="/"
+                <Link to={`/trip/${viewTrip}/activity`} 
                 className="cancel-update-btn"
                  // style={{width: 200}} //wouldn't take from scss..
                 >
                     Cancel
                 </Link>
             </h2>
-           <p className="prepopulated">By {user.displayName} for {viewTrip} </p>
+           <p className="prepopulated">BY {user.displayName} FOR {viewTrip} </p>
            </div>
            
       <Form
@@ -334,19 +339,10 @@ return (
       </Form>
       </>
 ): (
-    <div className="finish-panel">
-        <SmileOutlined style={{fontSize: "6rem" }} />
-        <h2 className="exclamation">SUCCESS!</h2>
-        <p>...fully submitted.</p>
-        <Button className="send-btn-item" size="large" onClick={()=> setIsSuccess(false) }>
-            Add another entry
-        </Button>
-        <Link to="/" className="send-btn-item secondary" // onClick={exitForm}
-        >
-            Go back
-        </Link>
-    </div>
-
+    <SuccessPage 
+    path={`/trip/${viewTrip}/activity/detail/${selectedActivity._id}`} //may have to lift this to customize more freely
+    customExitLine="Go back"
+/>
 
 )}
 

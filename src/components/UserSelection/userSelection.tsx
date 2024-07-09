@@ -6,6 +6,8 @@ import { AvatarItem, User } from "../../utils/interfaces";
 import bugs from "../../assets/bugs.svg";
 
 import "./userSelection.scss";
+import { sampleUsers } from "../../utils/sampleData";
+import { Link } from "react-router-dom";
 
 const ENV = import.meta.env.VITE_MODE;
 
@@ -21,7 +23,7 @@ const UserSelection = ({
 
     const assignUser = useCallback((event:any)=> {
 
-        event.preventDefault();
+        // event.preventDefault();
         const activeUser = userOptions.find((opt:User)=> opt._id === event.currentTarget.id);
 
         // console.log(userOptions.map(usr => usr._id))
@@ -44,20 +46,8 @@ const UserSelection = ({
         }
 
         if (ENV === "dev"){
-            setUser({
-                _id: "doot",
-                displayName: "Test",
-                lookupName: "app_developer",
-                createdDate: "20240705",
-                avatarRef: "bugs", //string
-                avatar: bugs,
-                trips: [
-                  {tripName: "test_trip_2024", role: ["participant"]},
-                  {tripName: "super_long_trip_name_hello", role: ["participant", "admin"]},
-                  {tripName: "third_trip", role: ["readOnly"]}
-                ]
-              });
-              return;
+            setUserOptions(sampleUsers);
+            return;
         }
         getUsers();
     },[])
@@ -74,8 +64,11 @@ const UserSelection = ({
 
                         const svg = avatarDictionary.find(({ref}:AvatarItem)=> ref === avatarRef)?.svg;
                         return (
-                            <div className="avatar-group"
-                                key={_id} 
+                            <>
+                            <Link to="/trip-selection"
+                            key={_id} 
+                                >
+                                <div className="avatar-group"
                                 id={_id}
                                 onClick={assignUser}
                                 role="button"
@@ -83,8 +76,17 @@ const UserSelection = ({
                                 {svg && <img src={svg} 
                                 key={_id} 
                                 className="avatar-img" alt="animal icon avatar"/> }
-                                <span>{displayName}</span>
+                                <span
+                                    style={{
+                                        letterSpacing: "0.1rem",
+                                        fontSize: "0.8rem",
+                                        color:"black",
+                                        textTransform: "uppercase"
+                                    }}//scss not overriding link
+                                >{displayName}</span>
                             </div>
+                            </Link>
+                            </>
                         )
                     }
                 )}

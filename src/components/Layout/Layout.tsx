@@ -36,7 +36,7 @@ function AppLayout({
             <Link to="/expenses-new">Expenses New</Link>
           </li>
           <li>
-            <Link to="/activity-update">Activity Update</Link>
+            <Link to="/activity/update">Activity Update</Link>
           </li>
           <li>
             <Link to="/activity-new">Activity New</Link>
@@ -45,7 +45,7 @@ function AppLayout({
             <Link to="/trip-selection">Trip Selection</Link>
           </li>
           <li>
-            <Link to="/trip-reviewer">Trip Reviewer</Link>
+            <Link to={`/trip/${viewTrip}/review/edit`}>Trip Reviewer</Link>
           </li>
         </ul>
       </nav> */}
@@ -61,8 +61,13 @@ function AppLayout({
     { activeUsr && viewTrip && (
       <>
 {/* (showActEntry || showExpenseViewer) && */}
-{ location.pathname !== "/" && location.pathname !== "/expenses-new" && location.pathname !== "/activity-detail" &&
-<Link to="/" >
+
+{ location.pathname !== `/trip/${viewTrip}/activity` && 
+location.pathname !== `/trip/${viewTrip}/expenses/new` && 
+//fix this
+!(location.pathname.includes("detail") && location.pathname.includes("activity")) &&
+//only show this button if currently NOT: activity viewer, new expense entry, or activity detail
+<Link to={`/trip/${viewTrip}/activity`} >
     <Button className="always-btn" shape="circle" onClick={() => { 
     console.log("back to activities")
     }} size="large">
@@ -70,9 +75,12 @@ function AppLayout({
     </Button>
 </Link> }
 
-
-{ location.pathname !== "/activity-new" && location.pathname !== "/activity-update" && 
-    <Link to="/activity-new">
+{ 
+//fix this
+location.pathname !== `/trip/${viewTrip}/activity/new` && 
+//`/trip/${viewTrip}/activity/detail/:activityId/update`
+!(location.pathname.includes("update") && location.pathname.includes("activity")) && 
+    <Link to={`/trip/${viewTrip}/activity/new`}>
         <Button className="always-btn" shape="circle" //onClick={(addActivity} size="large"
         >
             <FileAddOutlined />
@@ -80,8 +88,8 @@ function AppLayout({
     </Link> 
 }
 
-{ location.pathname !== "/expenses-viewer" &&
-    <Link to="/expenses-viewer">
+{ location.pathname !== `/trip/${viewTrip}/expenses` &&
+    <Link to={`trip/${viewTrip}/expenses`}>
         <Button className="always-btn" shape="circle" 
         ><DollarOutlined /></Button>
     </Link>

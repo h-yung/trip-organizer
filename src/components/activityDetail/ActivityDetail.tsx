@@ -1,17 +1,18 @@
 import { ArrowRightOutlined, CarOutlined, DeleteOutlined, DollarOutlined, EditOutlined, FileAddOutlined, HomeOutlined, PushpinOutlined, SmileOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider } from "antd";
+import { Button, ConfigProvider, Popconfirm } from "antd";
 import { useCallback, useState } from "react";
 import { deleteActivity } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { ActionItem, Category, User } from "../../utils/interfaces";
 import "./activityDetail.scss";
 import UpdateActivityEntry from "./activityUpdateForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ENV = import.meta.env.VITE_MODE;
 
 interface ActivityDetailProps {
     setSelectedActivity: (p: null | ActionItem) => void;
+    viewTrip: string;
 	// setShowActivityDetail: (p: boolean) => void;
     selectedActivity: ActionItem | null;
     // query: string; //global search
@@ -34,23 +35,29 @@ const categoryIcon = (category:Category) => {
 };
 
 const ActivityDetail = (
-    {setSelectedActivity, selectedActivity,
+    {setSelectedActivity, selectedActivity, viewTrip
         //  setShowActivityDetail, 
     }: ActivityDetailProps
 ) => {
 
+    const navigate = useNavigate();
 
     const { title, startTime, location, advisory, details, vendor, urls } = selectedActivity!;
 
     const sendActivityToTrash = useCallback(async () => {
         if (ENV==="dev"){
             // setShowActivityDetail(false);
+            console.log("dev: nah but back to main activity page");
+            navigate(`/trip/${viewTrip}/activity`);
+            return;
+            
         }
         const response = await deleteActivity(selectedActivity!._id!);
         if (response.deletedCount){
             //go back to main page, which should get refreshed list
-            // setShowActivityDetail(false);
-            console.log("YAY DELETED SUCCESSFULLY")
+            setSelectedActivity(null);
+            console.log("YAY DELETED SUCCESSFULLY");
+            navigate(`/trip/${viewTrip}/activity`);
         }
 
 
@@ -72,16 +79,20 @@ const ActivityDetail = (
             }}
           >
 
-
-    <div className="activity-detail-container">
-    <div className="detail-controls">
-      <Link to="/expenses-new"><Button className="btn" 
-      //onClick={()=> setEditing(true)} 
+<div className="detail-controls">
+    <div 
+    style={{ width: "90%", display: "flex", justifyContent: "space-between"}}
+    >
+      <Link to={`/trip/${viewTrip}/activity/detail/${selectedActivity?._id}/update`}><Button className="btn" 
       size="large"  style={{border: "none", fontSize: "2rem" }}><EditOutlined /></Button> 
       </Link>
 
-     <Link className="exit-btn" to="/" style={{width: 200}} ><span style={{fontSize:"1rem", textTransform: "uppercase", }}>Back </span><ArrowRightOutlined /></Link>
-      </div>
+     <Link className="exit-btn" to={`/trip/${viewTrip}/activity`} style={{width: 200}} >
+     <span style={{fontSize:"1rem", textTransform: "uppercase" }}>Back </span><ArrowRightOutlined />
+     </Link>
+     </div>
+</div>
+    <div className="activity-detail-container">
       <div>
           <a className="bare-link" href={location.mapUrl} target="_blank"><h3>View Map</h3></a>
       </div>
@@ -134,33 +145,16 @@ const ActivityDetail = (
               </div>
              } 
              <div>
-             <Link to="/"><DeleteOutlined className="bin-btn" onClick={sendActivityToTrash}  /></Link> 
+             <Popconfirm title="Remove?"
+                     onConfirm={sendActivityToTrash}
+                     placement="bottom"
+                >
+                    <DeleteOutlined className="bin-btn"/>
+                </Popconfirm>
+             {/* <Link to={`/trip/${viewTrip}/activity`}><DeleteOutlined className="bin-btn" onClick={sendActivityToTrash}  /></Link>  */}
              {/* check operationally - this needs an async patch */}
              </div>
      </div>
-       
-
-    <div className="footer">
-
-    {/* below already exists at top of detail page - back to activities */}
-        {/* <Link to="/" ><Button className="always-btn" shape="circle" onClick={() => { 
-        console.log("back to activities")
-        }} size="large"><CloseCircleOutlined /></Button></Link> */}
-
-        {/* { !showActEntry &&  */}
-        <Link to="/activity-new">
-        <Button className="always-btn" shape="circle" //onClick={(addActivity} size="large"
-        ><FileAddOutlined /></Button></Link> 
-
-
-        <Link to="/expenses-viewer">
-        <Button className="always-btn" shape="circle" 
-        ><DollarOutlined /></Button></Link>
-
-        {/* <Button className="always-btn" shape="circle" onClick={()=> console.log("search")}><SearchOutlined /></Button> */}
- 
-    </div>
-        
            
         </ConfigProvider>
     )

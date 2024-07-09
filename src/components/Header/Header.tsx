@@ -3,7 +3,7 @@ import { User } from '../../utils/interfaces';
 import { useMemo } from "react";
 import { Button, ConfigProvider, Popconfirm } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import { Link, redirect } from "react-router-dom";
+import { Link, redirect, useLocation, useNavigate } from "react-router-dom";
 
 interface AppHeaderProps {
     activeUsr: User | null;
@@ -13,17 +13,28 @@ interface AppHeaderProps {
 
 }
 const AppHeader = ({
-  activeUsr, viewTrip, setViewTrip,setActiveUsr
+  activeUsr, viewTrip, setViewTrip
 
 }: AppHeaderProps) => {
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const showName = useMemo(()=> activeUsr?.displayName.split(" ")[0],[activeUsr])
 
     const confirm = () => {
         setViewTrip("");
-        setActiveUsr(null);
-        // redirect("/user-selection");  //check
+        // setActiveUsr(null);
+        console.log("active user", activeUsr)
+        console.log("viewtrip set to ull, redirecting")
+        navigate("/trip-selection");  
     }
+    const switchUser = () => {
+      setViewTrip("");
+      // setActiveUsr(null);
+      // console.log("active user", activeUsr)
+      // console.log("viewtrip set to ull, redirecting")
+      navigate("/");  
+  }
 
     // const startReview = () => {
     //   setReviewForm(true);
@@ -42,21 +53,21 @@ const AppHeader = ({
             }}
           >
             <div className="header-container">
-                {!activeUsr  && <span className="titles">Hai there</span>}
+                {!activeUsr  && <span className="titles">Hallo</span>}
                 
                { activeUsr &&
 
-              <Popconfirm title="Switch user?"
-                onConfirm={confirm}
-                placement="bottom"
-                >
+              // <Popconfirm title="Switch user?"
+              //   onConfirm={switchUser}
+              //   placement="bottom"
+              //   >
                 <div className='avatar-group'>
                     {activeUsr.avatar && 
                     <img src={activeUsr.avatar} 
                         className="avatar-img" alt="animal icon avatar"/> }
                     <span className="titles">{showName}</span>
                 </div>
-                </Popconfirm>
+                // </Popconfirm>
               }
                 
                 <Popconfirm title="See a different trip?"
@@ -65,9 +76,19 @@ const AppHeader = ({
                 >
                     <div role="button" className="trip-name-container">{viewTrip}</div>
                 </Popconfirm>
-                <Link to="/help" className="help-btn">
-                  <QuestionCircleOutlined />
-                </Link>
+                 {location.pathname !== "/help" ? 
+                 <Link to="/help" className="help-btn">
+                    <QuestionCircleOutlined />
+                  </Link>
+                  :
+                  // <Button className="help-btn">
+                    <QuestionCircleOutlined
+                      className="help-btn"
+                      role="button"
+                      onClick={ ()=> navigate(-1)}
+                    />
+                  // </Button>
+                 }
             </div>
             </ConfigProvider>
     )

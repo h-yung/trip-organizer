@@ -158,13 +158,13 @@ return (
         <h2>
             <span>Trip Review</span> 
             <Link 
-            to="/"
+            to={`/trip/${viewTrip}/activity`}
             className="cancel-update-btn"
             >
                 Cancel
             </Link>
         </h2>
-        <p className="prepopulated">By {user.displayName} for {viewTrip} </p>
+        <p className="prepopulated">BY {user.displayName} FOR {viewTrip} </p>
     </div>
            
     <Form
@@ -251,7 +251,7 @@ return (
       </Form>
       </>
 ): (
-    <SuccessPage customExitLine={"Back to activities page"} path={"/"} />
+    <SuccessPage customExitLine={"Back to activities page"} path={`/trip/${viewTrip}/activity`} />
 
 )}
    </ConfigProvider>

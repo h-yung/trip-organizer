@@ -1,12 +1,13 @@
 .header-container {
-	width: 100%;
+	width: 100%; //due to6position:fixed, it has no parent to ref, but 100vw actually exceeds all device widths
+	border: 1px solid red;
 	height: 50px;
 	position: fixed;
 	top: 0;
 	left: 0;
 	padding: 0px 1.5rem;
 	// background: red;
-	background: #00c28e98;
+	background: #00c28ec3;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -17,12 +18,13 @@
 		display: flex;
 		align-items: center;
 		margin-right: 2rem;
-		width: 80px;
-		justify-content: space-between;
+		width: 120px;
+		// justify-content: space-between;
 	}
 
 	.avatar-img {
 		height: 40px;
+		margin-right: 0.5rem;
 		width: auto;
 		object-fit: contain;
 	}
@@ -34,7 +36,7 @@
 	}
 
 	.trip-name-container {
-		max-width: 160px;
+		width: 200px;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
@@ -42,6 +44,7 @@
 		font-size: 0.8rem;
 		letter-spacing: 0.05rem;
 		text-transform: uppercase;
+		text-align: left;
 
 		&:hover {
 			cursor: pointer;
@@ -56,8 +59,10 @@
 
 	.help-btn {
 		position: relative;
-		right: 2rem;
-		margin-left: 2rem;
+		width: 2rem;
+		padding: 0 2.5rem 0 0; //this is compensating temporarily for bad width
+		display: flex;
+		margin-left: 1rem;
 		font-size: 1.5rem;
 		height: 3rem;
 		background: transparent;

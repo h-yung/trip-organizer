@@ -1,8 +1,38 @@
+.detail-controls {
+	position: relative;
+	// top: 2.5rem;
+	height: 3rem;
+	width: 100%; //main-app width is not functioning properly; horiz.padding is compensating
+	padding: 1rem 5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.exit-btn {
+		// height: 100px;
+		// width: 100px;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		font-size: 3rem;
+		color: #00c28e;
+
+		// padding-right: 1rem;
+		border: none;
+		background: transparent;
+
+		&:hover {
+			background: transparent;
+		}
+	}
+}
 .activity-detail-container {
 	// height: 90vh;
 	margin-top: 1rem;
-	padding: 0 1rem;
 	text-align: left;
+	//again 100% width is not working properly
+	width: 90%;
+	padding: 0 1rem;
 
 	.bin-btn {
 		color: red;
@@ -22,32 +52,6 @@
 		font-size: 1rem;
 		color: #00c28e;
 		text-transform: uppercase;
-	}
-
-	.detail-controls {
-		position: relative;
-		// top: 2.5rem;
-		height: 3rem;
-		width: 100%;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-
-		.exit-btn {
-			// height: 100px;
-			// width: 100px;
-			display: flex;
-			justify-content: flex-end;
-			align-items: center;
-			font-size: 3rem;
-			padding-right: 1rem;
-			border: none;
-			background: transparent;
-
-			&:hover {
-				background: transparent;
-			}
-		}
 	}
 
 	label {
@@ -78,8 +82,8 @@
 .prepopulated {
 	// font-weight: bold;
 	letter-spacing: 0.1rem;
-	color: #00c28e;
-	font-weight: bold;
+	// color: #00c28e;
+	// font-weight: bold;
 	margin: 0px 1rem 6px 1rem;
 	border-left: 2px solid black;
 	text-align: start;
@@ -88,7 +92,7 @@
 	text-align: right;
 	line-height: 1.5rem;
 	font-size: 1rem;
-	text-transform: uppercase;
+	// text-transform: uppercase;
 }
 
 .prepopulated.new {
