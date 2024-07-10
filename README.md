@@ -106,7 +106,6 @@ If I had to restart,
 Create wrapper for Netlify serverless function + Mongo Data API.
 
 ## V1
+![trip-organizer_2](https://github.com/h-yung/trip-organizer/assets/102257735/f59d7681-b8a9-419c-9121-3e215fcc2e70)
 
-Left to right, top to bottom: trip list for user > activities list > activity detail > expenses viewer (exportable + can add) > editing expense > add new activity
 
-[![v1-screens](https://i.postimg.cc/bwGLX9nb/v1-screens.png)](https://i.postimg.cc/bwGLX9nb/v1-screens.png)
