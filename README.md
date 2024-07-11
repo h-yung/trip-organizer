@@ -50,7 +50,14 @@ Mostly moved into Issues section.
 - "I worry that wifi will not be reliable." It probably won't do well in those situations - need to allow some offline convenient downloading.
 - "Most event apps are used for navigation/wayfinding -even showing /highlighting the destination in a convention center (for example) would be an improvement on the typical experience (providing a floor map PDF). Also, it's hard to find activities that are actually interesting to me - requires reviewing long lists of activities to customize my schedule."
     - The second part is not super relevant to this app but noted...
-    - The navigation + offline needs is a problem I've kind of sidestepped (assuming the trip group created their own map resource, e.g., via Google Maps) but wanted to explore. Orientation problem: Where am I right now + where is that place ("where is it relative to me").
+    - The navigation + offline needs is a problem I've kind of sidestepped (assuming the trip group created their own map resource, e.g., via Google Maps) but wanted to explore. Orientation problem: Where am I right now + where is that place ("where is it relative to me").*
+
+*A deeper dive:
+While there's Wifi - 
+  - Snapshot/guess of last location (last activity on schedule)
+  - Location of next planned activity (if it's a sidetrip not in timeline, you're out of luck)
+  - Option for user get a snap of the two locations and download for offline access
+  - What's the minimum useful size and level of detail? Can the map indicate a visual path or at least highlight points A and B, and key landmarks/streets/crossings?
 
 ### API
 
