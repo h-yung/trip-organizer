@@ -92,7 +92,7 @@ function App() {
           } />}
 
         
-        {activeUsr && <Route path="trip-selection" element={<TripSelection
+        {activeUsr && <Route path="trip" element={<TripSelection
             activeUsr={activeUsr}
             setViewTrip={setViewTrip}
             setActiveUsr={setActiveUsr}

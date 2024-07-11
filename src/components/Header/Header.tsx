@@ -26,7 +26,7 @@ const AppHeader = ({
         // setActiveUsr(null);
         console.log("active user", activeUsr)
         console.log("viewtrip set to ull, redirecting")
-        navigate("/trip-selection");  
+        navigate("/trip");  
     }
     const switchUser = () => {
       setViewTrip("");

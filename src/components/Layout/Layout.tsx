@@ -43,7 +43,7 @@ function AppLayout({
             <Link to="/activity-new">Activity New</Link>
           </li>
           <li>
-            <Link to="/trip-selection">Trip Selection</Link>
+            <Link to="/trip">Trip Selection</Link>
           </li>
           <li>
             <Link to={`/trip/${viewTrip}/review/edit`}>Trip Reviewer</Link>
