@@ -100,10 +100,16 @@ const ActivityDetail = (
             
             <h2 style={{marginTop: "0.5rem"}}>{title}</h2>
 
+              {startTime ? 
               <div>
                   <label>Scheduled at</label>
                   <p>{startTime && new Date(startTime).toDateString()}</p>
               </div>
+              :
+              <div>
+                  <label>Update to add to schedule</label>
+                </div>}
+
               <div>
                   <label>Location</label>
                   <p>{location.address} | { location.nearestCity } | { location.country } {location.zipcode && location.nearestState && `| ${location.nearestState} ${location.nearestState }`} </p>
