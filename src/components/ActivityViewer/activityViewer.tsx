@@ -186,9 +186,7 @@ const ActivityViewer = ({
                 </Link>}
             </div>
             
-            <div>
-                <Button onClick={()=> navigate(`/trip/${viewTrip}/activity/map`)}>Map test</Button>
-            </div>
+        
         </>
                     
         <Divider type="horizontal" />
