@@ -17,7 +17,7 @@ export const convertActForForm = (
 		title: activity.title,
 		startTime: activity.startTime ? dayjs(activity.startTime) : undefined,
 		category: activity.category,
-		urls: activity.urls.length ? [...activity.urls] : [],
+		urls: activity.urls && activity.urls.length ? [...activity.urls] : [],
 		country: activity.location.country,
 		mapUrl: activity.location.mapUrl,
 		nearestCity: activity.location.nearestCity,
