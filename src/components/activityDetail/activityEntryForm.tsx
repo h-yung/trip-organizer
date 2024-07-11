@@ -64,14 +64,13 @@ const ActivityEntry = (
             if (ENV === "dev"){
                 console.log("tis dev, submitted new activity");
                 console.log(entry);
+                // setSelectedActivity(entry); //maybe need a way to force activityviewer to refresh
                 setIsSuccess(true);
                 return;
             }
             const response = await addActivity(entry);
             console.log("RESPONSE:", jsesc(response));
             if (response?.insertedId) setIsSuccess(true);
-            
-        //if (editing === true && selectedActivity) {} //need to prepopulate information and display as defaults
     }
 
     const onFinishFailed = () => {

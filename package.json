@@ -18,6 +18,7 @@
     "ag-grid-react": "^32.0.0",
     "antd": "^5.19.0",
     "dayjs": "^1.11.11",
+    "html2canvas": "^1.4.1",
     "jsesc": "^3.0.2",
     "mongodb": "^6.8.0",
     "react": "^18.3.1",

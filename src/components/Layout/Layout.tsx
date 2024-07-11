@@ -65,8 +65,7 @@ function AppLayout({
 
 { location.pathname !== `/trip/${viewTrip}/activity` && 
 location.pathname !== `/trip/${viewTrip}/expenses/new` && 
-//fix this
-!(location.pathname.includes("detail") && location.pathname.includes("activity")) &&
+// !(location.pathname.includes("detail") && location.pathname.includes("activity")) &&
 //only show this button if currently NOT: activity viewer, new expense entry, or activity detail
 <Link to={`/trip/${viewTrip}/activity`} >
     <Button className="always-btn" shape="circle" onClick={() => { 

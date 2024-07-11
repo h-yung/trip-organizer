@@ -11,7 +11,7 @@ import { getAllActivity, getTripReviewForUser } from "../../apis/main";
 import "./activityViewer.scss";
 
 import dayjs from "dayjs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { sampleActivities, sampleReviews } from "../../utils/sampleData";
 import { actGridOptions, defaultColDefs, useColDefs } from "./gridConfig";
 import { isPast } from "../../utils/timeStyleCheckers";
@@ -34,21 +34,19 @@ const ActivityViewer = ({
     user,
     viewTrip,
     setSelectedActivity,
+    selectedActivity,
     tripReview,
     setTripReview,
     rowData,
     setRowData
 }: ActivityViewerProps) => {
 
+    const navigate = useNavigate();
+
     const activityRef = useRef<GridApi<ActionItem>>(); //MutableRefObject<GridApi<ActionItem> | undefined >
-    // const [showExpenseForm, setShowExpenseForm] = useState(false);
-    // const [showActivityDetail, setShowActivityDetail] = useState(false);
-    // const [selectedActivity, setSelectedActivity] = useState<ActionItem | null>(null);
 
     const [ categoryFilter, setCategoryFilter ] = useState(""); 
     const disableClearBtn = useMemo(()=> categoryFilter==="", [categoryFilter]);
-
-    // const toggleFormVisibility = () => { setShowExpenseForm(!showExpenseForm)};
 
     const onGridReady = (params:GridReadyEvent) => { activityRef.current = params.api; };
     const columnDefs = useColDefs(setSelectedActivity, viewTrip);
@@ -62,11 +60,9 @@ const ActivityViewer = ({
     const onTimelineItemClicked = useCallback((e:React.MouseEvent<HTMLDivElement>)=> {
         //get the correct data
         e.preventDefault();
-        // console.log(e.currentTarget)
         const matchedDatum = rowData.find(datum => datum._id === e.currentTarget.id)!;
         console.log(matchedDatum)
         setSelectedActivity(matchedDatum);
-		// setShowActivityDetail(true);
     },[rowData])
 
     //timeline
@@ -111,9 +107,8 @@ const ActivityViewer = ({
         }
        getActivities();
 
-    }, [viewTrip
-
-        //Trigger based on something else - TODO - FIX BELOW
+    }, [viewTrip, 
+        selectedActivity //Trigger based on something else - TODO - FIX BELOW
         // showActivityDetail, //inelegant, but there is a chance that user has edited an activity since visiting the detail bc workflow.
     ])
 
@@ -191,6 +186,9 @@ const ActivityViewer = ({
                 </Link>}
             </div>
             
+            <div>
+                <Button onClick={()=> navigate(`/trip/${viewTrip}/activity/map`)}>Map test</Button>
+            </div>
         </>
                     
         <Divider type="horizontal" />

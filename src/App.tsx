@@ -20,6 +20,7 @@ import NoPage from './components/noPage/NoPage';
 import TripSelection from './TripSelection/TripSelection';
 import { ActionItem, TripReview, User } from './utils/interfaces';
 import UserSelection from './components/UserSelection/userSelection';
+import ActivityMap from './components/activityDetail/activityDetailMap';
 // import UserUpdateCreate from './components/UserUpdateOrCreate/userUpdateCreate';
 
 const ENV = import.meta.env.VITE_MODE;
@@ -69,10 +70,6 @@ function App() {
                     setSelectedActivity={setSelectedActivity} 
                     selectedActivity={selectedActivity} 
                     />} />}
-        {viewTrip && <Route path="trip/:tripName/expenses" element={<ExpenseViewer
-              viewTrip={viewTrip}
-              />} />} 
-              {/* above, we can assume there won't be a viewtrip without an active user */}
 
         {activeUsr && selectedActivity && <Route path="trip/:tripName/activity/detail/:activityId/update" element={<UpdateActivityEntry
                 selectedActivity={selectedActivity}
@@ -84,11 +81,27 @@ function App() {
                 user={activeUsr}
                 viewTrip={viewTrip}
                 />} />}
+
+          {/* hardcoded experiment here */}
+          {activeUsr && <Route path="trip/:tripName/activity/map" element={
+            <ActivityMap
+            // activeUsr={activeUsr}
+            // setViewTrip={setViewTrip}
+            // setActiveUsr={setActiveUsr}
+          />
+          } />}
+
+        
         {activeUsr && <Route path="trip-selection" element={<TripSelection
             activeUsr={activeUsr}
             setViewTrip={setViewTrip}
             setActiveUsr={setActiveUsr}
           />} />}
+
+    {viewTrip && <Route path="trip/:tripName/expenses" element={<ExpenseViewer
+              viewTrip={viewTrip}
+              />} />} 
+              {/* above, we can assume there won't be a viewtrip without an active user */}
 
        {activeUsr && viewTrip && <Route path="trip/:tripName/expenses/new" element={
             <ExpenseEntry 
