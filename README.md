@@ -47,6 +47,10 @@ Mostly moved into Issues section.
 ## Early user feedback
 - "I'm not sure initially what the categories mean. Is there an indicator or can I also define them?"
 - "No one reads the help section."
+- "I worry that wifi will not be reliable." It probably won't do well in those situations - need to allow some offline convenient downloading.
+- "Most event apps are used for navigation/wayfinding -even showing /highlighting the destination in a convention center (for example) would be an improvement on the typical experience (providing a floor map PDF). Also, it's hard to find activities that are actually interesting to me - requires reviewing long lists of activities to customize my schedule."
+    - The second part is not super relevant to this app but noted...
+    - The navigation + offline needs is a problem I've kind of sidestepped (assuming the trip group created their own map resource, e.g., via Google Maps) but wanted to explore. Orientation problem: Where am I right now + where is that place ("where is it relative to me").
 
 ### API
 
