@@ -1,6 +1,6 @@
 import { ArrowRightOutlined, CarOutlined, DeleteOutlined, DollarOutlined, EditOutlined, FileAddOutlined, HomeOutlined, PushpinOutlined, SmileOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, Popconfirm } from "antd";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { deleteActivity } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { ActionItem, Category, User } from "../../utils/interfaces";
@@ -61,6 +61,14 @@ const ActivityDetail = (
 
 
     },[selectedActivity]);
+
+
+    useEffect(()=> {
+
+        if (!viewTrip) navigate('/trip');
+        if (!selectedActivity) navigate(`/trip/${viewTrip}/activity`);
+    
+    }, [viewTrip, selectedActivity])
 
     return (
         <ConfigProvider

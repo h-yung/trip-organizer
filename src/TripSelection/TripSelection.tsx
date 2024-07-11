@@ -3,29 +3,24 @@ import { Image, TripRecord, User } from "../utils/interfaces";
 import "./tripSelection.scss";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { getAicArt } from "../apis/main";
-import { Link, redirect } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import UserContext from "../utils/UserProvider";
 
 const ENV = import.meta.env.VITE_MODE;
 
 interface TripSelectionProps {
-    activeUsr: User;
-    setViewTrip:(p:string) => void;
-    setActiveUsr: (p: User | null) => void;
 
 }
 
 export default function TripSelection(
     {
-        // activeUsr,
-        // setViewTrip,
-        // setActiveUsr
+ 
     }:TripSelectionProps
     
 ) {
 
   const { activeUsr, setViewTrip, setActiveUsr } = useContext(UserContext);
-
+  const navigate = useNavigate();
   const [artImg, setArtImg] = useState<Image | null>(null);
 
   const activeHasTrips:TripRecord[] = useMemo(()=>{
@@ -37,6 +32,10 @@ export default function TripSelection(
         const trip = e.currentTarget.id
         setViewTrip(trip);
         }
+
+    useEffect(()=> {
+      if (!activeUsr) navigate('/user-selection');
+    }, [activeUsr])
 
     useEffect(()=> {
         async function getArt(query?: string){  //currently "bear" default

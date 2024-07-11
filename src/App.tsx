@@ -55,66 +55,48 @@ function App() {
           setViewTrip={setViewTrip} 
         />
         }>
+          
+<Route index element={<UserSelection setUser={setActiveUsr} />} />
 
-{activeUsr && <Route path="trip" element={<TripSelection
-            activeUsr={activeUsr}
-            setViewTrip={setViewTrip}
-            setActiveUsr={setActiveUsr}
-          />} />}
+<Route path="trip" element={<TripSelection />} />
 
             {/* Rewrite conditional to be handled by router/redirect or within module. */}
             {activeUsr && 
             
-            <Route path="trip/:tripName/activity" element={<ActivityViewer 
-                selectedActivity={selectedActivity}
-                setSelectedActivity={setSelectedActivity}
-                tripReview={tripReview}
-                setTripReview={setTripReview}
-                rowData={rowData}
-                setRowData={setRowData}
-              />} />}
+  <Route path="trip/:tripName/activity" element={<ActivityViewer 
+      selectedActivity={selectedActivity}
+      setSelectedActivity={setSelectedActivity}
+      tripReview={tripReview}
+      setTripReview={setTripReview}
+      rowData={rowData}
+      setRowData={setRowData}
+    />} />}
 
-          <Route index element={<UserSelection setUser={setActiveUsr} />} />
 
-        {activeUsr && 
-                  <Route path="trip/:tripName/activity/detail/:activityId" element={
-                  <ActivityDetail 
-                    setSelectedActivity={setSelectedActivity} 
-                    selectedActivity={selectedActivity} 
-                    />} />}
 
-        {activeUsr && selectedActivity && <Route path="trip/:tripName/activity/detail/:activityId/update" element={<UpdateActivityEntry
+    <Route path="trip/:tripName/activity/detail/:activityId" element={
+              <ActivityDetail 
+                setSelectedActivity={setSelectedActivity} 
+                selectedActivity={selectedActivity} 
+                />} />
+
+        {selectedActivity && <Route path="trip/:tripName/activity/detail/:activityId/update" element={<UpdateActivityEntry
                 selectedActivity={selectedActivity}
                 setSelectedActivity={setSelectedActivity}
             />} />}
-        {activeUsr &&<Route path="trip/:tripName/activity/new" element={<ActivityEntry />} />}
+      <Route path="trip/:tripName/activity/new" element={<ActivityEntry />} />
 
-          {/* hardcoded experiment here */}
-          {activeUsr && <Route path="trip/:tripName/activity/map" element={
-            <ActivityMap
-            // activeUsr={activeUsr}
-            // setViewTrip={setViewTrip}
-            // setActiveUsr={setActiveUsr}
-          />
-          } />}
-
-        
-
-    {viewTrip && <Route path="trip/:tripName/expenses" element={<ExpenseViewer />} />} 
-              {/* above, we can assume there won't be a viewtrip without an active user */}
-
-       {activeUsr && viewTrip && <Route path="trip/:tripName/expenses/new" element={
-            <ExpenseEntry />
-          } />}
-          {activeUsr && <Route path="trip/:tripName/review/edit" element={<TripReviewer 
+      <Route path="trip/:tripName/expenses" element={<ExpenseViewer />} /> 
+      <Route path="trip/:tripName/expenses/new" element={<ExpenseEntry />} />
+      <Route path="trip/:tripName/review/edit" element={<TripReviewer 
                     allTripActivities={rowData}
                     tripReview={tripReview}
                     setTripReview={setTripReview}
-                />} />}
-          <Route path="help" element={<HelpPage />} />
+                />} />
+      <Route path="help" element={<HelpPage />} />
 
-          {/* <Route path="*" element={<NoPage />} /> */}
-          <Route path="*" element={<UserSelection setUser={setActiveUsr} />} />
+      {/* <Route path="*" element={<NoPage />} /> */}
+      <Route path="*" element={<UserSelection setUser={setActiveUsr} />} />
 
         </Route>
       </Routes>

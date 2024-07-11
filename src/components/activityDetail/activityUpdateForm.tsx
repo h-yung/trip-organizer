@@ -88,8 +88,9 @@ const UpdateActivityEntry = (
     useEffect(()=> {
 
         if (!viewTrip) navigate('/trip');
+        if (!selectedActivity) navigate(`/trip/${viewTrip}/activity`);
     
-    }, [viewTrip])
+    }, [viewTrip, selectedActivity])
 
 return (
     <ConfigProvider
