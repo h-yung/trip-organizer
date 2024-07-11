@@ -35,7 +35,7 @@ Potential img hosting: PixaBay
 
 The desktop UX is trash because time crunch lol! Someday we'll do breakpoints again...
 
-## To dos
+## To dos (not in issues)
 Mostly moved into Issues section.
 -   [x] Fix visual problems. **Ish?** Mobile only.
 -   [ ] Data entry.
@@ -43,6 +43,10 @@ Mostly moved into Issues section.
 -   [x] Timeline view for activities. Could be a nicer at-a-glance thing although I like the AG Grid functionality. Why not both.
 -   [ ] Update graphics.
 -   [ ] Integrate better with ~~Google maps~~ some map API.
+
+## Early user feedback
+- "I'm not sure initially what the categories mean. Is there an indicator or can I also define them?"
+- "No one reads the help section."
 
 ### API
 
