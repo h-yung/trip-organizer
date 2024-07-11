@@ -3,6 +3,7 @@ import {
 	ColDef,
 	GetQuickFilterTextParams,
 	ValueFormatterParams,
+	ValueGetterParams,
 } from "ag-grid-community";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
@@ -50,7 +51,7 @@ export const useColDefs = (
 					hide: true,
 					onCellClicked,
 					valueFormatter: (p: ValueFormatterParams) => {
-						if (!p.value) return p.value;
+						if (!p.value) return "Unscheduled";
 						dayjs.extend(localizedFormat);
 						return dayjs(p.value).format("L LT") ?? p.value;
 					},
@@ -62,6 +63,11 @@ export const useColDefs = (
 					width: 300,
 					headerClass: ["left-align", "scale-up", "header-text"],
 					cellClass: ["left-align", "scale-up"],
+					valueGetter: (p: ValueGetterParams) => {
+						if (!p.data?.startTime)
+							return `UNSCHEDULED: ${p.data.title}`;
+						else return p.data.title;
+					},
 					onCellClicked,
 				},
 				{

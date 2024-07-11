@@ -58,8 +58,6 @@ const UpdateActivityEntry = (
     const submit = async (values: any) => {
         const entry = convertFormToAct(values, user, viewTrip, selectedActivity._id);
 
-        const update = await updateAction(entry);
-
         if (ENV === "dev") {
             
             setSelectedActivity(entry);
@@ -68,6 +66,8 @@ const UpdateActivityEntry = (
             setIsSuccess(true);
             return;
         }
+
+        const update = await updateAction(entry);
 
         if (update.matchedCount && update.modifiedCount && update.matchedCount === update.modifiedCount) {
             console.log('Successfully sent in update!');
@@ -154,7 +154,7 @@ return (
             <label className="item-label">Scheduled for </label>
 
             <Form.Item className="form-item date-picker" name="startTime"
-                     help="Required"
+                     help="Required for updates"
                      rules={[{ required: true }]}
             >
                 <DatePicker showTime format="YYYY-MM-DD HH:mm" value={formVals?.startTime} />

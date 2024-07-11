@@ -15,7 +15,7 @@ export const convertActForForm = (
 		address: activity.location.address,
 		advisory: activity.advisory,
 		title: activity.title,
-		startTime: dayjs(activity.startTime),
+		startTime: activity.startTime ? dayjs(activity.startTime) : undefined,
 		category: activity.category,
 		urls: activity.urls.length ? [...activity.urls] : [],
 		country: activity.location.country,
@@ -67,7 +67,7 @@ export const convertFormToAct = (
 		category: category as Category,
 		submittedBy: user.lookupName,
 		trip: viewTrip,
-		startTime: startTime.toDate(), //to JavaScript Date object
+		startTime: startTime ? startTime.toDate() : undefined, //to JavaScript Date object
 		title,
 		details,
 		location: {

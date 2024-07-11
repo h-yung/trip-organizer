@@ -3,6 +3,7 @@ import { User } from "../../utils/interfaces";
 import AppHeader from "../Header/Header";
 import { Button } from "antd";
 import { CloseCircleOutlined, FileAddOutlined, DollarOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 interface AppLayoutProps {
     activeUsr: User | null;

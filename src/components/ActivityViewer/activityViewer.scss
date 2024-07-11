@@ -97,6 +97,10 @@
 			font-weight: 500;
 			color: black;
 		}
+		.activity-title.past {
+			color: rgba(121, 54, 54, 0.453);
+			text-decoration: line-through;
+		}
 	}
 	.timeline-btn {
 		margin-bottom: 3rem;

@@ -107,7 +107,7 @@ export interface ActivityUpdateFormValues {
 	address: string;
 	advisory: string | undefined;
 	title: string;
-	startTime: Dayjs;
+	startTime: Dayjs | undefined;
 	category: string;
 	urls: string[];
 	country: string;

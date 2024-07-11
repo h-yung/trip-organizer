@@ -14,6 +14,7 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { sampleActivities, sampleReviews } from "../../utils/sampleData";
 import { actGridOptions, defaultColDefs, useColDefs } from "./gridConfig";
+import { isPast } from "../../utils/timeStyleCheckers";
 
 const ENV = import.meta.env.VITE_MODE;
 
@@ -74,13 +75,17 @@ const ActivityViewer = ({
         setReverse(!reverse);
     }, [reverse])
     const timelineItems = useMemo(()=> {
-        return rowData.sort((a,b)=> dayjs(b.startTime).diff(dayjs(a.startTime))).map((datum:ActionItem)=> {
+        return rowData.sort((a,b)=> dayjs(b.startTime).diff(dayjs(a.startTime)))
+            .filter((datum:ActionItem) => datum.startTime)  //no datetime = exclude from timeline
+            .map((datum:ActionItem)=> {
+
+            const isOver = datum.startTime && isPast(datum.startTime);
             return ({
                 label: dayjs(datum.startTime).format("ddd MMM DD h:mm A"),
                 children: 
                 <div key={datum._id} id={datum._id} onClick={onTimelineItemClicked} role="button">
                     <Link to={`/trip/${viewTrip}/activity/detail/${datum._id}`}>
-                        <h4 className="activity-title">{datum.title}</h4>
+                        <h4 className={`activity-title ${isOver ? 'past' : ''}`}>{datum.title}</h4>
                         <span className="subtitle">{datum.location.nearestCity}</span>
                     </Link>
                 </div>,

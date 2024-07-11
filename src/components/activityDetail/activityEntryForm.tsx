@@ -139,8 +139,8 @@ return (
             <label className="item-label">Scheduled for </label>
 
             <Form.Item className="form-item date-picker" name="startTime"
-                     help="Required"
-                     rules={[{ required: true }]}
+                     help="Omit if adding to backlog."
+                    //  rules={[{ required: true }]}
             >
                 <DatePicker showTime format="YYYY-MM-DD HH:mm" />
             </Form.Item>
