@@ -113,7 +113,7 @@ const ActivityDetail = (
                   <p>{startTime && new Date(startTime).toDateString()}</p>
               </div>
               :
-              <div>
+                <div style={{marginBottom: "1rem"}}>
                   <label>Update to add to schedule</label>
                 </div>}
 
