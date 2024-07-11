@@ -1,9 +1,10 @@
 import "./Header.scss";
 import { User } from '../../utils/interfaces';
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { Button, ConfigProvider, Popconfirm } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { Link, redirect, useLocation, useNavigate } from "react-router-dom";
+import UserContext from "../../utils/UserProvider";     
 
 interface AppHeaderProps {
     activeUsr: User | null;
@@ -13,9 +14,14 @@ interface AppHeaderProps {
 
 }
 const AppHeader = ({
-  activeUsr, viewTrip, setViewTrip
+  // activeUsr, 
+  // viewTrip, 
+  // setViewTrip
 
 }: AppHeaderProps) => {
+
+  const { activeUsr, viewTrip, setViewTrip } = useContext(UserContext);
+
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -28,13 +34,6 @@ const AppHeader = ({
         console.log("viewtrip set to ull, redirecting")
         navigate("/trip");  
     }
-    const switchUser = () => {
-      setViewTrip("");
-      // setActiveUsr(null);
-      // console.log("active user", activeUsr)
-      // console.log("viewtrip set to ull, redirecting")
-      navigate("/");  
-  }
 
     // const startReview = () => {
     //   setReviewForm(true);

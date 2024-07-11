@@ -1,9 +1,10 @@
 import { ConfigProvider, Button } from "antd";
 import { Image, TripRecord, User } from "../utils/interfaces";
 import "./tripSelection.scss";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { getAicArt } from "../apis/main";
 import { Link, redirect } from "react-router-dom";
+import UserContext from "../utils/UserProvider";
 
 const ENV = import.meta.env.VITE_MODE;
 
@@ -16,16 +17,19 @@ interface TripSelectionProps {
 
 export default function TripSelection(
     {
-        activeUsr,
-        setViewTrip,
-        setActiveUsr
+        // activeUsr,
+        // setViewTrip,
+        // setActiveUsr
     }:TripSelectionProps
     
 ) {
+
+  const { activeUsr, setViewTrip, setActiveUsr } = useContext(UserContext);
+
   const [artImg, setArtImg] = useState<Image | null>(null);
 
   const activeHasTrips:TripRecord[] = useMemo(()=>{
-    return activeUsr.trips;
+    return activeUsr? activeUsr.trips : [];
 
   } ,[activeUsr] )
 

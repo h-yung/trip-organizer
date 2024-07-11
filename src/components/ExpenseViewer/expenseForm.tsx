@@ -2,22 +2,17 @@ import { CarOutlined, HomeOutlined, PushpinOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, DatePicker, Form, Input, Radio } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import jsesc from "jsesc";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { addExpense } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { ExpenseItem, User } from "../../utils/interfaces";
 import SuccessPage from "../Success/Success";
+import UserContext from "../../utils/UserProvider";
+import { useNavigate } from "react-router-dom";
 
 //some detritus here from initially thinking to edit expense with the form
 
 interface ExpenseEntryProps {
-    user: User;
-    viewTrip: string;
-    // query: string; //global search
-    // editing: boolean; //implies existing 
-    // setEditing:(p: boolean) => void;
-    // selectedExpense: ExpenseItem | null; //for EDIT
-    // setSelectedExpense: (p: null | ExpenseItem) => void;
 }
 
 const ENV = import.meta.env.VITE_MODE;
@@ -26,12 +21,11 @@ const ENV = import.meta.env.VITE_MODE;
 
 const ExpenseEntry = (
     {
-        user,
-        viewTrip
-        // , user
+
     }: ExpenseEntryProps 
 ) => {
-
+    const { activeUsr, viewTrip } = useContext(UserContext);
+    const navigate = useNavigate();
     const [isSuccess, setIsSuccess ] = useState(false);
 
 
@@ -45,7 +39,7 @@ const ExpenseEntry = (
 
     const submit = async (values: any) => {
             // Should format date value before submit.
-
+            if (!activeUsr) return;
             const {
                 currency,
                 category,
@@ -62,7 +56,7 @@ const ExpenseEntry = (
 
             const entry:ExpenseItem = {
                 category,
-                submittedBy: user.lookupName,
+                submittedBy: activeUsr.lookupName,
                 trip: viewTrip,
                 currency,
                 date: date.toDate(), //to JavaScript Date object
@@ -106,26 +100,10 @@ const ExpenseEntry = (
         console.log("Could not submit.")
     }
 
-    // const expInitialValues = useMemo(()=> {
+    useEffect(()=> {
 
-    //     if (selectedExpense && editing){
-    //         return {
-    //             currency:selectedExpense.currency,
-    //             category:selectedExpense.category,
-    //             details:selectedExpense.details,
-    //             date:selectedExpense.date,
-    //             desc:selectedExpense.desc,
-    //             value:selectedExpense.value,
-    //             //vendor
-    //             email:selectedExpense.vendor?.email ?? "",
-    //             name:selectedExpense.vendor?.name ?? "",
-    //             phoneNumber:selectedExpense.vendor?.phoneNumber ?? "",
-    //             url:selectedExpense.vendor?.url ?? ""
-    //         }
-    //     }
-
-    //     return {};
-    // }, [editing, selectedExpense]);
+        if (!viewTrip) navigate("/trip");
+    }, [viewTrip]) //after authentication, activeUsr will never be null
 
 
     return (
@@ -157,7 +135,7 @@ const ExpenseEntry = (
        
          <div className="entry-header">
             <h2 style={{marginRight: "1rem"}}>NEW Expense</h2>
-           <p className="prepopulated">by {user.displayName} for {viewTrip} </p>
+           <p className="prepopulated">by {activeUsr?.displayName} for {viewTrip} </p>
            </div>
         <label className="item-label">Category</label>
 

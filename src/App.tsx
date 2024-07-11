@@ -21,6 +21,7 @@ import TripSelection from './TripSelection/TripSelection';
 import { ActionItem, TripReview, User } from './utils/interfaces';
 import UserSelection from './components/UserSelection/userSelection';
 import ActivityMap from './components/activityDetail/activityDetailMap';
+import UserContext from './utils/UserProvider';
 // import UserUpdateCreate from './components/UserUpdateOrCreate/userUpdateCreate';
 
 const ENV = import.meta.env.VITE_MODE;
@@ -37,6 +38,13 @@ function App() {
 
 
   return (
+
+    <UserContext.Provider value={{
+      activeUsr, 
+      viewTrip, 
+      setActiveUsr, 
+      setViewTrip
+      }} >
     <BrowserRouter>
       <Routes>
       <Route path="/" element={
@@ -47,12 +55,17 @@ function App() {
           setViewTrip={setViewTrip} 
         />
         }>
+
+{activeUsr && <Route path="trip" element={<TripSelection
+            activeUsr={activeUsr}
+            setViewTrip={setViewTrip}
+            setActiveUsr={setActiveUsr}
+          />} />}
+
             {/* Rewrite conditional to be handled by router/redirect or within module. */}
             {activeUsr && 
             
             <Route path="trip/:tripName/activity" element={<ActivityViewer 
-                user={activeUsr} 
-                viewTrip={viewTrip} 
                 selectedActivity={selectedActivity}
                 setSelectedActivity={setSelectedActivity}
                 tripReview={tripReview}
@@ -66,7 +79,6 @@ function App() {
         {activeUsr && 
                   <Route path="trip/:tripName/activity/detail/:activityId" element={
                   <ActivityDetail 
-                  viewTrip={viewTrip}
                     setSelectedActivity={setSelectedActivity} 
                     selectedActivity={selectedActivity} 
                     />} />}
@@ -74,13 +86,8 @@ function App() {
         {activeUsr && selectedActivity && <Route path="trip/:tripName/activity/detail/:activityId/update" element={<UpdateActivityEntry
                 selectedActivity={selectedActivity}
                 setSelectedActivity={setSelectedActivity}
-                user={activeUsr}
-                viewTrip={viewTrip}
             />} />}
-        {activeUsr &&<Route path="trip/:tripName/activity/new" element={<ActivityEntry 
-                user={activeUsr}
-                viewTrip={viewTrip}
-                />} />}
+        {activeUsr &&<Route path="trip/:tripName/activity/new" element={<ActivityEntry />} />}
 
           {/* hardcoded experiment here */}
           {activeUsr && <Route path="trip/:tripName/activity/map" element={
@@ -92,26 +99,14 @@ function App() {
           } />}
 
         
-        {activeUsr && <Route path="trip" element={<TripSelection
-            activeUsr={activeUsr}
-            setViewTrip={setViewTrip}
-            setActiveUsr={setActiveUsr}
-          />} />}
 
-    {viewTrip && <Route path="trip/:tripName/expenses" element={<ExpenseViewer
-              viewTrip={viewTrip}
-              />} />} 
+    {viewTrip && <Route path="trip/:tripName/expenses" element={<ExpenseViewer />} />} 
               {/* above, we can assume there won't be a viewtrip without an active user */}
 
        {activeUsr && viewTrip && <Route path="trip/:tripName/expenses/new" element={
-            <ExpenseEntry 
-            viewTrip={viewTrip}
-            user={activeUsr}
-          />
+            <ExpenseEntry />
           } />}
           {activeUsr && <Route path="trip/:tripName/review/edit" element={<TripReviewer 
-                    user={activeUsr}
-                    viewTrip={viewTrip}
                     allTripActivities={rowData}
                     tripReview={tripReview}
                     setTripReview={setTripReview}
@@ -124,6 +119,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </UserContext.Provider>
   )
 
   

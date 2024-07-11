@@ -1,18 +1,17 @@
 import { ArrowRightOutlined, CarOutlined, DeleteOutlined, DollarOutlined, EditOutlined, FileAddOutlined, HomeOutlined, PushpinOutlined, SmileOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, Popconfirm } from "antd";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { deleteActivity } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { ActionItem, Category, User } from "../../utils/interfaces";
 import "./activityDetail.scss";
-import UpdateActivityEntry from "./activityUpdateForm";
 import { Link, useNavigate } from "react-router-dom";
+import UserContext from "../../utils/UserProvider";
 
 const ENV = import.meta.env.VITE_MODE;
 
 interface ActivityDetailProps {
     setSelectedActivity: (p: null | ActionItem) => void;
-    viewTrip: string;
 	// setShowActivityDetail: (p: boolean) => void;
     selectedActivity: ActionItem | null;
     // query: string; //global search
@@ -35,11 +34,11 @@ const categoryIcon = (category:Category) => {
 };
 
 const ActivityDetail = (
-    {setSelectedActivity, selectedActivity, viewTrip
-        //  setShowActivityDetail, 
+    {setSelectedActivity, selectedActivity, 
     }: ActivityDetailProps
 ) => {
 
+    const { viewTrip } = useContext(UserContext);
     const navigate = useNavigate();
 
     const { title, startTime, location, advisory, details, vendor, urls } = selectedActivity!;

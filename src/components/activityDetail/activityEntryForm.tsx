@@ -2,16 +2,16 @@ import { CarOutlined, HomeOutlined, MinusCircleOutlined, PlusOutlined, PushpinOu
 import { Button, ConfigProvider, DatePicker, Form, Input, Radio } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import jsesc from "jsesc";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { addActivity } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { convertFormToAct } from "../../utils/activityConverter";
 import { ActionItem, User } from "../../utils/interfaces";
 import SuccessPage from "../Success/Success";
+import UserContext from "../../utils/UserProvider";
+import { useNavigate } from "react-router-dom";
 
 interface ActivityEntryProps {
-    user: User;
-    viewTrip: string;
     // query: string; //global search
     selectedActivity?: ActionItem | null; //for EDIT
     setSelectedActivity?: (p: null | ActionItem) => void;
@@ -25,11 +25,10 @@ const ENV = import.meta.env.VITE_MODE;
 
 const ActivityEntry = (
     {
-        user,
-        viewTrip
     }: ActivityEntryProps 
 ) => {
-
+    const { activeUsr, viewTrip } = useContext(UserContext);
+    const navigate = useNavigate();
     const [isSuccess, setIsSuccess ] = useState(false);
 
     // const exitForm = () => {
@@ -57,7 +56,8 @@ const ActivityEntry = (
       
 
     const submit = async (values: any) => {
-            const entry = convertFormToAct(values, user, viewTrip);
+        if (!activeUsr) return;
+            const entry = convertFormToAct(values, activeUsr, viewTrip);
            
             // console.log('Received values of form: ', entry.startTime);
 
@@ -77,6 +77,11 @@ const ActivityEntry = (
         console.log("Could not submit.")
     }
 
+useEffect(()=> {
+
+    if (!viewTrip) navigate('/trip');
+
+}, [viewTrip])
 
 return (
     <ConfigProvider
@@ -95,7 +100,7 @@ return (
     <>
         <div className="entry-header">
         <h2>NEW Activity</h2>
-        <p className="prepopulated new">BY {user.displayName} FOR {viewTrip} </p>
+        <p className="prepopulated new">BY {activeUsr?.displayName} FOR {viewTrip} </p>
         </div>
       <Form
         className="activity-form"

@@ -1,18 +1,17 @@
 import { FrownOutlined, MehOutlined, SmileOutlined } from '@ant-design/icons';
 import { Button, Checkbox, ConfigProvider, Form, Rate } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { ActionItem, TripReview, User } from "../../utils/interfaces";
 import "./tripReviewer.scss";
 import { convertFormToReview } from '../../utils/activityConverter';
 import { addTripReview, updateTripReview } from '../../apis/main';
 import jsesc from 'jsesc';
 import SuccessPage from '../Success/Success';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import UserContext from '../../utils/UserProvider';
 
 interface ReviewProps {
-    user: User; //the review is in the user obj
-    viewTrip: string;
     allTripActivities: ActionItem[]; //via activityViewer, bc workflow
     tripReview: TripReview | null;
     setTripReview: (p:TripReview | null) => void;
@@ -25,14 +24,13 @@ const ENV = import.meta.env.VITE_MODE;
 
 const TripReviewer = (
     {
-        user,
-        viewTrip,
         allTripActivities,
         setTripReview,
         tripReview
     }: ReviewProps 
 ) => {
-
+    const { activeUsr, viewTrip } = useContext(UserContext);
+    const navigate = useNavigate();
     const [isSuccess, setIsSuccess ] = useState(false);
 
     const [ form ] = Form.useForm();
@@ -75,10 +73,10 @@ const TripReviewer = (
 
     const submit = async (values: any) => {
         // console.log("form values for activity are by ID", values);
-
+        if (!activeUsr) return;
         const review = convertFormToReview({
             initValSet: values,
-            user: user,
+            user: activeUsr,
             tripName: viewTrip,
             activities: allTripActivities
         });
@@ -138,6 +136,11 @@ const TripReviewer = (
         5: <SmileOutlined />,
       };
 
+    useEffect(()=> {
+
+        if (!viewTrip) navigate("/trip");
+    }, [viewTrip]) //after authentication, activeUsr will never be null
+
 return (
 
     !allTripActivities ? <></> :
@@ -164,7 +167,7 @@ return (
                 Cancel
             </Link>
         </h2>
-        <p className="prepopulated">by {user.displayName} for {viewTrip} </p>
+        <p className="prepopulated">by {activeUsr?.displayName} for {viewTrip} </p>
     </div>
            
     <Form

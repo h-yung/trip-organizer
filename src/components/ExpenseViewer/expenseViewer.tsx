@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { ExpenseItem, User } from "../../utils/interfaces";
 import { ColDef, GridApi, GridReadyEvent, RowValueChangedEvent } from "ag-grid-community";
 import { defaultColDefs, expGridOptions, useColDefs } from "./gridConfig";
@@ -9,22 +9,23 @@ import { HomeOutlined, CarOutlined, PushpinOutlined, SmileOutlined, CloseCircleO
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { SampleExp } from "../../utils/sampleData";
 import "./expenseViewer.scss";
-import ExpenseEntry from "./expenseForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import UserContext from "../../utils/UserProvider";
 
 const ENV = import.meta.env.VITE_MODE;
 
 interface ExpenseViewerProps {
-    viewTrip: string;
 }
 
 
 const ExpenseViewer = ({
-    viewTrip,
 }: ExpenseViewerProps) => {
 
 
     const expenseRef = useRef<GridApi<ExpenseItem>>(); //MutableRefObject<GridApi<ExpenseItem> | undefined >
+
+    const { viewTrip } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const [ openConfModal, setOpenConfModal ] = useState(false);
 
@@ -109,6 +110,8 @@ const ExpenseViewer = ({
 
 
     useEffect(()=> {
+
+        if (!viewTrip) navigate("/trip");
 
         async function getExps(){
             if (viewTrip){

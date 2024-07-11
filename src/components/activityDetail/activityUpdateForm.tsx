@@ -1,17 +1,16 @@
 import { CarOutlined, HomeOutlined, MinusCircleOutlined, PlusOutlined, PushpinOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, DatePicker, Form, Input, Radio } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { updateAction } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { convertActForForm, convertFormToAct } from "../../utils/activityConverter";
 import { ActionItem, User } from "../../utils/interfaces";
 import SuccessPage from "../Success/Success";
+import UserContext from "../../utils/UserProvider";
 
 interface UpdateActivityEntryProps {
-    user: User;
-    viewTrip: string;
     selectedActivity: ActionItem;
     setSelectedActivity: (p: null | ActionItem) => void;
 }
@@ -24,10 +23,12 @@ const UpdateActivityEntry = (
     {
         selectedActivity,
         setSelectedActivity, //need to update this
-        user,
-        viewTrip
     }: UpdateActivityEntryProps 
 ) => {
+
+    const { activeUsr, viewTrip } = useContext(UserContext);
+    const navigate = useNavigate();
+
     const [isSuccess, setIsSuccess ] = useState(false);
 
     const [ form ] = Form.useForm();
@@ -56,7 +57,8 @@ const UpdateActivityEntry = (
       
 
     const submit = async (values: any) => {
-        const entry = convertFormToAct(values, user, viewTrip, selectedActivity._id);
+        if (!activeUsr) return;
+        const entry = convertFormToAct(values, activeUsr, viewTrip, selectedActivity._id);
 
         if (ENV === "dev") {
             
@@ -83,6 +85,12 @@ const UpdateActivityEntry = (
         console.log("Could not submit.")
     }
 
+    useEffect(()=> {
+
+        if (!viewTrip) navigate('/trip');
+    
+    }, [viewTrip])
+
 return (
     <ConfigProvider
     theme={{
@@ -108,7 +116,7 @@ return (
                     Cancel
                 </Link>
             </h2>
-           <p className="prepopulated">by {user.displayName} for {viewTrip} </p>
+           <p className="prepopulated">by {activeUsr?.displayName} for {viewTrip} </p>
            </div>
            
       <Form

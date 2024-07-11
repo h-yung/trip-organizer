@@ -1,13 +1,13 @@
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { getAllUsers } from "../../apis/main";
 import { avatarDictionary } from "../../utils/avatars";
 import { AvatarItem, User } from "../../utils/interfaces";
-import bugs from "../../assets/bugs.svg";
 
 import "./userSelection.scss";
 import { sampleUsers } from "../../utils/sampleData";
 import { Link } from "react-router-dom";
+import UserContext from "../../utils/UserProvider";
 
 const ENV = import.meta.env.VITE_MODE;
 
@@ -17,10 +17,13 @@ interface UserSelectionProps {
 }
 
 const UserSelection = ({
-    setUser
+    // setUser
 }: UserSelectionProps) => {
+
+    const {setActiveUsr} = useContext(UserContext);
     const [userOptions, setUserOptions] = useState<User[]>([]);
 
+    //this will go away once authentication enforces a single user.
     const assignUser = useCallback((event:any)=> {
 
         // event.preventDefault();
@@ -28,17 +31,17 @@ const UserSelection = ({
 
         // console.log(userOptions.map(usr => usr._id))
         
-
         if (activeUser){
             console.log("New active user")
 
             activeUser.avatar = avatarDictionary.find(({ref}:AvatarItem)=> ref === activeUser?.avatarRef)?.svg;
 
-            setUser(activeUser);
+            setActiveUsr(activeUser);
         }
 
     }, [userOptions]);
 
+    //this goes away until future when admin can add users to a trip
     useEffect(()=> {
         async function getUsers(){
            const users = await getAllUsers();

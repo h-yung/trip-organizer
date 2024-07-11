@@ -1,6 +1,6 @@
 import { CarOutlined, CloseCircleOutlined, DownOutlined, HomeOutlined, PushpinOutlined, StarFilled, UpOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, Divider, Timeline } from "antd";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { ActionItem, TripReview, User } from "../../utils/interfaces";
 import { GridApi, GridReadyEvent } from "ag-grid-community";
@@ -15,13 +15,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { sampleActivities, sampleReviews } from "../../utils/sampleData";
 import { actGridOptions, defaultColDefs, useColDefs } from "./gridConfig";
 import { isPast } from "../../utils/timeStyleCheckers";
+import UserContext from "../../utils/UserProvider";
 
 const ENV = import.meta.env.VITE_MODE;
 
 
 interface ActivityViewerProps {
-    user: User;
-    viewTrip: string;
     setSelectedActivity: (p:ActionItem | null) => void;
     selectedActivity: ActionItem | null;
     tripReview: TripReview | null;
@@ -31,8 +30,6 @@ interface ActivityViewerProps {
 }
 
 const ActivityViewer = ({
-    user,
-    viewTrip,
     setSelectedActivity,
     selectedActivity,
     tripReview,
@@ -40,6 +37,8 @@ const ActivityViewer = ({
     rowData,
     setRowData
 }: ActivityViewerProps) => {
+
+    const { activeUsr, viewTrip } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -53,7 +52,7 @@ const ActivityViewer = ({
 
     const allowReview = useMemo(()=>{
       //if user was a trip participant
-      return user?.trips.find(trip => trip.tripName === viewTrip)?.role.includes("participant");
+      return activeUsr?.trips.find(trip => trip.tripName === viewTrip)?.role.includes("participant");
     },[viewTrip])
 
 
@@ -114,6 +113,9 @@ const ActivityViewer = ({
 
     //this has to do with antd form initialvalue setting. If called inside the reviewer, it may not set properly on mount.
     useEffect(()=> {
+
+        if (!activeUsr) navigate("/user-selection");
+
         async function getTripReviewByUser(){
             if (viewTrip){
 
@@ -122,7 +124,7 @@ const ActivityViewer = ({
                     return;
                 }
 
-                const userReview = await getTripReviewForUser(viewTrip, user._id);
+                const userReview = await getTripReviewForUser(viewTrip, activeUsr!._id);
 
                 const { document } = userReview; //singular: findOne
                 setTripReview(document);
@@ -133,8 +135,13 @@ const ActivityViewer = ({
     }, [viewTrip, 
         //FIND DIFFERENT TRIGGER TO RERUN TO GET UPDATES
         // reviewForm //on form exit, the original review retrieved is also removed
-
     ])
+
+    useEffect(()=> {
+
+        if (!viewTrip) navigate('/trip');
+    
+    }, [viewTrip])
 
     return (
         <ConfigProvider
@@ -154,7 +161,7 @@ const ActivityViewer = ({
             }}
           >
 <div className="activity-viewer">
-            {/* <h1>Activity Viewer {user.displayName} {user.trips.find(trip => trip.tripName === viewTrip)!.role}</h1> */}
+            {/* <h1>Activity Viewer {activeUsr.displayName} {activeUsr.trips.find(trip => trip.tripName === viewTrip)!.role}</h1> */}
 
     <div className="timeline-container">
 
