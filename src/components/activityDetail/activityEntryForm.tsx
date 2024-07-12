@@ -3,13 +3,13 @@ import { Button, ConfigProvider, DatePicker, Form, Input, Radio } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import jsesc from "jsesc";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { addActivity } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { convertFormToAct } from "../../utils/activityConverter";
-import { ActionItem, User } from "../../utils/interfaces";
-import SuccessPage from "../Success/Success";
+import { ActionItem } from "../../utils/interfaces";
 import UserContext from "../../utils/UserProvider";
-import { useNavigate } from "react-router-dom";
+import SuccessPage from "../Success/Success";
 
 interface ActivityEntryProps {
     // query: string; //global search

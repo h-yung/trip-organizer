@@ -1,0 +1,108 @@
+.login-container {
+	margin-top: 2rem;
+	width: 100%;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+
+	.ant-form-item-control-input-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.login-btn {
+		height: 120px;
+		width: 120px;
+		overflow: hidden;
+		border: none;
+
+		&:active,
+		&:focus {
+			border: none;
+			outline: none;
+			animation: spin 5s infinite;
+		}
+	}
+	@keyframes spin {
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	.avatar-group {
+		height: 120px;
+		width: 120px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		background: #00c28e;
+
+		.avatar-img {
+			height: auto;
+			width: 120px;
+			object-fit: contain;
+		}
+	}
+
+	.splash {
+		// font-weight: bold;
+		font-size: 2rem;
+		letter-spacing: 0.05rem;
+		margin: 0px;
+		text-transform: uppercase;
+	}
+
+	.ant-form-item {
+		margin-top: 1rem;
+
+		.ant-form-item-label {
+			display: flex;
+			justify-content: center;
+			letter-spacing: 0.05rem;
+		}
+	}
+}
+
+.login-ctr {
+	margin-top: 2rem;
+
+	// display: flex;
+	// width: 100%;
+	// flex-flow: row wrap;
+	// justify-content: center;
+	column-gap: 20px;
+	display: grid;
+	row-gap: 2rem;
+	grid-template-columns: 80px 80px 80px;
+	grid-auto-rows: 100px;
+	// grid-template-rows: 1fr;
+
+	.avatar-group {
+		height: 80px;
+		width: 80px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		&:hover {
+			color: blue;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		&:focus {
+			color: blue;
+			font-weight: bold;
+			cursor: pointer;
+		}
+	}
+	.avatar-img {
+		height: 60px;
+		width: auto;
+		object-fit: contain;
+	}
+}

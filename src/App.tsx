@@ -22,6 +22,7 @@ import { ActionItem, TripReview, User } from './utils/interfaces';
 import UserSelection from './components/UserSelection/userSelection';
 import ActivityMap from './components/activityDetail/activityDetailMap';
 import UserContext from './utils/UserProvider';
+import LoginPage from './components/Login/Login';
 // import UserUpdateCreate from './components/UserUpdateOrCreate/userUpdateCreate';
 
 const ENV = import.meta.env.VITE_MODE;
@@ -55,8 +56,10 @@ function App() {
           setViewTrip={setViewTrip} 
         />
         }>
-          
+
 <Route index element={<UserSelection setUser={setActiveUsr} />} />
+
+<Route path="login" element={<LoginPage />} /> 
 
 <Route path="trip" element={<TripSelection />} />
 
@@ -71,8 +74,6 @@ function App() {
       rowData={rowData}
       setRowData={setRowData}
     />} />}
-
-
 
     <Route path="trip/:tripName/activity/detail/:activityId" element={
               <ActivityDetail 
