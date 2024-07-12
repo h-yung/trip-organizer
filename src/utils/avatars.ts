@@ -8,7 +8,7 @@ import monkey from "../assets/monkey.svg";
 import raccoon from "../assets/raccoon.svg";
 import lion from "../assets/lion.svg";
 import kiwiBird from "../assets/kiwi-bird.svg";
-import { AvatarItem } from "./interfaces";
+import { AvatarItem, User } from "./interfaces";
 
 export const avatarDictionary: AvatarItem[] = [
 	{
@@ -52,3 +52,10 @@ export const avatarDictionary: AvatarItem[] = [
 		svg: kiwiBird,
 	},
 ];
+
+export const getAvatar = (user: User) => {
+	return (
+		avatarDictionary.find(({ ref }: AvatarItem) => ref === user.avatarRef)
+			?.svg ?? undefined
+	);
+};

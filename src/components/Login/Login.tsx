@@ -6,6 +6,7 @@ import { UserContext, useUserContext } from "../../utils/UserContext";
 import { sampleUsers } from "../../utils/sampleData";
 import dolphin from "../../assets/kiwi-bird.svg";
 import { authenticate } from "../../apis/main";
+import { getAvatar } from "../../utils/avatars";
 
 const ENV = import.meta.env.VITE_MODE;
 
@@ -33,8 +34,9 @@ const LoginPage = ({}: LoginPageProps) => {
 				(user) => user.lookupName === username
 			);
 			if (user) {
-				navigate("/trip");
+				user.avatar = getAvatar(user);
 				setActiveUsr(user);
+				navigate("/trip");
 			} else {
 				setMsg("Locked out? Contact admin.");
 			}
@@ -45,8 +47,9 @@ const LoginPage = ({}: LoginPageProps) => {
 		//authenticate
 		const user = await authenticate(username, password);
 		if (user) {
-			navigate("/trip");
+			user.avatar = getAvatar(user);
 			setActiveUsr(user);
+			navigate("/trip");
 		} else {
 			setMsg("Locked out? Contact admin.");
 		}
