@@ -18,13 +18,14 @@
 		height: 120px;
 		width: 120px;
 		overflow: hidden;
+		outline: none;
 		border: none;
 
 		&:active,
 		&:focus {
 			border: none;
-			outline: none;
 			animation: spin 5s infinite;
+			// background: #00c28e;
 		}
 	}
 	@keyframes spin {
@@ -40,7 +41,8 @@
 		flex-direction: column;
 		align-items: center;
 
-		background: #00c28e;
+		// background: #00c28e;
+		background: red;
 
 		.avatar-img {
 			height: auto;

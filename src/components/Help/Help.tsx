@@ -20,37 +20,29 @@ export default function HelpPage() {
 					viewer
 				</li>
 				<li>
-					<SearchOutlined className="help-icon" /> *Global search (not
-					yet functional HAHA)
+					<SearchOutlined className="help-icon" /> *Global search
+					(N/A)
 				</li>
 				<li>
 					<CloseCircleOutlined className="help-icon" />
-					Close everything/return to activity list
+					Return to activity list
 				</li>
 			</ul>
+			<p>Update/delete Activities: From detail page.</p>
 			<p>
-				In Activities List: Double click to see activity detail. From
-				detail page, you can edit or delete activity.
+				Expenses: Export CSV / Add new expense. Edit/Delete from table
+				(tap outside the grid to get it to stop editing lol). It'll ask
+				you to confirm your edits but deletes straight away.
 			</p>
-			<p>
-				In Expenses: Export CSV with the button at the bottom, or add a
-				new expense. You can tap to enable deletion (tap on red bin 1x)
-				or update existing expense (tap around elsewhere on the grid to
-				get it to stop editing lol). It'll ask you to confirm your edits
-				but deletes straight away. If you enter a new expense, notice
-				you can add a few more fields than are currently shown.
-			</p>
-			<p>
-				Click on the trip name in the header to choose a different trip.
-			</p>
+			<p>Suggested categories: Activity, Food, Lodging, Prep/Sundry</p>
+			<p>To choose a different trip, tap on the header.</p>
 			<div style={{ fontSize: "0.8rem", textAlign: "center" }}>
 				<Divider type="horizontal" />
 				<span>
 					Icons from{" "}
 					<a href="https://www.flaticon.com/" target="_blank">
-						{" "}
 						Flaticon
-					</a>{" "}
+					</a>
 					&{" "}
 					<a
 						href="https://thenounproject.com/browse/icons/term/kiwi/"

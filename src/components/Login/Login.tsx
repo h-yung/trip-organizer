@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import "./loginPage.scss";
 import { Button, ConfigProvider, Form, Input } from "antd";
-import { useContext } from "react";
-import UserContext from "../../utils/UserProvider";
+import { useContext, useEffect, useState } from "react";
+import { UserContext, useUserContext } from "../../utils/UserContext";
 import { sampleUsers } from "../../utils/sampleData";
 import dolphin from "../../assets/kiwi-bird.svg";
 
@@ -17,29 +17,44 @@ type FieldType = {
 interface LoginPageProps {}
 
 const LoginPage = ({}: LoginPageProps) => {
-	const { setActiveUsr } = useContext(UserContext);
+	const { setActiveUsr, activeUsr } = useUserContext();
 	const navigate = useNavigate();
 
+	const [msg, setMsg] = useState("Click to submit");
 	const submit = async (values: any) => {
 		const { username } = values;
 
 		if (ENV === "dev") {
-			console.log("tis dev, proceed");
+			console.log("tis dev");
+
 			// setSelectedActivity(entry); //maybe need a way to force activityviewer to refresh
 			const user = sampleUsers.find(
 				(user) => user.lookupName === username
 			);
-			user && setActiveUsr(user);
-			navigate("/trip");
+			if (user) {
+				navigate("/trip");
+				setActiveUsr(user);
+			} else {
+				setMsg("Locked out? Contact admin.");
+			}
+
+			// async function stall(stallTime = 100) {
+			// 	await new Promise((resolve) => setTimeout(resolve, stallTime));
+			// }
+			// await stall(2000);
 
 			//do some storage
-			return;
+			// return;
 		}
 	};
 
 	const onFinishFailed = () => {
 		console.log("Could not submit.");
 	};
+
+	useEffect(() => {
+		if (activeUsr) navigate("/trip"); //or fix later to last attptd
+	}, [activeUsr]);
 
 	return (
 		<ConfigProvider
@@ -56,7 +71,7 @@ const LoginPage = ({}: LoginPageProps) => {
 			<div className="login-container">
 				<div style={{ margin: "1rem" }}>
 					<h2 className="splash">Oy!</h2>
-					<span className="titles">Sign in! Right now!</span>
+					<span className="titles">Sign in below.</span>
 				</div>
 
 				<Form
@@ -86,7 +101,7 @@ const LoginPage = ({}: LoginPageProps) => {
 						rules={[
 							{
 								required: true,
-								message: "Required.",
+								message: "Enter password.",
 							},
 						]}
 					>
@@ -98,6 +113,7 @@ const LoginPage = ({}: LoginPageProps) => {
 							size="large"
 							shape="circle"
 							className="login-btn"
+							onSubmit={(e) => e.preventDefault()}
 							// style={{
 							// 	height: 150,
 							// 	width: 150,
@@ -122,7 +138,7 @@ const LoginPage = ({}: LoginPageProps) => {
 								marginTop: "1rem",
 							}} //scss not overriding link
 						>
-							Click me to Submit
+							{msg}
 						</span>
 					</Form.Item>
 				</Form>

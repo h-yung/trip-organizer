@@ -1,10 +1,10 @@
-import "./Header.scss";
-import { User } from "../../utils/interfaces";
-import { useContext, useMemo } from "react";
-import { Button, ConfigProvider, Popconfirm } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import { Link, redirect, useLocation, useNavigate } from "react-router-dom";
-import UserContext from "../../utils/UserProvider";
+import { ConfigProvider, Popconfirm } from "antd";
+import { useMemo } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { User } from "../../utils/interfaces";
+import { useUserContext } from "../../utils/UserContext";
+import "./Header.scss";
 
 interface AppHeaderProps {
 	activeUsr: User | null;
@@ -17,7 +17,7 @@ const AppHeader = ({}: // activeUsr,
 // setViewTrip
 
 AppHeaderProps) => {
-	const { activeUsr, viewTrip, setViewTrip } = useContext(UserContext);
+	const { activeUsr, viewTrip, setViewTrip } = useUserContext();
 
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -30,7 +30,7 @@ AppHeaderProps) => {
 	const confirm = () => {
 		setViewTrip("");
 		// setActiveUsr(null);
-		console.log("active user", activeUsr);
+		console.log("active user is", activeUsr);
 		console.log("viewtrip set to ull, redirecting");
 		navigate("/trip");
 	};
@@ -51,7 +51,7 @@ AppHeaderProps) => {
 				},
 			}}
 		>
-			<div className="header-container">
+			<div className={`header-container ${!activeUsr && "not-auth"}`}>
 				{!activeUsr && <span className="titles">Log in</span>}
 
 				{
