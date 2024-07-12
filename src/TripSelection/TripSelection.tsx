@@ -1,10 +1,11 @@
-import { ConfigProvider, Button } from "antd";
-import { Image, TripRecord, User } from "../utils/interfaces";
-import "./tripSelection.scss";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { Button, ConfigProvider } from "antd";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { getAicArt } from "../apis/main";
-import { Link, redirect, useNavigate } from "react-router-dom";
-import UserContext from "../utils/UserProvider";
+import { Image, TripRecord } from "../utils/interfaces";
+import { UserContext } from "../utils/UserContext";
+import "./tripSelection.scss";
+import IdCard from "../modules/IdCard";
 
 const ENV = import.meta.env.VITE_MODE;
 
@@ -24,10 +25,14 @@ export default function TripSelection({}: TripSelectionProps) {
 		setViewTrip(trip);
 	};
 
-	useEffect(() => {
-		if (!activeUsr) navigate("/user-selection");
-	}, [activeUsr]);
+	const logout = useCallback(async () => {
+		//remove local token?
+		setActiveUsr(null);
+		setViewTrip("");
+		navigate("/login");
 
+		//prod: does session have to end explicitly, or just wipe storage?
+	}, []);
 	useEffect(() => {
 		async function getArt(query?: string) {
 			//currently "bear" default
@@ -88,15 +93,19 @@ export default function TripSelection({}: TripSelectionProps) {
 						);
 					})}
 				</div>
-				<div style={{ marginBottom: "2rem" }}>
-					<Link to="/">
-						<Button
-							className="titles tertiary-btn"
-							// onClick={() => setActiveUsr(null)}
-						>
-							All set? Just close this tab.
-						</Button>
-					</Link>
+				<div
+					style={{
+						width: "100%",
+						marginBottom: "2rem",
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+					}}
+				>
+					<Button className="titles tertiary-btn" onClick={logout}>
+						{/* <IdCard /> */}
+						Log out
+					</Button>
 				</div>
 			</ConfigProvider>
 

@@ -5,11 +5,16 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { ActionItem, TripReview, User } from "../../utils/interfaces";
 import "./tripReviewer.scss";
 import { convertFormToReview } from "../../utils/activityConverter";
-import { addTripReview, updateTripReview } from "../../apis/main";
+import {
+	addTripReview,
+	getAllActivity,
+	updateTripReview,
+} from "../../apis/main";
 import jsesc from "jsesc";
 import SuccessPage from "../Success/Success";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../utils/UserContext";
+import { sampleActivities } from "../../utils/sampleData";
 
 interface ReviewProps {
 	allTripActivities: ActionItem[]; //via activityViewer, bc workflow
@@ -22,12 +27,16 @@ const ENV = import.meta.env.VITE_MODE;
 //need form reset
 
 const TripReviewer = ({
-	allTripActivities,
+	// allTripActivities, //won't persist on refresh; just refetch.
 	setTripReview,
 	tripReview,
 }: ReviewProps) => {
 	const { activeUsr, viewTrip } = useContext(UserContext);
 	const navigate = useNavigate();
+
+	const [allTripActivities, setAllTripActivities] = useState<ActionItem[]>(
+		[]
+	);
 	const [isSuccess, setIsSuccess] = useState(false);
 
 	const [form] = Form.useForm();
@@ -137,6 +146,28 @@ const TripReviewer = ({
 	useEffect(() => {
 		if (!viewTrip) navigate("/trip");
 	}, [viewTrip]); //after authentication, activeUsr will never be null
+
+	useEffect(() => {
+		//init
+		async function getActivities() {
+			if (viewTrip) {
+				if (ENV === "dev") {
+					setAllTripActivities(
+						sampleActivities.filter(
+							(activity) => activity.trip === viewTrip
+						)
+					); //in prod the request passes the trip name to collection
+					return;
+				}
+
+				const activities = await getAllActivity(viewTrip);
+
+				const { documents } = activities;
+				setAllTripActivities(documents);
+			}
+		}
+		getActivities();
+	}, []);
 
 	return !allTripActivities ? (
 		<></>

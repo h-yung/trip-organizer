@@ -7,6 +7,7 @@ const {
 	VITE_UPDATE_ONE,
 	VITE_DELETE_ONE,
 	VITE_GET_REVIEW_TRIP_USER,
+	VITE_AUTHENTICATE,
 } = import.meta.env;
 
 export const getAicArt = async (query?: string) => {
@@ -29,6 +30,22 @@ export const getAicArt = async (query?: string) => {
 export const getAllUsers = async () => {
 	const url = `${VITE_GET_ALL}?collection=trip_users`;
 	const response = await fetch(url);
+	return await response.json();
+};
+
+//placeholder...
+export const authenticate = async (lookupName: string, password: string) => {
+	const url = `${VITE_AUTHENTICATE}`;
+	const config = {
+		method: "POST",
+		body: JSON.stringify({
+			document: {
+				lookupName,
+				password,
+			},
+		}),
+	};
+	const response = await fetch(url, config);
 	return await response.json();
 };
 

@@ -8,6 +8,7 @@ import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { ExpenseItem } from "../../utils/interfaces";
 import { useUserContext } from "../../utils/UserContext";
 import SuccessPage from "../Success/Success";
+import { useNavigate } from "react-router-dom";
 
 //some detritus here from initially thinking to edit expense with the form
 
@@ -19,6 +20,7 @@ const ENV = import.meta.env.VITE_MODE;
 
 const ExpenseEntry = ({}: ExpenseEntryProps) => {
 	const { activeUsr, viewTrip } = useUserContext();
+	const navigate = useNavigate();
 	const [isSuccess, setIsSuccess] = useState(false);
 
 	const formItemLayoutWithOutLabel = {

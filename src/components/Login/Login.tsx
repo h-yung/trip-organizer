@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext, useUserContext } from "../../utils/UserContext";
 import { sampleUsers } from "../../utils/sampleData";
 import dolphin from "../../assets/kiwi-bird.svg";
+import { authenticate } from "../../apis/main";
 
 const ENV = import.meta.env.VITE_MODE;
 
@@ -22,7 +23,7 @@ const LoginPage = ({}: LoginPageProps) => {
 
 	const [msg, setMsg] = useState("Click to submit");
 	const submit = async (values: any) => {
-		const { username } = values;
+		const { username, password } = values;
 
 		if (ENV === "dev") {
 			console.log("tis dev");
@@ -38,14 +39,19 @@ const LoginPage = ({}: LoginPageProps) => {
 				setMsg("Locked out? Contact admin.");
 			}
 
-			// async function stall(stallTime = 100) {
-			// 	await new Promise((resolve) => setTimeout(resolve, stallTime));
-			// }
-			// await stall(2000);
-
-			//do some storage
-			// return;
+			return;
 		}
+
+		//authenticate
+		const user = await authenticate(username, password);
+		if (user) {
+			navigate("/trip");
+			setActiveUsr(user);
+		} else {
+			setMsg("Locked out? Contact admin.");
+		}
+
+		return;
 	};
 
 	const onFinishFailed = () => {
