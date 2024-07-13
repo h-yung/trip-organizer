@@ -49,8 +49,6 @@ function App() {
 				viewTrip,
 				setActiveUsr,
 				setViewTrip,
-				rowData,
-				setRowData,
 				selectedActivity,
 				setSelectedActivity,
 			}}

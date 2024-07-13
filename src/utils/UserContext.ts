@@ -6,8 +6,6 @@ type IUserContext = {
 	setActiveUsr: React.Dispatch<React.SetStateAction<User | null>>;
 	viewTrip: string;
 	setViewTrip: React.Dispatch<React.SetStateAction<string>>;
-	rowData: ActionItem[];
-	setRowData: React.Dispatch<React.SetStateAction<ActionItem[]>>;
 	selectedActivity: ActionItem | null;
 	setSelectedActivity: React.Dispatch<
 		React.SetStateAction<ActionItem | null>
@@ -17,11 +15,9 @@ type IUserContext = {
 export const UserContext = createContext<IUserContext>({
 	activeUsr: null,
 	viewTrip: "",
-	rowData: [],
 	selectedActivity: null,
 	setActiveUsr: () => {},
 	setViewTrip: () => {},
-	setRowData: () => {},
 	setSelectedActivity: () => {},
 });
 export const useUserContext = () => useContext(UserContext);
