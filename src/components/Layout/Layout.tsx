@@ -61,7 +61,7 @@ function AppLayout({ selectedActivity }: AppLayoutProps) {
 									<Link to={`/trip/${viewTrip}/activity/new`}>
 										<Button
 											className="always-btn"
-											shape="circle" //onClick={(addActivity} size="large"
+											shape="circle"
 										>
 											<FileAddOutlined />
 										</Button>

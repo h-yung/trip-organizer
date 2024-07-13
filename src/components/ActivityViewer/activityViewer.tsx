@@ -137,11 +137,12 @@ const ActivityViewer = ({
 			}
 		}
 		getActivities();
-	}, [
-		viewTrip,
-		selectedActivity, //Trigger based on something else - TODO - FIX BELOW
-		// showActivityDetail, //inelegant, but there is a chance that user has edited an activity since visiting the detail bc workflow.
-	]);
+	}, [viewTrip]);
+
+	useEffect(() => {
+		//single-use cleanup
+		setSelectedActivity(null);
+	}, []);
 
 	//this has to do with antd form initialvalue setting. If called inside the reviewer, it may not set properly on mount.
 	useEffect(() => {

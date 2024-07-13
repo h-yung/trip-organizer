@@ -81,16 +81,7 @@ const ExpenseEntry = ({}: ExpenseEntryProps) => {
 		//if (editing === true && selectedExpense) {} //need to prepopulate information and display as defaults
 	};
 
-	// const cancelExpenseEditing = ()=> {
-	//     // setEditing(false);
-	//     setShowExpenseForm(false);
-	//     // setSelectedExpense(null);
-	// }
-
 	const onFinishFailed = () => {
-		// if (!editing){
-		// }
-		//if (editing === true && selectedExpense) {} //need to prepopulate information and display as defaults
 		console.log("Could not submit.");
 	};
 

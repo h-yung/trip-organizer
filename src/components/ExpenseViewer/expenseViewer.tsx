@@ -31,7 +31,7 @@ interface ExpenseViewerProps {}
 const ExpenseViewer = ({}: ExpenseViewerProps) => {
 	const expenseRef = useRef<GridApi<ExpenseItem>>(); //MutableRefObject<GridApi<ExpenseItem> | undefined >
 
-	const { viewTrip } = useUserContext();
+	const { viewTrip, setSelectedActivity } = useUserContext();
 	const navigate = useNavigate();
 
 	const [openConfModal, setOpenConfModal] = useState(false);
@@ -144,6 +144,11 @@ const ExpenseViewer = ({}: ExpenseViewerProps) => {
 		viewTrip,
 		//in case of successful insert, need to refresh list. isSuccess is in lower-level child component
 	]);
+
+	useEffect(() => {
+		//single-use cleanup
+		setSelectedActivity(null);
+	}, []);
 
 	return (
 		<ConfigProvider

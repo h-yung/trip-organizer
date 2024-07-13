@@ -30,15 +30,9 @@ const ENV = import.meta.env.VITE_MODE;
 //may replace everything with the update activity form /controlled values
 
 const ActivityEntry = ({}: ActivityEntryProps) => {
-	const { activeUsr, viewTrip } = useUserContext();
+	const { activeUsr, viewTrip, setSelectedActivity } = useUserContext();
 	const navigate = useNavigate();
 	const [isSuccess, setIsSuccess] = useState(false);
-
-	// const exitForm = () => {
-	//     setEditing && setEditing(false);
-	//     setIsSuccess(false); //just cleanup
-	//     setShowActEntry(false);
-	// }
 
 	const formItemLayout = {
 		// labelCol: {
@@ -82,6 +76,11 @@ const ActivityEntry = ({}: ActivityEntryProps) => {
 	useEffect(() => {
 		if (!viewTrip) navigate("/trip");
 	}, [viewTrip]);
+
+	useEffect(() => {
+		//single-use cleanup
+		setSelectedActivity(null);
+	}, []);
 
 	return (
 		<ConfigProvider

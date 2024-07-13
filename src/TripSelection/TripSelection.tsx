@@ -54,6 +54,11 @@ export default function TripSelection({}: TripSelectionProps) {
 		}
 	}, []);
 
+	useEffect(() => {
+		//single-use cleanup
+		setViewTrip("");
+	}, []);
+
 	return (
 		<div className="trip-container">
 			<span className="titles">Choose a trip</span>
