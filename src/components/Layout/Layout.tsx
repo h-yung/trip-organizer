@@ -20,32 +20,6 @@ function AppLayout({ selectedActivity }: AppLayoutProps) {
 	return (
 		<>
 			<AppHeader />
-			{/* <nav style={{marginTop: 50}}>
-        <ul>
-          <li>
-            <Link to="/">ActivityViewer</Link>
-          </li>
-          <li>
-            <Link to="/expenses-viewer">ExpensesViewer</Link>
-          </li>
-          <li>
-            <Link to="/expenses-new">Expenses New</Link>
-          </li>
-          <li>
-            <Link to="/activity/update">Activity Update</Link>
-          </li>
-          <li>
-            <Link to="/activity-new">Activity New</Link>
-          </li>
-          <li>
-            <Link to="/trip">Trip Selection</Link>
-          </li>
-          <li>
-            <Link to={`/trip/${viewTrip}/review/edit`}>Trip Reviewer</Link>
-          </li>
-        </ul>
-      </nav> */}
-			{/* <h2>Hello</h2> */}
 
 			<div className="main-app">
 				<Outlet />
@@ -54,12 +28,11 @@ function AppLayout({ selectedActivity }: AppLayoutProps) {
 			<div className="footer">
 				{activeUsr && viewTrip && (
 					<>
-						{/* (showActEntry || showExpenseViewer) && */}
-
 						{location.pathname !== `/trip/${viewTrip}/activity` &&
-							location.pathname !==
-								`/trip/${viewTrip}/expenses/new` && (
-								// !(location.pathname.includes("detail") && location.pathname.includes("activity")) &&
+							!(
+								location.pathname.includes("detail") &&
+								location.pathname.includes("activity")
+							) && (
 								//only show this button if currently NOT: activity viewer, new expense entry, or activity detail
 								<Link to={`/trip/${viewTrip}/activity`}>
 									<Button
@@ -82,7 +55,9 @@ function AppLayout({ selectedActivity }: AppLayoutProps) {
 								location.pathname !==
 									`/trip/${viewTrip}/review/edit` &&
 								location.pathname !==
-									`/trip/${viewTrip}/activity/detail/${selectedActivity?._id}` && (
+									`/trip/${viewTrip}/expenses/new` &&
+								location.pathname !==
+									`/trip/${viewTrip}/activity/detail/${selectedActivity?._id}/update` && (
 									<Link to={`/trip/${viewTrip}/activity/new`}>
 										<Button
 											className="always-btn"

@@ -1,10 +1,19 @@
-import { Link } from "react-router-dom";
+import { Button } from "antd";
+import { useNavigate } from "react-router-dom";
+import { BigFruit } from "../../modules/Fruit";
+import "./noPage.scss";
 
 export default function NoPage() {
+	const navigate = useNavigate();
 	return (
-		<>
-			<h2>404. Oh noooooo something went wrong.</h2>
-			<Link to={`/login`}>Go log in again.</Link>
-		</>
+		<div className="generic-container">
+			<BigFruit />
+			<p>Something went wrong.</p>
+
+			<h2>Oof.</h2>
+			<Button className="special-btn" onClick={() => navigate(-1)}>
+				Go back
+			</Button>
+		</div>
 	);
 }

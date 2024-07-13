@@ -1,0 +1,19 @@
+.generic-container {
+	height: 60vh;
+	padding: 0 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	.special-btn {
+		// padding: 2rem;
+		height: 3rem;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 0.1rem;
+		color: red;
+		background: transparent;
+		border: 4px solid red;
+	}
+}

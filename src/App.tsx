@@ -73,23 +73,23 @@ function App() {
 
 					<Route path="login" element={<LoginPage />} />
 
-					{/* <Route
-							element={
-								<PrivateRoute children={<TripSelection />} />
-							}
-						/> */}
-					<Route path="trip" element={<TripSelection />} />
+					<Route
+						path="trip"
+						element={<PrivateRoute children={<TripSelection />} />}
+					/>
 
 					<Route
 						path="trip/:tripName/activity"
 						element={
-							<ActivityViewer
-								selectedActivity={selectedActivity}
-								setSelectedActivity={setSelectedActivity}
-								tripReview={tripReview}
-								setTripReview={setTripReview}
-								rowData={rowData}
-								setRowData={setRowData}
+							<PrivateRoute
+								children={
+									<ActivityViewer
+										tripReview={tripReview}
+										setTripReview={setTripReview}
+										rowData={rowData}
+										setRowData={setRowData}
+									/>
+								}
 							/>
 						}
 					/>
@@ -97,9 +97,15 @@ function App() {
 					<Route
 						path="trip/:tripName/activity/detail/:activityId"
 						element={
-							<ActivityDetail
-								setSelectedActivity={setSelectedActivity}
-								selectedActivity={selectedActivity}
+							<PrivateRoute
+								children={
+									<ActivityDetail
+										setSelectedActivity={
+											setSelectedActivity
+										}
+										selectedActivity={selectedActivity}
+									/>
+								}
 							/>
 						}
 					/>
@@ -138,7 +144,12 @@ function App() {
 							/>
 						}
 					/>
-					<Route path="help" element={<HelpPage />} />
+					<Route
+						path="help"
+						element={
+							!activeUsr ? <Navigate to="/login" /> : <HelpPage />
+						}
+					/>
 
 					<Route path="*" element={<NoPage />} />
 				</Route>

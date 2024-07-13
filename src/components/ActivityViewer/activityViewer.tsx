@@ -28,8 +28,6 @@ import { actGridOptions, defaultColDefs, useColDefs } from "./gridConfig";
 const ENV = import.meta.env.VITE_MODE;
 
 interface ActivityViewerProps {
-	setSelectedActivity: (p: ActionItem | null) => void;
-	selectedActivity: ActionItem | null;
 	tripReview: TripReview | null;
 	setTripReview: (p: TripReview | null) => void;
 	rowData: ActionItem[];
@@ -37,14 +35,13 @@ interface ActivityViewerProps {
 }
 
 const ActivityViewer = ({
-	setSelectedActivity,
-	selectedActivity,
 	tripReview,
 	setTripReview,
 	rowData,
 	setRowData,
 }: ActivityViewerProps) => {
-	const { activeUsr, viewTrip } = useUserContext();
+	const { activeUsr, viewTrip, setSelectedActivity, selectedActivity } =
+		useUserContext();
 
 	const navigate = useNavigate();
 
