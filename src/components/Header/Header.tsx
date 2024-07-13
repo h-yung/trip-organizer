@@ -2,22 +2,15 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 import { ConfigProvider, Popconfirm } from "antd";
 import { useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { User } from "../../utils/interfaces";
 import { useUserContext } from "../../utils/UserContext";
 import "./Header.scss";
 
-interface AppHeaderProps {
-	activeUsr: User | null;
-	viewTrip: string;
-	setViewTrip: (p: string) => void;
-	setActiveUsr: (p: User | null) => void;
-}
+interface AppHeaderProps {}
 const AppHeader = ({}: // activeUsr,
-// viewTrip,
-// setViewTrip
 
 AppHeaderProps) => {
-	const { activeUsr, viewTrip, setViewTrip } = useUserContext();
+	const { activeUsr, viewTrip, setViewTrip, setSelectedActivity } =
+		useUserContext();
 
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -29,7 +22,7 @@ AppHeaderProps) => {
 
 	const confirm = () => {
 		setViewTrip("");
-		// setActiveUsr(null);
+		setSelectedActivity(null);
 		console.log("active user is", activeUsr);
 		console.log("viewtrip set to ull, redirecting");
 		navigate("/trip");

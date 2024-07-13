@@ -1,10 +1,4 @@
-import {
-	BrowserRouter,
-	Navigate,
-	Route,
-	Routes,
-	useNavigate,
-} from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 // import AppHeader from './components/Header/Header';
 import ActivityDetail from "./components/activityDetail/ActivityDetail";
 import ActivityEntry from "./components/activityDetail/activityEntryForm";
@@ -16,22 +10,17 @@ import TripReviewer from "./components/TripReviewer/tripReviewer";
 
 //none: User Home
 
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import "./App.scss";
-import bugs from "./assets/bugs.svg";
 
+import { useStorage } from "./authentication/useStorage";
 import HelpPage from "./components/Help/Help";
 import AppLayout from "./components/Layout/Layout";
+import LoginPage from "./components/Login/Login";
 import NoPage from "./components/noPage/NoPage";
 import TripSelection from "./TripSelection/TripSelection";
-import { ActionItem, TripReview, User } from "./utils/interfaces";
-import UserSelection from "./components/UserSelection/userSelection";
-import ActivityMap from "./components/activityDetail/activityDetailMap";
+import { ActionItem, TripReview } from "./utils/interfaces";
 import { UserContext, useUserContext } from "./utils/UserContext";
-import LoginPage from "./components/Login/Login";
-import RequireAuth from "./authentication/RequireAuth";
-import { useStorage } from "./authentication/useStorage";
-import Home from "./modules/IdCard";
 // import UserUpdateCreate from './components/UserUpdateOrCreate/userUpdateCreate';
 
 const ENV = import.meta.env.VITE_MODE;
@@ -48,9 +37,7 @@ function App() {
 	const [activeUsr, setActiveUsr] = useStorage("activeUsr");
 	const [viewTrip, setViewTrip] = useStorage("viewTrip");
 
-	const [selectedActivity, setSelectedActivity] = useState<ActionItem | null>(
-		null
-	);
+	const [selectedActivity, setSelectedActivity] = useStorage("selected");
 
 	const [tripReview, setTripReview] = useState<TripReview | null>(null);
 	const [rowData, setRowData] = useState<ActionItem[]>([]);
@@ -71,14 +58,7 @@ function App() {
 			<Routes>
 				<Route
 					path="/"
-					element={
-						<AppLayout
-							activeUsr={activeUsr}
-							setActiveUsr={setActiveUsr}
-							viewTrip={viewTrip}
-							setViewTrip={setViewTrip}
-						/>
-					}
+					element={<AppLayout selectedActivity={selectedActivity} />}
 				>
 					<Route
 						index

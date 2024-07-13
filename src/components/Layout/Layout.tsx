@@ -1,37 +1,25 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
-import { User } from "../../utils/interfaces";
-import AppHeader from "../Header/Header";
-import { Button } from "antd";
 import {
 	CloseCircleOutlined,
-	FileAddOutlined,
 	DollarOutlined,
+	FileAddOutlined,
 } from "@ant-design/icons";
-import { useState } from "react";
+import { Button } from "antd";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { useUserContext } from "../../utils/UserContext";
+import AppHeader from "../Header/Header";
+import { ActionItem } from "../../utils/interfaces";
 
 interface AppLayoutProps {
-	activeUsr: User | null;
-	setActiveUsr: (p: User | null) => void;
-	viewTrip: string;
-	setViewTrip: (p: string) => void;
+	selectedActivity: ActionItem | null;
 }
 
-function AppLayout({
-	activeUsr,
-	viewTrip,
-	setViewTrip,
-	setActiveUsr,
-}: AppLayoutProps) {
+function AppLayout({ selectedActivity }: AppLayoutProps) {
 	const location = useLocation();
+	const { activeUsr, viewTrip } = useUserContext();
 
 	return (
 		<>
-			<AppHeader
-				activeUsr={activeUsr}
-				setActiveUsr={setActiveUsr}
-				viewTrip={viewTrip}
-				setViewTrip={setViewTrip}
-			/>
+			<AppHeader />
 			{/* <nav style={{marginTop: 50}}>
         <ul>
           <li>
@@ -93,10 +81,8 @@ function AppLayout({
 								`/trip/${viewTrip}/activity/new` &&
 								location.pathname !==
 									`/trip/${viewTrip}/review/edit` &&
-								!(
-									location.pathname.includes("update") &&
-									location.pathname.includes("activity")
-								) && (
+								location.pathname !==
+									`/trip/${viewTrip}/activity/detail/${selectedActivity?._id}` && (
 									<Link to={`/trip/${viewTrip}/activity/new`}>
 										<Button
 											className="always-btn"
