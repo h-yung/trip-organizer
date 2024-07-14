@@ -13,6 +13,8 @@
 }
 
 .activity-viewer {
+	padding: 0 2rem;
+
 	.controls-activity {
 		margin-top: 1rem;
 		display: flex;
@@ -60,7 +62,6 @@
 
 	.timeline-container {
 		margin-top: 1rem;
-		padding: 0 1rem;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-end;
