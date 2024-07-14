@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { deleteActivity } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { ActionItem, Category } from "../../utils/interfaces";
+import dayjs from "dayjs";
 import { useUserContext } from "../../utils/UserContext";
 import "./activityDetail.scss";
 
@@ -152,7 +153,10 @@ const ActivityDetail = ({
 				{startTime ? (
 					<div>
 						<label>Scheduled at</label>
-						<p>{startTime && new Date(startTime).toDateString()}</p>
+						<p>
+							{startTime &&
+								dayjs(startTime).format("ddd MMM DD h:mm A")}
+						</p>
 					</div>
 				) : (
 					<div style={{ marginBottom: "1rem" }}>
