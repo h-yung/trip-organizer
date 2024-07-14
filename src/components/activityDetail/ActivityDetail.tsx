@@ -167,14 +167,38 @@ const ActivityDetail = ({
 						{location.country}{" "}
 						{location.zipcode &&
 							location.nearestState &&
-							`| ${location.nearestState} ${location.nearestState}`}{" "}
+							`| ${location.nearestState} ${location.zipcode}`}{" "}
 					</p>
 				</div>
 				{advisory && (
 					<div>
 						<label>Advisory</label>
-						<p>{advisory} </p>
+						<ul>
+							{advisory.split("✦").map((bit) => (
+								<li key={`tip-${advisory.indexOf(bit)}`}>
+									{bit}
+								</li>
+							))}
+						</ul>
 					</div>
+				)}
+
+				<label>Links</label>
+				{urls?.length && urls[0] ? (
+					<ul>
+						{urls.map((url) => {
+							return (
+								<li
+									key={urls.indexOf(url)}
+									className="detail-urls"
+								>
+									<a href={url}>{url}</a>
+								</li>
+							);
+						})}
+					</ul>
+				) : (
+					<></>
 				)}
 				{vendor && (
 					<div>
@@ -189,7 +213,13 @@ const ActivityDetail = ({
 				{details && (
 					<div>
 						<label>Further Information</label>
-						<p>{details} </p>
+						<ul>
+							{details.split("✦").map((bit) => (
+								<li key={`deet-${details.indexOf(bit)}`}>
+									{bit}
+								</li>
+							))}{" "}
+						</ul>
 
 						<label>Links</label>
 						{urls?.length && urls[0] ? (
