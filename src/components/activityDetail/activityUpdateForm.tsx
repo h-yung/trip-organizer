@@ -123,7 +123,7 @@ const UpdateActivityEntry = ({
 						<h2>
 							<span>Updating Activity</span>
 							<Link
-								to={`/trip/${viewTrip}/activity`}
+								to={`/trip/${viewTrip}/activity/detail/${selectedActivity._id}`}
 								className="cancel-update-btn"
 								// style={{width: 200}} //wouldn't take from scss..
 							>

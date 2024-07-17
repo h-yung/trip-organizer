@@ -29,10 +29,8 @@ function AppLayout({ selectedActivity }: AppLayoutProps) {
 				{activeUsr && viewTrip && (
 					<>
 						{location.pathname !== `/trip/${viewTrip}/activity` &&
-							!(
-								location.pathname.includes("detail") &&
-								location.pathname.includes("activity")
-							) && (
+							location.pathname !==
+								`/trip/${viewTrip}/activity/detail/${selectedActivity?._id}` && (
 								//only show this button if currently NOT: activity viewer, new expense entry, or activity detail
 								<Link to={`/trip/${viewTrip}/activity`}>
 									<Button
