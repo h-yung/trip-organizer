@@ -1,4 +1,6 @@
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import {
 	ActionItem,
 	ActivityUpdateFormValues,
@@ -9,13 +11,21 @@ import {
 } from "./interfaces";
 
 export const convertActForForm = (
-	activity: ActionItem
+	activity: ActionItem,
+	customTz: string
 ): ActivityUpdateFormValues => {
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
+
 	const entry: ActivityUpdateFormValues = {
 		address: activity.location.address,
 		advisory: activity.advisory,
 		title: activity.title,
-		startTime: activity.startTime ? dayjs(activity.startTime) : undefined,
+		startTime: activity.startTime
+			? customTz
+				? dayjs(activity.startTime).tz(customTz, true)
+				: dayjs(activity.startTime)
+			: undefined, //display should use customTz if specified
 		category: activity.category,
 		urls: activity.urls && activity.urls.length ? [...activity.urls] : [],
 		country: activity.location.country,
@@ -41,8 +51,12 @@ export const convertFormToAct = (
 	actFormVals: ActivityUpdateFormValues,
 	user: User,
 	viewTrip: string,
+	customTz: string,
 	itemId?: string
 ): ActionItem => {
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
+
 	const {
 		address,
 		advisory,
@@ -67,7 +81,11 @@ export const convertFormToAct = (
 		category: category as Category,
 		submittedBy: user.lookupName,
 		trip: viewTrip,
-		startTime: startTime ? startTime.toDate() : undefined, //to JavaScript Date object
+		startTime: startTime
+			? customTz
+				? dayjs(startTime).tz(customTz, true).toDate()
+				: dayjs(startTime).toDate()
+			: undefined, //to JavaScript Date object
 		title,
 		details,
 		location: {

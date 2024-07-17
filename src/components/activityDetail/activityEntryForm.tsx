@@ -17,6 +17,11 @@ import { ActionItem } from "../../utils/interfaces";
 import { useUserContext } from "../../utils/UserContext";
 import SuccessPage from "../Success/Success";
 
+import { TimezoneSelector } from "../../modules/timezoneSelector";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
 interface ActivityEntryProps {
 	// query: string; //global search
 	selectedActivity?: ActionItem | null; //for EDIT
@@ -30,9 +35,13 @@ const ENV = import.meta.env.VITE_MODE;
 //may replace everything with the update activity form /controlled values
 
 const ActivityEntry = ({}: ActivityEntryProps) => {
-	const { activeUsr, viewTrip, setSelectedActivity } = useUserContext();
+	const { activeUsr, viewTrip, setSelectedActivity, customTz } =
+		useUserContext();
 	const navigate = useNavigate();
 	const [isSuccess, setIsSuccess] = useState(false);
+
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
 
 	const formItemLayout = {
 		// labelCol: {
@@ -53,14 +62,11 @@ const ActivityEntry = ({}: ActivityEntryProps) => {
 
 	const submit = async (values: any) => {
 		if (!activeUsr) return;
-		const entry = convertFormToAct(values, activeUsr, viewTrip);
-
-		// console.log('Received values of form: ', entry.startTime);
+		const entry = convertFormToAct(values, activeUsr, viewTrip, customTz);
 
 		if (ENV === "dev") {
 			console.log("tis dev, submitted new activity");
 			console.log(entry);
-			// setSelectedActivity(entry); //maybe need a way to force activityviewer to refresh
 			setIsSuccess(true);
 			return;
 		}
@@ -102,6 +108,8 @@ const ActivityEntry = ({}: ActivityEntryProps) => {
 							BY {activeUsr?.displayName} FOR {viewTrip}{" "}
 						</p>
 					</div>
+					<TimezoneSelector layout={"vertical"} />
+
 					<Form
 						className="activity-form"
 						labelCol={{ span: 4 }}

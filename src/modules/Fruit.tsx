@@ -1,4 +1,4 @@
-import fruit from "../../public/icons8-fruit-100.png";
+import fruit from "../assets/icons8-fruit-100.png";
 import "./fruit.scss";
 
 export const BigFruit = () => {

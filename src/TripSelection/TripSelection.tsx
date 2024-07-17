@@ -12,7 +12,8 @@ const ENV = import.meta.env.VITE_MODE;
 interface TripSelectionProps {}
 
 export default function TripSelection({}: TripSelectionProps) {
-	const { activeUsr, setViewTrip, setActiveUsr } = useContext(UserContext);
+	const { activeUsr, setViewTrip, setActiveUsr, setCustomTz } =
+		useContext(UserContext);
 	const navigate = useNavigate();
 	const [artImg, setArtImg] = useState<Image | null>(null);
 
@@ -28,7 +29,6 @@ export default function TripSelection({}: TripSelectionProps) {
 	const logout = useCallback(async () => {
 		//remove local token?
 		setActiveUsr(null);
-		setViewTrip("");
 		navigate("/login");
 
 		//prod: does session have to end explicitly, or just wipe storage?
@@ -56,6 +56,8 @@ export default function TripSelection({}: TripSelectionProps) {
 
 	useEffect(() => {
 		//single-use cleanup
+		setViewTrip("");
+		setCustomTz("");
 		setViewTrip("");
 	}, []);
 

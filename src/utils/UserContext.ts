@@ -10,6 +10,8 @@ type IUserContext = {
 	setSelectedActivity: React.Dispatch<
 		React.SetStateAction<ActionItem | null>
 	>;
+	customTz: string;
+	setCustomTz: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const UserContext = createContext<IUserContext>({
@@ -19,5 +21,7 @@ export const UserContext = createContext<IUserContext>({
 	setActiveUsr: () => {},
 	setViewTrip: () => {},
 	setSelectedActivity: () => {},
+	customTz: "",
+	setCustomTz: () => {},
 });
 export const useUserContext = () => useContext(UserContext);

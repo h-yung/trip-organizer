@@ -8,12 +8,15 @@ import {
 	SmileOutlined,
 } from "@ant-design/icons";
 import { Button, ConfigProvider, Popconfirm } from "antd";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { deleteActivity } from "../../apis/main";
 import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import { ActionItem, Category } from "../../utils/interfaces";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
 import { useUserContext } from "../../utils/UserContext";
 import "./activityDetail.scss";
 
@@ -62,11 +65,25 @@ const ActivityDetail = ({
 	setSelectedActivity,
 	selectedActivity,
 }: ActivityDetailProps) => {
-	const { viewTrip } = useUserContext();
+	const { viewTrip, customTz } = useUserContext();
 	const navigate = useNavigate();
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
 
 	const { title, startTime, location, advisory, details, vendor, urls } =
 		selectedActivity!;
+
+	const displayScheduledTime = useMemo(
+		() =>
+			!startTime
+				? "Update to add to schedule"
+				: customTz
+				? dayjs(startTime)
+						.tz(customTz)
+						.format("ddd MMM DD h:mm A (zzz)")
+				: dayjs(startTime).format("ddd MMM DD h:mm A (zzz)"),
+		[startTime, customTz]
+	);
 
 	const sendActivityToTrash = useCallback(async () => {
 		if (ENV === "dev") {
@@ -150,19 +167,26 @@ const ActivityDetail = ({
 
 				<h2 style={{ marginTop: "0.5rem" }}>{title}</h2>
 
-				{startTime ? (
-					<div>
-						<label>Scheduled at</label>
-						<p>
-							{startTime &&
-								dayjs(startTime).format("ddd MMM DD h:mm A")}
-						</p>
-					</div>
-				) : (
-					<div style={{ marginBottom: "1rem" }}>
-						<label>Update to add to schedule</label>
-					</div>
-				)}
+				{/* {startTime ? ( */}
+				<div>
+					<label>Scheduled at</label>
+					<p>
+						{displayScheduledTime}
+						{/* {startTime &&
+								(customTz
+									? dayjs(startTime)
+											.tz(customTz, true)
+											.format("ddd MMM DD h:mm A")
+									: dayjs(startTime).format(
+											"ddd MMM DD h:mm A"
+									  ))} */}
+					</p>
+				</div>
+				{/* // ) : (
+				// 	<div style={{ marginBottom: "1rem" }}>
+				// 		<label>Update to add to schedule</label>
+				// 	</div>
+				// )} */}
 
 				<div>
 					<label>Location</label>

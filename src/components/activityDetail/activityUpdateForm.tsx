@@ -18,6 +18,7 @@ import {
 import { ActionItem } from "../../utils/interfaces";
 import { useUserContext } from "../../utils/UserContext";
 import SuccessPage from "../Success/Success";
+import { TimezoneSelector } from "../../modules/timezoneSelector";
 
 interface UpdateActivityEntryProps {
 	selectedActivity: ActionItem;
@@ -32,7 +33,7 @@ const UpdateActivityEntry = ({
 	selectedActivity,
 	setSelectedActivity, //need to update this
 }: UpdateActivityEntryProps) => {
-	const { activeUsr, viewTrip } = useUserContext();
+	const { activeUsr, viewTrip, customTz } = useUserContext();
 	const navigate = useNavigate();
 
 	const [isSuccess, setIsSuccess] = useState(false);
@@ -40,8 +41,8 @@ const UpdateActivityEntry = ({
 	const [form] = Form.useForm();
 
 	const formVals = useMemo(() => {
-		return convertActForForm(selectedActivity);
-	}, [selectedActivity]);
+		return convertActForForm(selectedActivity, customTz);
+	}, [selectedActivity, customTz]);
 
 	const formItemLayout = {
 		// labelCol: {
@@ -66,6 +67,7 @@ const UpdateActivityEntry = ({
 			values,
 			activeUsr,
 			viewTrip,
+			customTz,
 			selectedActivity._id
 		);
 
@@ -73,6 +75,7 @@ const UpdateActivityEntry = ({
 			setSelectedActivity(entry);
 
 			console.log("tis dev, submitted update activity");
+			console.log(entry.startTime);
 			setIsSuccess(true);
 			return;
 		}
@@ -131,6 +134,7 @@ const UpdateActivityEntry = ({
 							by {activeUsr?.displayName} for {viewTrip}{" "}
 						</p>
 					</div>
+					<TimezoneSelector layout={"vertical"} />
 
 					<Form
 						form={form}

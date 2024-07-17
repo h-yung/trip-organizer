@@ -38,6 +38,7 @@ function App() {
 	const [viewTrip, setViewTrip] = useStorage("viewTrip");
 
 	const [selectedActivity, setSelectedActivity] = useStorage("selected");
+	const [customTz, setCustomTz] = useStorage("ctz");
 
 	const [tripReview, setTripReview] = useState<TripReview | null>(null);
 	const [rowData, setRowData] = useState<ActionItem[]>([]);
@@ -51,6 +52,8 @@ function App() {
 				setViewTrip,
 				selectedActivity,
 				setSelectedActivity,
+				customTz,
+				setCustomTz,
 			}}
 		>
 			<Routes>

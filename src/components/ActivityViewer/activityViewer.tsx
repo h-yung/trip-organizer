@@ -19,11 +19,15 @@ import { ActionItem, TripReview } from "../../utils/interfaces";
 import "./activityViewer.scss";
 
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
 import { Link, useNavigate } from "react-router-dom";
 import { sampleActivities, sampleReviews } from "../../utils/sampleData";
 import { isPast } from "../../utils/timeStyleCheckers";
 import { useUserContext } from "../../utils/UserContext";
 import { actGridOptions, defaultColDefs, useColDefs } from "./gridConfig";
+import { TimezoneSelector } from "../../modules/timezoneSelector";
 
 const ENV = import.meta.env.VITE_MODE;
 
@@ -40,10 +44,13 @@ const ActivityViewer = ({
 	rowData,
 	setRowData,
 }: ActivityViewerProps) => {
-	const { activeUsr, viewTrip, setSelectedActivity, selectedActivity } =
+	const { activeUsr, viewTrip, setSelectedActivity, setCustomTz, customTz } =
 		useUserContext();
 
 	const navigate = useNavigate();
+
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
 
 	const activityRef = useRef<GridApi<ActionItem>>(); //MutableRefObject<GridApi<ActionItem> | undefined >
 
@@ -90,7 +97,11 @@ const ActivityViewer = ({
 			.map((datum: ActionItem) => {
 				const isOver = datum.startTime && isPast(datum.startTime);
 				return {
-					label: dayjs(datum.startTime).format("ddd MMM DD h:mm A"),
+					label: customTz
+						? dayjs(datum.startTime)
+								.tz(customTz)
+								.format("ddd MMM DD h:mm A")
+						: dayjs(datum.startTime).format("ddd MMM DD h:mm A"),
 					children: (
 						<div
 							key={datum._id}
@@ -116,7 +127,7 @@ const ActivityViewer = ({
 					),
 				};
 			});
-	}, [rowData]);
+	}, [rowData, customTz]);
 
 	useEffect(() => {
 		async function getActivities() {
@@ -216,13 +227,15 @@ const ActivityViewer = ({
 								<span className="titles timeline">
 									Schedule
 								</span>
-
 								<span className="subtitle">
 									{" "}
 									{rowData.length
 										? "Tap on activity names for details."
 										: "There are no activities/events for this trip."}
 								</span>
+								{rowData.length && (
+									<TimezoneSelector layout={"horizontal"} />
+								)}
 							</div>
 
 							{rowData.length ? (
