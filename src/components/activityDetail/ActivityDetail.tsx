@@ -211,23 +211,6 @@ const ActivityDetail = ({
 					</div>
 				)}
 
-				<label>Links</label>
-				{urls?.length && urls[0] ? (
-					<ul>
-						{urls.map((url) => {
-							return (
-								<li
-									key={urls.indexOf(url)}
-									className="detail-urls"
-								>
-									<a href={url}>{url}</a>
-								</li>
-							);
-						})}
-					</ul>
-				) : (
-					<></>
-				)}
 				{vendor && (
 					<div>
 						<label>Vendor</label>
