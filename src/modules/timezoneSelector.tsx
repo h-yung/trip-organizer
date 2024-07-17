@@ -41,6 +41,7 @@ export const TimezoneSelector = ({ layout }: TimeZoneSelectorProps) => {
 		<div className={`tz-select-container ${layout}`}>
 			<label className="titles">Timezone</label>
 			<Select
+				showSearch
 				style={{ width: "100%", fontSize: "1rem" }}
 				onChange={handleChange}
 				options={options}
