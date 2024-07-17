@@ -23,7 +23,7 @@ export const convertActForForm = (
 		title: activity.title,
 		startTime: activity.startTime
 			? customTz
-				? dayjs(activity.startTime).tz(customTz, true)
+				? dayjs(activity.startTime).tz(customTz)
 				: dayjs(activity.startTime)
 			: undefined, //display should use customTz if specified
 		category: activity.category,
