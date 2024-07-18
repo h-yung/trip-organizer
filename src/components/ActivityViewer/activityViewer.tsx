@@ -92,7 +92,7 @@ const ActivityViewer = ({
 	}, [reverse]);
 	const timelineItems = useMemo(() => {
 		return rowData
-			.sort((a, b) => dayjs(b.startTime).diff(dayjs(a.startTime)))
+			.sort((a, b) => dayjs(a.startTime).diff(dayjs(b.startTime)))
 			.filter((datum: ActionItem) => datum.startTime) //no datetime = exclude from timeline
 			.map((datum: ActionItem) => {
 				const isOver = datum.startTime && isPast(datum.startTime);
