@@ -1,5 +1,5 @@
 .tz-select-container {
-	margin: 1rem;
+	// margin-bottom: 1rem;
 }
 
 .tz-select-container.horizontal {
@@ -21,4 +21,8 @@
 	> label {
 		margin-bottom: 0.5rem;
 	}
+}
+
+.city-select-container {
+	min-width: 200px;
 }

@@ -8,6 +8,7 @@ const {
 	VITE_DELETE_ONE,
 	VITE_GET_REVIEW_TRIP_USER,
 	VITE_AUTHENTICATE,
+	VITE_GET_TZ,
 } = import.meta.env;
 
 export const getAicArt = async (query?: string) => {
@@ -25,6 +26,13 @@ export const getAicArt = async (query?: string) => {
         url: singleRes.url,
     }
      */
+};
+
+//public API
+export const getTz = async (lat: string, lng: string) => {
+	const url = `${VITE_GET_TZ}?lat=${lat}&lng=${lng}`;
+	const response = await fetch(url);
+	return await response.json();
 };
 
 export const getAllUsers = async () => {

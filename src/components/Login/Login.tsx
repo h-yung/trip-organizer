@@ -1,12 +1,12 @@
-import { redirect, useNavigate } from "react-router-dom";
-import "./loginPage.scss";
 import { Button, ConfigProvider, Form, Input } from "antd";
-import { useContext, useEffect, useState } from "react";
-import { UserContext, useUserContext } from "../../utils/UserContext";
-import { sampleUsers } from "../../utils/sampleData";
-import dolphin from "../../assets/kiwi-bird.svg";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { authenticate } from "../../apis/main";
+import dolphin from "../../assets/kiwi-bird.svg";
+import { useUserContext } from "../../utils/UserContext";
 import { getAvatar } from "../../utils/avatars";
+import { sampleUsers } from "../../utils/sampleData";
+import "./loginPage.scss";
 
 const ENV = import.meta.env.VITE_MODE;
 

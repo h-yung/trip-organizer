@@ -87,13 +87,15 @@ export interface ActionItem {
 	startTime?: Date; //check ...
 	title: string;
 	details: string;
+	tz?: string; //suggest by location... determine whether/how to accept tz shown when user updates/enters
 	location: {
 		//tbd
 		mapUrl: string; //link
 		address: string;
-		country: string;
+		country: string; //remove requirement?
+		countryCode?: string;
 		nearestCity: string;
-		nearestState?: string;
+		nearestState?: string; //remove requirement?
 		zipcode?: number;
 	};
 
@@ -115,6 +117,8 @@ export interface ActivityUpdateFormValues {
 	nearestCity: string;
 	nearestState: string | undefined;
 	zipcode: number | undefined;
+	tz: string | undefined;
+	countryCode: string | undefined;
 	details: string;
 	//vendor
 	email: string | undefined;
@@ -130,4 +134,27 @@ export interface Image {
 	date_display: string;
 	alt_text: string;
 	url: string;
+}
+
+export interface CityObj {
+	name: string;
+	lat: string; //float
+	lng: string; //float
+	country: string;
+	admin1: string;
+	admin2: string;
+}
+
+export interface TzResponse {
+	latitude: number;
+	longitude: number;
+	location: string; //country, "Austria"
+	country_iso: string; //"AT",
+	iana_timezone: string; //"Europe/Vienna",
+	timezone_abbreviation: string; //"CET",
+	dst_abbreviation: string; //"CEST",
+	offset: string; //"UTC+1",
+	dst_offset: string; // "UTC+2",
+	current_local_datetime: string; //"2023-09-19T18:06:11.57",
+	current_utc_datetime: string; //"2023-09-19T16:06:11.570Z"
 }

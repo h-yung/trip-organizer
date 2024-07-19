@@ -102,6 +102,12 @@
 	// text-transform: uppercase;
 }
 
+.prepopulated.conditional {
+	border: none;
+	margin-bottom: 0.5rem;
+	font-style: italic;
+}
+
 .prepopulated.new {
 	padding-left: 1rem;
 }
@@ -132,6 +138,10 @@
 		font-size: 1.5rem;
 		letter-spacing: 0.1rem;
 		padding-bottom: 0.5rem;
+		margin-top: 1.5rem;
+	}
+	.item-label.first {
+		margin-top: 0px;
 	}
 
 	.entry-header {
@@ -153,6 +163,7 @@
 	#startTime_help,
 	#address_help,
 	#country_help,
+	#nearestCity_help,
 	#details_help {
 		// display: flex;
 		// justify-content: flex-end;
@@ -220,7 +231,7 @@
 	display: flex;
 	justify-content: center;
 	font-weight: 700;
-	font-size: 2rem;
+	font-size: 1.5rem;
 	padding: 0.25rem 0.5rem;
 	letter-spacing: 0.2rem;
 	text-transform: uppercase;

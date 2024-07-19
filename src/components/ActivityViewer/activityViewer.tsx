@@ -90,18 +90,22 @@ const ActivityViewer = ({
 	const toggleReverse = useCallback(() => {
 		setReverse(!reverse);
 	}, [reverse]);
+
 	const timelineItems = useMemo(() => {
+		//if older data pts don't have tz - not using .tz will default to device OS timezone
+		// const defaultVal = dayjs.tz.guess();
+
 		return rowData
 			.sort((a, b) => dayjs(a.startTime).diff(dayjs(b.startTime)))
 			.filter((datum: ActionItem) => datum.startTime) //no datetime = exclude from timeline
 			.map((datum: ActionItem) => {
 				const isOver = datum.startTime && isPast(datum.startTime);
 				return {
-					label: customTz
+					label: datum.tz
 						? dayjs(datum.startTime)
-								.tz(customTz)
-								.format("ddd MMM DD h:mm A")
-						: dayjs(datum.startTime).format("ddd MMM DD h:mm A"),
+								.tz(datum.tz)
+								.format("ddd MMM DD h:mm A z")
+						: dayjs(datum.startTime).format("ddd MMM DD h:mm A z"),
 					children: (
 						<div
 							key={datum._id}
@@ -233,9 +237,9 @@ const ActivityViewer = ({
 										? "Tap on activity names for details."
 										: "There are no activities/events for this trip."}
 								</span>
-								{rowData.length && (
+								{/* {rowData.length && (
 									<TimezoneSelector layout={"horizontal"} />
-								)}
+								)} */}
 							</div>
 
 							{rowData.length ? (

@@ -5,7 +5,15 @@ import {
 	PlusOutlined,
 	PushpinOutlined,
 } from "@ant-design/icons";
-import { Button, ConfigProvider, DatePicker, Form, Input, Radio } from "antd";
+import {
+	Button,
+	ConfigProvider,
+	DatePicker,
+	Form,
+	Input,
+	Radio,
+	Select,
+} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,11 +22,18 @@ import FoodOutlined from "../../assets/noun-food-6439612.svg";
 import {
 	convertActForForm,
 	convertFormToAct,
+	retrieveTz,
 } from "../../utils/activityConverter";
-import { ActionItem } from "../../utils/interfaces";
+import { ActionItem, ActivityUpdateFormValues } from "../../utils/interfaces";
 import { useUserContext } from "../../utils/UserContext";
 import SuccessPage from "../Success/Success";
-import { TimezoneSelector } from "../../modules/timezoneSelector";
+import {
+	getCityOptions,
+	TimezoneSelector,
+} from "../../modules/timezoneSelector";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
 interface UpdateActivityEntryProps {
 	selectedActivity: ActionItem;
@@ -33,16 +48,27 @@ const UpdateActivityEntry = ({
 	selectedActivity,
 	setSelectedActivity, //need to update this
 }: UpdateActivityEntryProps) => {
-	const { activeUsr, viewTrip, customTz } = useUserContext();
+	const { activeUsr, viewTrip, customTz, setCustomTz } = useUserContext();
 	const navigate = useNavigate();
 
 	const [isSuccess, setIsSuccess] = useState(false);
 
 	const [form] = Form.useForm();
 
-	const formVals = useMemo(() => {
-		return convertActForForm(selectedActivity, customTz);
-	}, [selectedActivity, customTz]);
+	const [formVals, setFormVals] = useState<ActivityUpdateFormValues>(
+		convertActForForm(selectedActivity, customTz)
+	);
+
+	const cityOptions = useMemo(() => {
+		return getCityOptions();
+	}, [getCityOptions]);
+
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
+
+	// const formVals = useMemo(() => {
+	// 	return convertActForForm(selectedActivity, customTz);
+	// }, [selectedActivity, customTz]);
 
 	const formItemLayout = {
 		// labelCol: {
@@ -61,6 +87,40 @@ const UpdateActivityEntry = ({
 		},
 	};
 
+	const onValuesChange = async (
+		changedValues: Record<string, any>,
+		allValues: Record<string, any>
+	) => {
+		if ("nearestCity" in changedValues) {
+			// return await retrieveTz(changedValues["nearestCity"]);
+			// console.log(thing);
+			const { iana_timezone, admin1, location, country } =
+				await retrieveTz(changedValues["nearestCity"]);
+
+			const amendedVals = structuredClone(allValues);
+			// amendedVals.tz = iana_timezone; //will set this on submission using customTz
+			amendedVals.country = location;
+			if (country === "US") amendedVals.nearestState = admin1;
+
+			//fix startTime
+			if (allValues.startTime) {
+				//redundant?
+				// console.log("there is start time");
+				amendedVals.startTime = allValues.startTime.tz(
+					iana_timezone,
+					true
+				);
+			}
+
+			console.log("Amended bc city,", amendedVals);
+			setCustomTz(iana_timezone);
+			setFormVals(amendedVals as ActivityUpdateFormValues);
+			return;
+		}
+
+		// setFormVals(allValues as ActivityUpdateFormValues);
+	};
+
 	const submit = async (values: any) => {
 		if (!activeUsr) return;
 		const entry = convertFormToAct(
@@ -76,6 +136,7 @@ const UpdateActivityEntry = ({
 
 			console.log("tis dev, submitted update activity");
 			console.log(entry.startTime);
+			console.log(entry);
 			setIsSuccess(true);
 			return;
 		}
@@ -134,7 +195,7 @@ const UpdateActivityEntry = ({
 							by {activeUsr?.displayName} for {viewTrip}{" "}
 						</p>
 					</div>
-					<TimezoneSelector layout={"vertical"} />
+					{/* <TimezoneSelector layout={"vertical"} /> */}
 
 					<Form
 						form={form}
@@ -145,8 +206,7 @@ const UpdateActivityEntry = ({
 						onFinish={submit}
 						onFinishFailed={onFinishFailed}
 						initialValues={formVals}
-						// onValuesChange={e=>console.log(e)}
-
+						onValuesChange={onValuesChange}
 						{...formItemLayoutWithOutLabel}
 					>
 						<label className="item-label">Category</label>
@@ -208,12 +268,100 @@ const UpdateActivityEntry = ({
 						</Form.Item>
 
 						<div className="form-subBlock">
-							<label className="item-label">Scheduled for </label>
+							{/* <label className="subheader">Location</label> */}
+
+							<label className="item-label">Address</label>
+
+							<Form.Item
+								className="form-item"
+								name="address"
+								help="Required"
+								rules={[{ required: true }]}
+							>
+								<Input value={formVals?.address} />
+							</Form.Item>
+							<label className="item-label">Nearest City</label>
+							{formVals.country ? (
+								<span className="prepopulated conditional">
+									{formVals.nearestState
+										? `${formVals.nearestState}, `
+										: ""}
+									{formVals.country}
+								</span>
+							) : (
+								<></>
+							)}
+							<Form.Item
+								className="form-item"
+								name="nearestCity"
+								rules={[{ required: true }]}
+								help="Required"
+							>
+								{/* <Input /> */}
+								<Select
+									showSearch
+									style={{ width: 250, fontSize: "1rem" }}
+									placeholder="Select a city"
+									options={cityOptions}
+									// defaultValue={defaultVal}
+									value={formVals?.nearestCity} //let's see...
+									size="large"
+								/>
+							</Form.Item>
+
+							{/* <Form.Item
+								className="form-item"
+								name="nearestCity"
+								// rules={[{ required: true, message: "Required" }]}
+							>
+								<Input value={formVals?.nearestCity} />
+							</Form.Item> */}
+							<label className="item-label">Map URL</label>
+
+							{/* <label className="item-label">Country</label>
+
+							<Form.Item
+								className="form-item"
+								name="country"
+								help="Required"
+								rules={[{ required: true }]}
+							>
+								<Input value={formVals?.country} />
+							</Form.Item>
+							<label className="item-label">Nearest State</label>
+
+							<Form.Item
+								className="form-item"
+								name="nearestState"
+							>
+								<Input value={formVals?.nearestState} />
+							</Form.Item> */}
+							<label className="item-label">Zipcode</label>
+
+							<Form.Item className="form-item" name="zipcode">
+								<Input value={formVals?.zipcode} />
+							</Form.Item>
+
+							<Form.Item
+								className="form-item"
+								name="mapUrl"
+								help="Required"
+								rules={[{ required: true }]}
+							>
+								<Input value={formVals?.mapUrl} />
+							</Form.Item>
+						</div>
+
+						<div className="form-subBlock">
+							<label className="subheader">Timing</label>
+							<label className="item-label first">
+								Scheduled for
+							</label>
 
 							<Form.Item
 								className="form-item date-picker"
 								name="startTime"
-								help="Required for updates"
+								help="Required"
 								rules={[{ required: true }]}
 							>
 								<DatePicker
@@ -221,6 +369,14 @@ const UpdateActivityEntry = ({
 									format="YYYY-MM-DD HH:mm"
 									value={formVals?.startTime}
 								/>
+							</Form.Item>
+							<Form.Item
+								className="form-item date-picker"
+								name="tz"
+								help="Suggested timezone based on nearest city. Override if needed."
+								//  rules={[{ required: true }]}
+							>
+								<TimezoneSelector layout={"vertical"} />
 							</Form.Item>
 						</div>
 
@@ -309,62 +465,6 @@ const UpdateActivityEntry = ({
 								</div>
 							)}
 						</Form.List>
-
-						<div className="form-subBlock">
-							<label className="subheader">Location</label>
-							<label className="item-label">Map URL</label>
-
-							<Form.Item
-								className="form-item"
-								name="mapUrl"
-								help="Required"
-								rules={[{ required: true }]}
-							>
-								<Input value={formVals?.mapUrl} />
-							</Form.Item>
-							<label className="item-label">Address</label>
-
-							<Form.Item
-								className="form-item"
-								name="address"
-								help="Required"
-								rules={[{ required: true }]}
-							>
-								<Input value={formVals?.address} />
-							</Form.Item>
-							<label className="item-label">Nearest City</label>
-
-							<Form.Item
-								className="form-item"
-								name="nearestCity"
-								// rules={[{ required: true, message: "Required" }]}
-							>
-								<Input value={formVals?.nearestCity} />
-							</Form.Item>
-							<label className="item-label">Country</label>
-
-							<Form.Item
-								className="form-item"
-								name="country"
-								help="Required"
-								rules={[{ required: true }]}
-							>
-								<Input value={formVals?.country} />
-							</Form.Item>
-							<label className="item-label">Nearest State</label>
-
-							<Form.Item
-								className="form-item"
-								name="nearestState"
-							>
-								<Input value={formVals?.nearestState} />
-							</Form.Item>
-							<label className="item-label">Zipcode</label>
-
-							<Form.Item className="form-item" name="zipcode">
-								<Input value={formVals?.zipcode} />
-							</Form.Item>
-						</div>
 
 						<div className="form-subBlock">
 							<label className="subheader">Details</label>
