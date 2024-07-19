@@ -93,6 +93,13 @@ Running locally (front-end only instruction):
 
 Add your own API key in environment variables for the Netlify functions.
 
+## Credits/Resources/Thanks
+- lutangar/ cities.json - https://github.com/lutangar/cities.json
+- TimeAPI - https://www.timeapi.io
+- TheRealBarenziah / imgbb-uploader - https://github.com/TheRealBarenziah/imgbb-uploader
+
+
+
 ## Learnings
 
 Mostly sticking to a consistent workflow/order of operations. General directory structure working from outside-in,
