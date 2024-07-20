@@ -163,7 +163,7 @@ const ActivityEntry = ({}: ActivityEntryProps) => {
 			if (ENV === "dev") {
 				console.log("tis dev, submitted new activity");
 				console.log(entry);
-				// setIsSuccess(true);
+				setIsSuccess(true);
 				return;
 			}
 			const response = await addActivity(entry);
