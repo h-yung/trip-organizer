@@ -86,7 +86,7 @@ const ActivityEntry = ({}: ActivityEntryProps) => {
 			const { iana_timezone, admin1, location, country } =
 				await retrieveTz(changedValues["nearestCity"]);
 
-			const amendedVals = structuredClone(allValues);
+			const amendedVals = structuredClone(formVals);
 			// amendedVals.tz = iana_timezone; //will set this on submission using customTz
 			amendedVals.country = location;
 			amendedVals.countryCode = country;

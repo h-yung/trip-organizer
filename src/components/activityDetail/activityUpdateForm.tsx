@@ -97,7 +97,7 @@ const UpdateActivityEntry = ({
 			const { iana_timezone, admin1, location, country } =
 				await retrieveTz(changedValues["nearestCity"]);
 
-			const amendedVals = structuredClone(allValues);
+			const amendedVals = structuredClone(formVals);
 			// amendedVals.tz = iana_timezone; //will set this on submission using customTz
 			amendedVals.country = location;
 			if (country === "US") amendedVals.nearestState = admin1;
@@ -105,7 +105,6 @@ const UpdateActivityEntry = ({
 			//fix startTime
 			if (allValues.startTime) {
 				//redundant?
-				// console.log("there is start time");
 				amendedVals.startTime = allValues.startTime.tz(
 					iana_timezone,
 					true
