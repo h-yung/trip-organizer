@@ -67,7 +67,7 @@ const ExpenseEntry = ({}: ExpenseEntryProps) => {
 		//   'date-picker': fieldsValue['date-picker'].format('YYYY-MM-DD'),
 		//   'date-time-picker': fieldsValue['date-time-picker'].format('YYYY-MM-DD HH:mm:ss'),
 
-		console.log("Received values of form: ", values, entry);
+		// console.log("Received values of form: ", values, entry);
 
 		if (ENV === "dev") {
 			console.log("tis dev, submitted new expense");
@@ -75,7 +75,7 @@ const ExpenseEntry = ({}: ExpenseEntryProps) => {
 			return;
 		}
 		const response = await addExpense(entry);
-		console.log("RESPONSE:", jsesc(response));
+		// console.log("RESPONSE:", jsesc(response));
 		if (response?.insertedId) setIsSuccess(true);
 		// }
 		//if (editing === true && selectedExpense) {} //need to prepopulate information and display as defaults

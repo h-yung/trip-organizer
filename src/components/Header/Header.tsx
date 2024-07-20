@@ -23,8 +23,8 @@ AppHeaderProps) => {
 	const confirm = () => {
 		setViewTrip("");
 		setSelectedActivity(null);
-		console.log("active user is", activeUsr);
-		console.log("viewtrip set to ull, redirecting");
+		// console.log("active user is", activeUsr);
+		// console.log("viewtrip set to ull, redirecting");
 		navigate("/trip");
 	};
 

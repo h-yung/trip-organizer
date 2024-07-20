@@ -36,7 +36,7 @@ export const TimezoneSelector = ({ layout }: TimeZoneSelectorProps) => {
 	const defaultVal = useMemo(() => customTz ?? dayjs.tz.guess(), [customTz]);
 
 	const handleChange = (value: string) => {
-		console.log(value);
+		// console.log(value);
 		setCustomTz(value);
 	};
 

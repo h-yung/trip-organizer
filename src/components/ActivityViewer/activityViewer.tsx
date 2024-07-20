@@ -79,7 +79,7 @@ const ActivityViewer = ({
 			const matchedDatum = rowData.find(
 				(datum) => datum._id === e.currentTarget.id
 			)!;
-			console.log(matchedDatum);
+			// console.log(matchedDatum);
 			setSelectedActivity(matchedDatum);
 		},
 		[rowData]

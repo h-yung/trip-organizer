@@ -121,7 +121,7 @@ const TripReviewer = ({
 			}
 
 			const response = await addTripReview(review);
-			console.log("RESPONSE:", jsesc(response));
+			// console.log("RESPONSE:", jsesc(response));
 			if (response?.insertedId) {
 				//if succeeded, apply the updates from submission; does not re-req however
 				setTripReview(review); //doesn't seem to work properly..

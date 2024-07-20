@@ -32,11 +32,11 @@ export const useColDefs = (
 ) => {
 	const navigate = useNavigate();
 	const onCellClicked = (p: CellClickedEvent) => {
-		console.log("clicked");
+		// console.log("clicked");
 		const { data } = p;
 		setSelectedActivity(data);
-		console.log(data);
-		console.log(`/trip/${viewTrip}/activity/detail/${data._id}`);
+		// console.log(data);
+		// console.log(`/trip/${viewTrip}/activity/detail/${data._id}`);
 		navigate(`/trip/${viewTrip}/activity/detail/${data._id}`);
 	};
 

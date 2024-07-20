@@ -103,7 +103,7 @@ const ActivityEntry = ({}: ActivityEntryProps) => {
 				);
 			}
 
-			console.log("Amended bc city,", amendedVals);
+			// console.log("Amended bc city,", amendedVals);
 			setCustomTz(iana_timezone);
 			setFormVals(amendedVals as ActivityUpdateFormValues);
 			return;
@@ -162,7 +162,7 @@ const ActivityEntry = ({}: ActivityEntryProps) => {
 				return;
 			}
 			const response = await addActivity(entry);
-			console.log("RESPONSE:", jsesc(response));
+			// console.log("RESPONSE:", jsesc(response));
 			if (response?.insertedId) setIsSuccess(true);
 		};
 

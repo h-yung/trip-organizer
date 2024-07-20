@@ -81,7 +81,7 @@ const ExpenseViewer = ({}: ExpenseViewerProps) => {
 	}, []);
 
 	const handleOk = useCallback(async () => {
-		console.log("selected exp at this time:", selectedExpense);
+		// console.log("selected exp at this time:", selectedExpense);
 
 		if (!selectedExpense) {
 			console.log("nothing to update");
@@ -113,8 +113,8 @@ const ExpenseViewer = ({}: ExpenseViewerProps) => {
 		//editing has stopped?
 		event.api.stopEditing();
 		const changedRowNode = event.api.getRowNode(event.data._id);
-		console.log("changed row?");
-		console.log(changedRowNode?.data);
+		// console.log("changed row?");
+		// console.log(changedRowNode?.data);
 
 		changedRowNode && setSelectedExpense(changedRowNode.data);
 

@@ -112,7 +112,7 @@ const UpdateActivityEntry = ({
 				);
 			}
 
-			console.log("Amended bc city,", amendedVals);
+			// console.log("Amended bc city,", amendedVals);
 			setCustomTz(iana_timezone);
 			setFormVals(amendedVals as ActivityUpdateFormValues);
 			return;
