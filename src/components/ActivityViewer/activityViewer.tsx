@@ -106,6 +106,7 @@ const ActivityViewer = ({
 								.tz(datum.tz)
 								.format("ddd MMM DD h:mm A z")
 						: dayjs(datum.startTime).format("ddd MMM DD h:mm A z"),
+					color: isOver ? "rgba(121, 54, 54, 0.453)" : "#00c28e",
 					children: (
 						<div
 							key={datum._id}
