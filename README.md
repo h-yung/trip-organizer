@@ -27,8 +27,6 @@ UI libraries:
 -   Ant Design
 -   AG Grid (probably overkill)
 
-Mobile testing: https://www.lambdatest.com/
-Note that this only really runs in Chrome browser.
 
 Free icons from FlatIcon and some personal graphics
 
@@ -104,6 +102,10 @@ Add your own API key in environment variables for the Netlify functions.
 
 ## Learnings
 
+### Testing
+- Mobile testing: https://www.lambdatest.com/ Note that this only really runs in Chrome browser and only 3 free sessions.
+
+### Approach
 Mostly sticking to a consistent workflow/order of operations. General directory structure working from outside-in,
 
 1. Define data structures (only two here). Even if the database doesn't enforce a schema, be consistent and work with TypeScript.
