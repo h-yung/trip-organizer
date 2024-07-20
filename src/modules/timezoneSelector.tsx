@@ -57,10 +57,14 @@ export const TimezoneSelector = ({ layout }: TimeZoneSelectorProps) => {
 };
 
 //to serve timezone selector/suggestor. for some reason cannot import a Select into form and have it acknowledged by form item name
+export const cityList = Object.values(
+	cityJson["default" as keyof object]
+) as unknown as CityObj[];
+
 export const getCityOptions = () => {
-	const cities: CityObj[] = cityJson[
-		"default" as keyof object
-	] as unknown as CityObj[]; //ridic typescript issue
+	const cities: CityObj[] = Object.values(
+		cityJson["default" as keyof object]
+	) as unknown as CityObj[]; //...
 
 	return cities
 		.sort((a, b) => {

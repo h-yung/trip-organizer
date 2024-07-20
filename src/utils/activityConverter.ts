@@ -11,7 +11,7 @@ import {
 	User,
 } from "./interfaces";
 import { sampleTzResponse } from "./sampleData";
-import * as cityJson from "cities.json";
+import { cityList } from "../modules/timezoneSelector";
 
 const ENV = import.meta.env.VITE_MODE;
 
@@ -23,10 +23,6 @@ export const convertActForForm = (
 	dayjs.extend(timezone);
 
 	//need nearestCity to be converted into pre-parsed CityObj
-	const cityList = cityJson[
-		"default" as keyof object
-	] as unknown as CityObj[];
-
 	const { location } = activity;
 	const cityData = cityList.find(({ name, country, admin1 }: CityObj) => {
 		return activity.location.countryCode === "US"
