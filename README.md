@@ -27,6 +27,8 @@ UI libraries:
 -   Ant Design
 -   AG Grid (probably overkill)
 
+Mobile testing: https://www.lambdatest.com/
+
 Free icons from FlatIcon and some personal graphics
 
 Additional art, etc. credits to the AIC (Art Institute of Chicago) API
