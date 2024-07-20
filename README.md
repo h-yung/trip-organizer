@@ -28,6 +28,7 @@ UI libraries:
 -   AG Grid (probably overkill)
 
 Mobile testing: https://www.lambdatest.com/
+Note that this only really runs in Chrome browser.
 
 Free icons from FlatIcon and some personal graphics
 
