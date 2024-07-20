@@ -182,6 +182,7 @@ const ActivityEntry = ({}: ActivityEntryProps) => {
 	useEffect(() => {
 		//single-use cleanup
 		setSelectedActivity(null);
+		setCustomTz("");
 	}, []);
 
 	return (

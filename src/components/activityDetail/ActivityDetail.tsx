@@ -65,24 +65,22 @@ const ActivityDetail = ({
 	setSelectedActivity,
 	selectedActivity,
 }: ActivityDetailProps) => {
-	const { viewTrip, customTz } = useUserContext();
+	const { viewTrip, setCustomTz } = useUserContext();
 	const navigate = useNavigate();
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 
-	const { title, startTime, location, advisory, details, vendor, urls } =
+	const { title, startTime, location, advisory, details, vendor, urls, tz } =
 		selectedActivity!;
 
 	const displayScheduledTime = useMemo(
 		() =>
 			!startTime
 				? "Update to add to schedule"
-				: customTz
-				? dayjs(startTime)
-						.tz(customTz)
-						.format("ddd MMM DD h:mm A (zzz)")
+				: tz
+				? dayjs(startTime).tz(tz).format("ddd MMM DD h:mm A (zzz)")
 				: dayjs(startTime).format("ddd MMM DD h:mm A (zzz)"),
-		[startTime, customTz]
+		[startTime, tz]
 	);
 
 	const sendActivityToTrash = useCallback(async () => {
@@ -105,6 +103,11 @@ const ActivityDetail = ({
 		if (!viewTrip) navigate("/trip");
 		if (!selectedActivity) navigate(`/trip/${viewTrip}/activity`);
 	}, [viewTrip, selectedActivity]);
+
+	useEffect(() => {
+		//one time cleanup
+		setCustomTz(selectedActivity?.tz ?? "");
+	}, [selectedActivity]);
 
 	return (
 		<ConfigProvider

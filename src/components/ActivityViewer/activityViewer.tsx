@@ -157,6 +157,7 @@ const ActivityViewer = ({
 	useEffect(() => {
 		//single-use cleanup
 		setSelectedActivity(null);
+		setCustomTz("");
 	}, []);
 
 	//this has to do with antd form initialvalue setting. If called inside the reviewer, it may not set properly on mount.
