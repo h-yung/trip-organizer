@@ -16,6 +16,8 @@ export const defaultColDefs = {
 	resizable: false,
 	menuTabs: [],
 	suppressMovable: true,
+	headerClass: ["left-align", "scale-up", "header-text"],
+	cellClass: ["left-align", "scale-up"],
 	// onCellClicked: (p: CellClickedEvent) => console.log(p.data.category),
 };
 
@@ -61,14 +63,19 @@ export const useColDefs = (
 					headerName: "Title",
 					field: "title",
 					width: 300,
-					headerClass: ["left-align", "scale-up", "header-text"],
-					cellClass: ["left-align", "scale-up"],
 					valueGetter: (p: ValueGetterParams) => {
 						if (!p.data?.startTime)
 							return `UNSCHEDULED: ${p.data.title}`;
 						else return p.data.title;
 					},
 					onCellClicked,
+				},
+				{
+					headerName: "Timezone",
+					field: "tz",
+					// getQuickFilterText: (p: GetQuickFilterTextParams) =>
+					// 	p.value,
+					hide: true,
 				},
 				{
 					headerName: "Category",

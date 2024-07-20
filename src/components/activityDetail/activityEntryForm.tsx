@@ -107,6 +107,12 @@ const ActivityEntry = ({}: ActivityEntryProps) => {
 			setCustomTz(iana_timezone);
 			setFormVals(amendedVals as ActivityUpdateFormValues);
 			return;
+		} else {
+			//any other update:
+			const updates = { ...formVals, ...changedValues };
+
+			setFormVals(updates as ActivityUpdateFormValues);
+			return;
 		}
 
 		// setFormVals(allValues as ActivityUpdateFormValues);

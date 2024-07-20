@@ -116,15 +116,20 @@ const UpdateActivityEntry = ({
 			setCustomTz(iana_timezone);
 			setFormVals(amendedVals as ActivityUpdateFormValues);
 			return;
+		} else {
+			const updates = { ...formVals, ...changedValues };
+
+			setFormVals(updates as ActivityUpdateFormValues);
+			return;
 		}
 
 		// setFormVals(allValues as ActivityUpdateFormValues);
 	};
 
-	const submit = async (values: any) => {
+	const submit = async () => {
 		if (!activeUsr) return;
 		const entry = convertFormToAct(
-			values,
+			formVals,
 			activeUsr,
 			viewTrip,
 			customTz,
@@ -316,7 +321,6 @@ const UpdateActivityEntry = ({
 							>
 								<Input value={formVals?.nearestCity} />
 							</Form.Item> */}
-							<label className="item-label">Map URL</label>
 
 							{/* <label className="item-label">Country</label>
 
@@ -341,6 +345,7 @@ const UpdateActivityEntry = ({
 							<Form.Item className="form-item" name="zipcode">
 								<Input value={formVals?.zipcode} />
 							</Form.Item>
+							<label className="item-label">Map URL</label>
 
 							<Form.Item
 								className="form-item"

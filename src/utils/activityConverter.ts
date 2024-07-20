@@ -84,6 +84,8 @@ export const convertFormToAct = (
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 
+	console.log("preconvert", actFormVals);
+
 	const {
 		address,
 		advisory,
@@ -92,10 +94,10 @@ export const convertFormToAct = (
 		category,
 		urls,
 		country,
-		countryCode,
+		// countryCode,
 		mapUrl,
 		nearestCity,
-		nearestState,
+		// nearestState,
 		zipcode,
 		details,
 		//vendor
@@ -108,6 +110,8 @@ export const convertFormToAct = (
 	//convert nearestCity value into readable fields
 	const cityData: CityObj = JSON.parse(nearestCity);
 	const cityName = cityData.name;
+	const countryCode = cityData.country;
+	const state = cityData.admin1;
 
 	const entry: ActionItem = {
 		category: category as Category,
@@ -126,7 +130,7 @@ export const convertFormToAct = (
 			country,
 			countryCode,
 			nearestCity: cityName,
-			nearestState,
+			nearestState: countryCode === "US" ? state : undefined,
 			zipcode,
 		},
 		tz: customTz,
@@ -142,6 +146,8 @@ export const convertFormToAct = (
 
 	//if an entry update
 	if (itemId) entry._id = itemId;
+
+	console.log("converted", entry);
 	return entry;
 };
 
