@@ -84,7 +84,7 @@ export const convertFormToAct = (
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 
-	// console.log("preconvert", actFormVals);
+	console.log("preconvert", actFormVals);
 
 	const {
 		address,
@@ -94,10 +94,8 @@ export const convertFormToAct = (
 		category,
 		urls,
 		country,
-		// countryCode,
 		mapUrl,
 		nearestCity,
-		// nearestState,
 		zipcode,
 		details,
 		//vendor
@@ -147,7 +145,7 @@ export const convertFormToAct = (
 	//if an entry update
 	if (itemId) entry._id = itemId;
 
-	// console.log("converted", entry);
+	console.log("converted", entry);
 	return entry;
 };
 

@@ -81,15 +81,20 @@ const ActivityEntry = ({}: ActivityEntryProps) => {
 		allValues: Record<string, any>
 	) => {
 		if ("nearestCity" in changedValues) {
-			// return await retrieveTz(changedValues["nearestCity"]);
-			// console.log(thing);
-			const { iana_timezone, admin1, location, country } =
-				await retrieveTz(changedValues["nearestCity"]);
+			const tzRes =
+				ENV === "dev"
+					? {
+							...sampleTzResponse,
+							admin1: changedValues["nearestCity"].admin,
+							country: changedValues["nearestCity"].country,
+					  }
+					: await retrieveTz(changedValues["nearestCity"]);
+			const { iana_timezone, admin1, location, country } = tzRes;
 
 			const amendedVals = structuredClone(formVals);
 			// amendedVals.tz = iana_timezone; //will set this on submission using customTz
 			amendedVals.country = location;
-			amendedVals.countryCode = country;
+			amendedVals.nearestCity = changedValues["nearestCity"];
 
 			if (country === "US") amendedVals.nearestState = admin1;
 
@@ -158,7 +163,7 @@ const ActivityEntry = ({}: ActivityEntryProps) => {
 			if (ENV === "dev") {
 				console.log("tis dev, submitted new activity");
 				console.log(entry);
-				setIsSuccess(true);
+				// setIsSuccess(true);
 				return;
 			}
 			const response = await addActivity(entry);

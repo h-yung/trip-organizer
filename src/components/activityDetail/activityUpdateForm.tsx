@@ -34,6 +34,7 @@ import {
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { sampleTzResponse } from "../../utils/sampleData";
 
 interface UpdateActivityEntryProps {
 	selectedActivity: ActionItem;
@@ -92,14 +93,20 @@ const UpdateActivityEntry = ({
 		allValues: Record<string, any>
 	) => {
 		if ("nearestCity" in changedValues) {
-			// return await retrieveTz(changedValues["nearestCity"]);
-			// console.log(thing);
-			const { iana_timezone, admin1, location, country } =
-				await retrieveTz(changedValues["nearestCity"]);
-
+			const tzRes =
+				ENV === "dev"
+					? {
+							...sampleTzResponse,
+							admin1: changedValues["nearestCity"].admin,
+							country: changedValues["nearestCity"].country,
+					  }
+					: await retrieveTz(changedValues["nearestCity"]);
+			const { iana_timezone, admin1, location, country } = tzRes;
 			const amendedVals = structuredClone(formVals);
 			// amendedVals.tz = iana_timezone; //will set this on submission using customTz
 			amendedVals.country = location;
+			amendedVals.nearestCity = changedValues["nearestCity"];
+
 			if (country === "US") amendedVals.nearestState = admin1;
 
 			//fix startTime
