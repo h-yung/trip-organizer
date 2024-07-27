@@ -96,9 +96,7 @@ Add your own API key in environment variables for the Netlify functions.
 
 ## Credits/Resources/Thanks
 - lutangar/ cities.json - https://github.com/lutangar/cities.json
-- TheRealBarenziah / imgbb-uploader - https://github.com/TheRealBarenziah/imgbb-uploader
 - GeoTimeZone API - https://www.geotimezone.com/
-
 
 ## Learnings
 
