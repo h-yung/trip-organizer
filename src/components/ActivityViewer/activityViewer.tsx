@@ -19,15 +19,14 @@ import { ActionItem, TripReview } from "../../utils/interfaces";
 import "./activityViewer.scss";
 
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 
 import { Link, useNavigate } from "react-router-dom";
 import { sampleActivities, sampleReviews } from "../../utils/sampleData";
 import { isPast } from "../../utils/timeStyleCheckers";
 import { useUserContext } from "../../utils/UserContext";
 import { actGridOptions, defaultColDefs, useColDefs } from "./gridConfig";
-import { TimezoneSelector } from "../../modules/timezoneSelector";
 
 const ENV = import.meta.env.VITE_MODE;
 
@@ -71,6 +70,14 @@ const ActivityViewer = ({
 			.find((trip) => trip.tripName === viewTrip)
 			?.role.includes("participant");
 	}, [viewTrip]);
+
+	const exportActivities = useCallback(() => {
+		if (activityRef.current) {
+			activityRef.current.exportDataAsCsv({
+				allColumns: true,
+			});
+		}
+	}, [activityRef]);
 
 	const onTimelineItemClicked = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
@@ -202,6 +209,8 @@ const ActivityViewer = ({
 						defaultHoverBg: "transparent",
 						defaultColor: "#00c28e",
 						defaultBorderColor: "#00c28e",
+						primaryColor: "white",
+						colorPrimaryBg: "red",
 					},
 					Timeline: {
 						colorPrimary: "#00c28e",
@@ -341,7 +350,17 @@ const ActivityViewer = ({
 					</Button>
 				</div>
 				<div className="grid-title-box">
-					<label className="titles">Activities</label>
+					<label className="titles" style={{ marginRight: "0.5rem" }}>
+						Activities |
+					</label>
+					<Button
+						className="titles"
+						size="small"
+						style={{ border: "none", padding: 0 }}
+						onClick={exportActivities}
+					>
+						Export
+					</Button>
 				</div>
 
 				<div className="ag-theme-material activity-grid">
